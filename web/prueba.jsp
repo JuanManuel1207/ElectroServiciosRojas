@@ -105,7 +105,7 @@
                         </h1>
                         <button type="button" class="btn btn-success">Añadir</button>
                         <h1>
-                            
+                            Nueva version
                         </h1>
                     </div>
                     <div class="tab-content" id="myTabContent">

@@ -8,6 +8,6 @@ package model;
  *
  * @author juanm
  */
-public class servicios {
+public class empleados {
     
 }

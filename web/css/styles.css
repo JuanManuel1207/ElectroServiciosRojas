@@ -1,0 +1,53 @@
+
+body {
+    overflow: hidden;
+    font-family: 'Muli', sans-serif;
+    font-weight: 300;
+    color: #AF4129;
+}
+
+a:hover {
+    text-decoration: none;
+}
+#menu1{
+    background-color: #bf4611;
+    
+}
+#container{
+    background-color: #bf4611;
+    
+}
+#content {
+    overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 5rem;
+}
+
+.avatar {
+    max-width: 35px;
+}
+
+.btn-search {
+    right: 0;
+}
+
+.stat {
+    border-right: 1px solid var(--grey);
+}
+
+
+  
+  
+
+
+
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 23/05/2022, 9:35:35 p. m.
+    Author     : LENOVO
+*/
+

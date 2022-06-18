@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Reporte Productos</title>
+        <title>Página Principal</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->
@@ -48,7 +48,7 @@
                                     Gestión Ventas</a>
                                 <a href="#" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
-                                <a href="#" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
                             </div>
                         </div>

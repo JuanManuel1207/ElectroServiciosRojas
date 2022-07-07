@@ -48,7 +48,7 @@
                                     Gestión Ventas</a>
                                 <a href="#" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
-                                <a href="#" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : menu
-    Created on : 31/05/2022, 07:54:53 PM
-    Author     : juanm
+    Document   : gestionServicios
+    Created on : 24/05/2022, 3:46:36 p. m.
+    Author     : Asus
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,7 +37,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        
+                        <!<!-- ssssss -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="menu">
                                 <a href="#" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
@@ -93,8 +93,103 @@
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100">
-              
+                        <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionServiciosModal">
+                    AGREGAR
+                </button>
+        
+                <div class="form-row">
+                        <div class="table-responsive" id="tablaProd">
+                            <table class="table table-striped">
+                                    <thead>
+                                    <th>ID</th>
+                                    <th>Tipo Servicio</th>
+                                    <th>Cliente</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Ingreso</th>
+                                    <th>Fecha Salida</th>
+                                    <th>Acciones</th>
+                                    
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="prod" items="${listaProd}">
+                                          <tr>
+                                            <td><c:out value="${prod.codigo}"/></td>
+                                            <td><c:out value="${prod.nombre}"/></td>
+                                            <td><c:out value="${prod.cantidad}"/></td>
+                                            <td><c:out value="${prod.valor}"/></td>
+                                            <td><c:out value="${prod.descripcion}"/></td>
+                                          </tr>
+                                        </c:forEach>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div
+                    <!--Gg-->
+        <!-- Modal -->
+                <div class="modal fade" id="gestionServiciosModal" tabindex="-1" aria-labelledby="gestionServicios" aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                      <div class="modal-header bg-success">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Servicios</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
 
+                <div class="card-body">   
+
+                        <div class="form-row">
+                            <div class="form-group col-12 col-sm">
+                                <label for="ID">ID</label>
+                                <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto"required>
+                            </div>
+                            <div class="form-group col-12 col-sm">
+                                <label for="Nombre">Tipo de Servicio</label>
+                                <select class="form-control" aria-label="GG" required>                            
+                                    <option value="0">REPARACIÓN</option>
+                                    <option value="1">REVISIÓN</option>                            
+                                </select>
+                            </div>                  
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12 col-sm">
+                                <label for="Cliente">Cliente</label>
+                                <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
+                            </div>
+                            <div class="form-group col-12 col-sm">
+                                <label for="Nombre">ESTADO</label>
+                                <select class="form-control" aria-label="GG" required>                            
+                                    <option value="2">EN PROCESO</option>
+                                    <option value="3">TERMINADO</option>                           
+                                </select>
+                            </div>                  
+                        </div>                                     
+
+                        <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="Valor">Fecha Ingreso</label>
+                                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="Descripcion">Fecha Salida</label>
+                                    <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" required>
+                                </div>
+                        </div>                           
+                </div>
+                      </div>
+
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">SI</button>
+                      <button type="button" class="btn btn-primary">NO</button>
+                      </div>               
+                    </div>
+                  </div>
+                </div>
+              
+                        
             </div>
         </div>
     </div>

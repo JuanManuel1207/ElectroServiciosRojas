@@ -3,16 +3,42 @@ body {
     overflow: hidden;
     font-family: 'Muli', sans-serif;
     font-weight: 300;
-    color: #AF4129;
+    background-color: #ffffff; 
 }
 
 a:hover {
     text-decoration: none;
 }
+
+
 #menu1{
     background-color: #bf4611;
     
 }
+#info{
+    background-color: #ffffff;
+}
+
+#cardPadre{
+    border-top-color: #bf4611;
+    border-left-color: #ffffff;
+    border-right-color: #ffffff;
+    
+}
+#cardEncabezado{
+    background-color: #ffffff;
+    border-color: #bf4611;
+}
+
+#cardBody{
+    background-color: #ffffff;
+}
+
+#fondo{
+   background-color: #fffffff;
+}
+
+
 #container{
     background-color: #bf4611;
     
@@ -26,11 +52,6 @@ a:hover {
 .avatar {
     max-width: 35px;
 }
-
-.btn-search {
-    right: 0;
-}
-
 .stat {
     border-right: 1px solid var(--grey);
 }

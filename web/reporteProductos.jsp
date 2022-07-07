@@ -40,7 +40,7 @@
                         
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="menu">
-                                <a href="./prueba.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
+                                <a href="#" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                     Gestión Empleados</a>
                                 <a href="#" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>

@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,7 +52,7 @@
                                     Gestión Servicios</a>
                                 <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
-                                <a href="gestionProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
                                 <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
@@ -131,30 +133,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">7644</th>
-                                                        <td>Licuadora</td>
-                                                        <td>Electrodomestico</td>
-                                                        <td>2</td>
-                                                        <td>20000</td>
-                                                        <td>Oster</td>
-                                                        <td>Clasic</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarProducto"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
-                                                 <tr>
-                                                    <th scope="row">2624</th>
-                                                        <td>Empaque Olla</td>
-                                                        <td>Repuesto</td>
-                                                        <td>2</td>
-                                                        <td>5000</td>
-                                                        <td>Corona</td>
-                                                        <td>x-332</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarProducto"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
+                                                <c:forEach var="prod" items="${listaProductos}"> 
+                                                    <tr>
+                                                        <td><c:out value="${prod.productId}"/></td>
+                                                        <td><c:out value="${prod.productName}"/></td>
+                                                        <td><c:out value="${prod.productType}"/></td>
+                                                        <td><c:out value="${prod.stock}"/></td>
+                                                        <td><c:out value="${prod.price}"/></td>
+                                                        <td><c:out value="${prod.brand}"/></td>
+                                                        <td><c:out value="${prod.model}"/></td>                                                        
+                                                    </tr>
+                                                    
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>                        
@@ -281,17 +271,6 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script><!-- comment -->
-    <script type="text/javascript">
-	$(document).ready(function() {
-	        //Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
-	        $('#userList').DataTable();
-	    } );
-	</script>    
-    <script type="text/javascript">
-        $(function() {
-            $('#datepicker').datepicker();
-        });
-    </script>
 </head>
     </body>
 </html>

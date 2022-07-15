@@ -57,7 +57,7 @@ public class ProductoDAO {
     public boolean insertarDB(Producto product){
         PreparedStatement ps;
         try{
-            ps = conexionBD.prepareStatement("INSERT INTO productos(id, name, tipo, cantidad, precio, marca, modelo) values(?,?,?,?,?,?;?)");
+            ps = conexionBD.prepareStatement("INSERT INTO productos(id, name, tipo, cantidad, precio, marca, modelo) values(?,?,?,?,?,?,?)");
             ps.setString(1, product.getProductId());
             ps.setString(2, product.getProductName());
             ps.setString(3, product.getProductType().toString());

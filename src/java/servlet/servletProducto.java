@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Producto;
 import modelo.ProductoDAO;
+import modelo.ProductosEnum;
 
 /**
  *
@@ -37,7 +38,24 @@ public class servletProducto extends HttpServlet {
             dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
             List<Producto> listProducts = productoDAO.listarProductos();
             listProducts.toString();
-            req.setAttribute("listaProductos", listProducts);            
+            req.setAttribute("listaProductos", listProducts);       
+            
+        }else if("Insertar".equals(accion)){
+            String productId = req.getParameter("idProducto");
+            String productName = req.getParameter("name");
+            String productType = req.getParameter("select");  
+            ProductosEnum productEnum = (productType == "0")? ProductosEnum.valueOf("ELECTRODOMESTICO") : ProductosEnum.valueOf("REPUESTO");
+            System.out.println(productType);
+            int stock = Integer.parseInt(req.getParameter("cantidad"));
+            double price = Double.parseDouble(req.getParameter("precio"));
+            String brand = req.getParameter("marca");
+            String modelo = req.getParameter("modelo");
+            
+            Producto product = new Producto(productId, productName, productEnum, stock, price, brand, modelo);
+            productoDAO.insertarDB(product);
+            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+            List<Producto> listProducts = productoDAO.listarProductos();
+            req.setAttribute("listaProductos", listProducts);
         }
         dispatcher.forward(req,resp);
         

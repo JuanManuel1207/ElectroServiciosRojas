@@ -162,7 +162,7 @@
                                     <button class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="servletProducto?accion=Insertar" method="POST" autocomplete="off">
                                     <div class="card-body">
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
@@ -182,12 +182,12 @@
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <label for="selection" class=" col-form-label text-dark">Tipo de producto</label>
+                                                <label for="select" class=" col-form-label text-dark">Tipo de producto</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group selection">
-                                                        <select class="form-control" id="exampleFormControlSelect1">
-                                                            <option>Electrodomestico</option>
-                                                            <option>Repuesto</option>
+                                                        <select class="form-control" id="select" name="select">
+                                                            <option value="0" >Electrodomestico</option>
+                                                            <option value="1">Repuesto</option>
                                                 </select> 
                                                     </div>
                                                 </div>                                
@@ -222,12 +222,12 @@
                                         </div>
 
                                     </div>
-                                </form>  
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Añadir</button>
+                                        <div class="modal-footer">
+                                    <button type="submit" id="btnAdd" class="btn btn-success">Añadir</button>
                                     <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
+                                    </form>  
+                                </div>                                
                             </div>
                         </div>
                     </div>

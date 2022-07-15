@@ -56,9 +56,16 @@ public class servletProducto extends HttpServlet {
             dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
             List<Producto> listProducts = productoDAO.listarProductos();
             req.setAttribute("listaProductos", listProducts);
+            
+        }else if("Eliminar".equals(accion)){
+            String id = req.getParameter("producto");
+            productoDAO.eliminarProducto(id);
+            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+            List<Producto> listProducts = productoDAO.listarProductos();
+            req.setAttribute("listaProductos", listProducts);
+            
         }
-        dispatcher.forward(req,resp);
-        
+        dispatcher.forward(req,resp);        
     }
 
     @Override

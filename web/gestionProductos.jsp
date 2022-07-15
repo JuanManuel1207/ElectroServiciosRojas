@@ -141,7 +141,9 @@
                                                         <td><c:out value="${prod.stock}"/></td>
                                                         <td><c:out value="${prod.price}"/></td>
                                                         <td><c:out value="${prod.brand}"/></td>
-                                                        <td><c:out value="${prod.model}"/></td>                                                        
+                                                        <td><c:out value="${prod.model}"/></td>   
+                                                        <td> <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
+                                                        </td>
                                                     </tr>
                                                     
                                                 </c:forEach>
@@ -241,12 +243,14 @@
                                     <button class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
+                                    
                                     <h5>
                                         ¿Esta seguro de realizar esta acción?
                                     </h5> 
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-success">Si</button>
+                                    <button type="submit" class="btn btn-success">Si</button>
+                                    
                                     <button class="btn btn-danger" data-dismiss="modal">No</button>
                                 </div>
                             </div>

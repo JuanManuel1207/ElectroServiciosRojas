@@ -5,14 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Reporte Productos</title>
+        <title>Gesti&oacute;n Servicios</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">		
         <link rel="icon" href="./resources/Logo_1.ico" type="image/ico" />
         <link rel="icon1" href="./resources/Logo.ico" type="image/ico" />
         <link rel="iconElectro" href="./resources/Electro.jpg" type="image/jpg" />
@@ -23,7 +24,7 @@
         <link rel="stylesheet" href="./css/styles.css">
         <link href="https://fonts.googleapis.com/css?family=Muli:300,700&display=swap" rel="stylesheet">
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">		
     </head>
     
     <body>
@@ -83,10 +84,6 @@
                               </li>
                             </ul>
                             </form>
-                        
-                    
-              
-            
             </div>
          
         
@@ -99,34 +96,39 @@
                 </button>
         
                 <div class="form-row">
-                        <div class="table-responsive" id="tablaProd">
-                            <table class="table table-striped">
-                                    <thead>
-                                    <th>ID</th>
-                                    <th>Tipo Servicio</th>
-                                    <th>Cliente</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Ingreso</th>
-                                    <th>Fecha Salida</th>
-                                    <th>Acciones</th>
-                                    
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="prod" items="${listaProd}">
-                                          <tr>
-                                            <td><c:out value="${prod.codigo}"/></td>
-                                            <td><c:out value="${prod.nombre}"/></td>
-                                            <td><c:out value="${prod.cantidad}"/></td>
-                                            <td><c:out value="${prod.valor}"/></td>
-                                            <td><c:out value="${prod.descripcion}"/></td>
-                                          </tr>
-                                        </c:forEach>
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div
-                    <!--Gg-->
+                    <div class="table-responsive">
+                        <table id="tableServicios" class="table table-striped">
+                            <thead>
+                                <th>ID</th>
+                                <th>Tipo Servicio</th>
+                                <th>Cliente</th>
+                                <th>Estado</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Fecha Salida</th>
+                                <th>Acciones</th>    
+                            </thead>
+                            <tbody>
+                                 <c:forEach var="prod" items="${listaServicio}">
+                                  <tr>
+                                    <td><c:out value="${prod.id}"/></td>
+                                    <td><c:out value="${ (prod.tipoServicio == '0') ? 'REPARACIÓN':'REVISIÓN' }"/></td>
+                                    <td><c:out value="${prod.cliente}"/></td>
+                                    <td><c:out value="${ (prod.estado == '0') ? 'EN PROCESO' : 'TERMINADO' }"/></td>
+                                    <td><c:out value="${prod.fechaIngreso}"/></td>
+                                    <td><c:out value="${prod.fechaSalida}"/></td>
+                                    <td>
+                                        <a class="btn btn-warning bi bi-pencil-square"></a>
+                                        <a class="btn btn-danger bi bi-x-lg" style="color:#fff"></a>
+                                    </td>
+                                  </tr>
+                                </c:forEach>       
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         <!-- Modal -->
+            <form action="servletServicio?action=Agregar" method="POST" autocomplete="off"> 
+
                 <div class="modal fade" id="gestionServiciosModal" tabindex="-1" aria-labelledby="gestionServicios" aria-hidden="true">
                  <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -137,58 +139,54 @@
                         </button>
                       </div>
                       <div class="modal-body">
-
-                <div class="card-body">   
-
-                        <div class="form-row">
-                            <div class="form-group col-12 col-sm">
-                                <label for="ID">ID</label>
-                                <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto"required>
-                            </div>
-                            <div class="form-group col-12 col-sm">
-                                <label for="Nombre">Tipo de Servicio</label>
-                                <select class="form-control" aria-label="GG" required>                            
-                                    <option value="0">REPARACIÓN</option>
-                                    <option value="1">REVISIÓN</option>                            
-                                </select>
-                            </div>                  
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-12 col-sm">
-                                <label for="Cliente">Cliente</label>
-                                <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
-                            </div>
-                            <div class="form-group col-12 col-sm">
-                                <label for="Nombre">ESTADO</label>
-                                <select class="form-control" aria-label="GG" required>                            
-                                    <option value="2">EN PROCESO</option>
-                                    <option value="3">TERMINADO</option>                           
-                                </select>
-                            </div>                  
-                        </div>                                     
-
-                        <div class="form-row">
+                              <div class="form-row">
                                 <div class="form-group col-12 col-sm">
-                                    <label for="Valor">Fecha Ingreso</label>
+                                    <label for="id">ID</label>
+                                    <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="tipoServicio">Tipo de Servicio</label>
+                                    <select id="tipoServicio" name="tipoServicio" class="form-control" aria-label="GG" required>                            
+                                        <option value="0">REPARACIÓN</option>
+                                        <option value="1">REVISIÓN</option>                            
+                                    </select>
+                                </div>                  
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="cliente">Cliente</label>
+                                    <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="estado">Estado</label>
+                                    <select id="estado" name="estado" class="form-control" aria-label="GG" required>                            
+                                        <option value="0">EN PROCESO</option>
+                                        <option value="1">TERMINADO</option>                           
+                                    </select>
+                                </div>                  
+                            </div>                                     
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="fecha_ingreso">Fecha Ingreso</label>
                                     <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" required>
                                 </div>
                                 <div class="form-group col-12 col-sm">
-                                    <label for="Descripcion">Fecha Salida</label>
+                                    <label for="fecha_salida">Fecha Salida</label>
                                     <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" required>
                                 </div>
-                        </div>                           
-                </div>
+                            </div>
                       </div>
 
                       <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">SI</button>
-                      <button type="button" class="btn btn-primary">NO</button>
+                          <button type="submit" class="btn btn-secondary col-2">SI</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
                       </div>               
                     </div>
                   </div>
                 </div>
-              
+            </form>                                         
                         
             </div>
         </div>

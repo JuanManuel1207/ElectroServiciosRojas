@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,7 +49,7 @@
                                     Gestión Empleados</a>
                                 <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
-                                <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
                                 <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
@@ -133,34 +134,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                        <td>2222</td>
-                                                        <td>Licuadora</td>
-                                                        <td>Electrodomestico</td>
-                                                        <td>2</td>
-                                                        <td>20000</td>
-                                                        <td>40000</td>
-                                                        <td>xx/xx/xxxx</td>
-                                                        <td>Pedro L</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirVenta"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarVenta"><i class="bi bi-trash3-fill"></i></a>
+                                                <c:forEach var="venta" items="${listaVentas}">
+                                                    <tr>
+                                                        <td><c:out value="${venta.idVenta}"/></td>
+                                                        <td><c:out value="${venta.idProducto}"/></td>
+                                                        <td><c:out value="${venta.productName}"/></td>
+                                                        <td><c:out value="${venta.productType}"/></td>
+                                                        <td><c:out value="${venta.cantidad}"/></td>
+                                                        <td><c:out value="${venta.priceProduct}"/></td>
+                                                        <td><c:out value="${venta.precioTotal}"/></td>
+                                                        <td><c:out value="${venta.fecha}"/></td>
+                                                        <td><c:out value="${venta.cliente}"/></td>
+                                                        <td> <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
                                                         </td>
-                                                 </tr>
-                                                 <tr>
-                                                    <th scope="row">2</th>
-                                                        <td>2652</td>
-                                                        <td>Empaque Olla</td>
-                                                        <td>Repuesto</td>
-                                                        <td>2</td>
-                                                        <td>5000</td>
-                                                        <td>10000</td>
-                                                        <td>xx/xx/xxxx</td>
-                                                        <td>Juan L</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirVenta"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarVenta"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
+                                                    </tr>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>                        
@@ -178,7 +166,7 @@
                                     <button class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="servletVentas?accion=Insertar" method="POST" autocomplete="off">
                                     <div class="card-body">
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
@@ -198,10 +186,10 @@
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <label for="selection" class=" col-form-label text-dark">Tipo de producto</label>
+                                                <label for="select" class=" col-form-label text-dark">Tipo de producto</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group selection">
-                                                        <select class="form-control" id="exampleFormControlSelect1">
+                                                        <select class="form-control" id="select" name="select">
                                                             <option>Electrodomestico</option>
                                                             <option>Repuesto</option>
                                                 </select> 
@@ -252,12 +240,13 @@
                                         </div>
 
                                     </div>
-                                </form>  
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Añadir</button>
+                                         <div class="modal-footer">
+                                             <button type="submit" class="btn btn-success">Añadir</button>
                                     <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>  
+                                </div>
+                               
                             </div>
                         </div>
                     </div>

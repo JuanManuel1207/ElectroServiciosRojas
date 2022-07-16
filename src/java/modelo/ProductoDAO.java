@@ -61,8 +61,8 @@ public class ProductoDAO {
             ps.setString(1, product.getProductId());
             ps.setString(2, product.getProductName());
             ps.setString(3, product.getProductType().toString());
-            ps.setString(4, String.valueOf(product.getStock()));
-            ps.setString(5, String.valueOf(product.getPrice()));
+            ps.setInt(4, product.getStock());
+            ps.setDouble(5, product.getPrice());
             ps.setString(6, product.getBrand());
             ps.setString(7, product.getModel());
             ps.execute();

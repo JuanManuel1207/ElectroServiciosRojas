@@ -145,7 +145,7 @@
                                                         <td><c:out value="${venta.precioTotal}"/></td>
                                                         <td><c:out value="${venta.fecha}"/></td>
                                                         <td><c:out value="${venta.cliente}"/></td>
-                                                        <td> <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
+                                                        <td> <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletVentas?accion=Eliminar&venta=${venta.idVenta}"><i class="bi bi-trash3-fill"></i></a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -168,6 +168,14 @@
                                 <div class="modal-body">
                                     <form action="servletVentas?accion=Insertar" method="POST" autocomplete="off">
                                     <div class="card-body">
+                                        <div style="margin-bottom: 10px" class="input-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="inputGroup-sizing-default">ID Venta</span>
+                                                </div>
+                                                <input id="idVenta" type="text" class="form-control text-center" name="idVenta" value="" required>                                       
+                                            </div>                                            
+                                        </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -221,14 +229,8 @@
                                             <div class="input-group">    
                                                 
                                                 <label for="date" class=" col-form-label text-dark">Fecha de venta</label>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group date" id="datepicker">
-                                                        <input type="text" class="form-control">
-                                                        <span class="input-group-append">
-                                                            <span class="input-group-text bg-white"><i class="bi bi-calendar3"></i>
-                                                            </span>
-                                                        </span>
-                                                    </div>
+                                                <div class="form-group col-12 col-sm">                                                    
+                                                        <input type="date" id="fecha_venta" name="fecha_venta" class="form-control col" required>
                                                 </div>
                                             </div>
                                         </div>

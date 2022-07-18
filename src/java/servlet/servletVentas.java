@@ -7,13 +7,19 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Producto;
 import modelo.ProductoDAO;
 import modelo.ProductosEnum;
 import modelo.Ventas;
@@ -30,8 +36,8 @@ public class servletVentas extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
         
-        VentasDAO ventasDAO = new VentasDAO();
-        ProductoDAO productoDAO = new ProductoDAO();
+        VentasDAO ventasDAO = new VentasDAO();        
+        ProductoDAO prodDAO = new ProductoDAO();
                 
         String accion;
         RequestDispatcher dispatcher = null;
@@ -44,8 +50,8 @@ public class servletVentas extends HttpServlet {
             listVentas.toString();
             req.setAttribute("listaVentas", listVentas);
             
-        }else if("Insertar".equals(accion)){            
-            String idVenta= "";
+        }else if("Insertar".equals(accion)){                
+            String idVenta= req.getParameter("idVenta");            
             String idProduct = req.getParameter("idProducto");
             String nameProduct = req.getParameter("name");
             String productType = req.getParameter("select");
@@ -53,16 +59,20 @@ public class servletVentas extends HttpServlet {
             int cantidad = Integer.parseInt(req.getParameter("cantidad"));
             double precio = Double.parseDouble(req.getParameter("precio"));
             double precioTotal = Double.parseDouble(req.getParameter("total"));
-            String fecha = req.getParameter("datePicker");
-            System.out.println(fecha+"+++");
-            String cliente = req.getParameter("namecliente");
-            
-            Ventas venta = new Ventas(idVenta, cantidad, precioTotal, null, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
+            String fecha = req.getParameter("fecha_venta");                                    
+            String cliente = req.getParameter("namecliente");                                                            
+            Ventas venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
             ventasDAO.insertarDB(venta);
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
             List<Ventas> listVentas = ventasDAO.listarVentas();
+            req.setAttribute("listaVentas", listVentas);                                            
+                                    
+        }else if("Eliminar".equals(accion)){
+            String id = req.getParameter("venta");
+            ventasDAO.eliminarVenta(id);
+            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+            List<Ventas> listVentas = ventasDAO.listarVentas();
             req.setAttribute("listaVentas", listVentas);
-            
         }
         
         dispatcher.forward(req,resp);    

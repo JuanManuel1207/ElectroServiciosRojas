@@ -26,7 +26,7 @@ public class ConexionBD {
         try{
             Class.forName(DRIVER);
             conexion_DB = DriverManager.getConnection(URL_DB,USER_DB,PASS_DB);
-            System.out.println("Conexión éxitosa a BD");
+            //System.out.println("Conexión éxitosa a BD");
             return conexion_DB;
         }catch(SQLException ex){
             System.out.println(ex.toString());

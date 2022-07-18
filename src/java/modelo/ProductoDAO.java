@@ -53,7 +53,7 @@ public class ProductoDAO {
             }
             
     }
-    
+               
     public boolean insertarDB(Producto product){
         PreparedStatement ps;
         try{
@@ -73,7 +73,7 @@ public class ProductoDAO {
         }
                 
     }
-    
+         //Para un solo registro.
     public Producto buscarProducto(String id){
             PreparedStatement ps;
             ResultSet rs;
@@ -117,7 +117,7 @@ public class ProductoDAO {
     public boolean actualiarProducto(Producto product){
         PreparedStatement ps;
         try{
-            ps= conexionBD.prepareStatement("UPDATE productos SET id=?, name=?, tipo=?, cantidad=?, precio=?, marca=?, modelo=?");
+            ps= conexionBD.prepareStatement("UPDATE productos SET id=?, name=?, tipo=?, cantidad=?, precio=?, marca=?, modelo=? WHERE id=?");
             ps.setString(1, product.getProductId());
             ps.setString(2, product.getProductName());
             ps.setString(3, product.getProductType().toString());
@@ -125,10 +125,11 @@ public class ProductoDAO {
             ps.setString(5, String.valueOf(product.getPrice()));
             ps.setString(6, product.getBrand());
             ps.setString(7, product.getModel());
+            ps.setString(8, product.getProductId());
             ps.execute();
             return true;         
         }catch(SQLException ex){
-            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE,null,ex);
+            System.out.println(ex.toString());
             return false;
         }
     }

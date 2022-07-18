@@ -15,7 +15,7 @@ public class Ventas {
     private String idVenta;    
     private int cantidad;    
     private double precioTotal;
-    private Date fecha;
+    private String fecha;
     private String cliente;
     
     private String idProducto;
@@ -23,7 +23,7 @@ public class Ventas {
     private String productType;
     private double priceProduct;
 
-    public Ventas(String idVenta, int cantidad, double precioTotal, Date fecha, String cliente, String idProducto, String productName, String typeProduct, double priceProduct) {
+    public Ventas(String idVenta, int cantidad, double precioTotal, String fecha, String cliente, String idProducto, String productName, String typeProduct, double priceProduct) {
         this.idVenta = idVenta;
         this.cantidad = cantidad;
         this.precioTotal = precioTotal;
@@ -59,11 +59,11 @@ public class Ventas {
         this.precioTotal = precioTotal;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

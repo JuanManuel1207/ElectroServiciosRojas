@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +43,7 @@ public class VentasDAO {
                     int cantidad = rs.getInt("cantidad");
                     double priceProduct = rs.getDouble("precio");
                     double precioTotal = rs.getDouble("precioTotal");
-                    Date fecha = rs.getDate("fecha");
+                    String fecha = ""+rs.getDate("fecha");
                     String cliente = rs.getString("cliente");
                     ProductoDAO pDAO = new ProductoDAO();
                                                                                
@@ -64,7 +66,7 @@ public class VentasDAO {
             ps.setString(1, venta.getIdVenta());
             ps.setInt(2, venta.getCantidad());
             ps.setDouble(3,venta.getPrecioTotal());
-            ps.setDate(4, venta.getFecha());
+            ps.setString(4, venta.getFecha());
             ps.setString(5,venta.getCliente());
             ps.setString(6,venta.getIdProducto());
             
@@ -95,7 +97,7 @@ public class VentasDAO {
                 int cantidad = rs.getInt("cantidad");
                 double precio = rs.getDouble("precio");
                 double precioTotal = rs.getDouble("precioTotal");
-                Date fecha = rs.getDate("fecha");
+                String fecha = ""+rs.getDate("fecha");
                 String cliente = rs.getString("cliente");
                 
                 venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct, productName, typeProduct, precio);                
@@ -105,5 +107,19 @@ public class VentasDAO {
             System.out.println(e.toString());
             return null;
         }       
+    }
+    
+    public boolean eliminarVenta(String id){
+        PreparedStatement ps;
+        try{
+            ps = conexionBD.prepareStatement("DELETE FROM ventas where idventas=?");
+            ps.setString(1, id);
+            ps.execute();
+            return true;
+        }catch(SQLException ex){
+            Logger.getLogger(VentasDAO.class.getName()).log(Level.SEVERE,null,ex);
+            return false;
+        }
+        
     }
 }

@@ -60,12 +60,23 @@ public class servletVentas extends HttpServlet {
             double precio = Double.parseDouble(req.getParameter("precio"));
             double precioTotal = Double.parseDouble(req.getParameter("total"));
             String fecha = req.getParameter("fecha_venta");                                    
-            String cliente = req.getParameter("namecliente");                                                            
-            Ventas venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
-            ventasDAO.insertarDB(venta);
-            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-            List<Ventas> listVentas = ventasDAO.listarVentas();
-            req.setAttribute("listaVentas", listVentas);                                            
+            String cliente = req.getParameter("namecliente");  
+            
+            Producto product = prodDAO.buscarProducto(idProduct);
+                                
+            if(prodDAO.buscarProducto(idProduct).getStock() != 0 & prodDAO.buscarProducto(idProduct).getStock() > cantidad){
+                
+                int newStock = product.getStock() - cantidad;                                
+                Ventas venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
+                ventasDAO.insertarDB(venta);
+                
+                Producto producto = new Producto(product.getProductId(),product.getProductName(),product.getProductType(),newStock,product.getPrice(),product.getBrand(),product.getModel());
+                prodDAO.actualiarProducto(producto);                
+                dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+                List<Ventas> listVentas = ventasDAO.listarVentas();
+                req.setAttribute("listaVentas", listVentas);                                            
+                
+            }            
                                     
         }else if("Eliminar".equals(accion)){
             String id = req.getParameter("venta");

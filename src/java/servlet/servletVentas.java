@@ -64,7 +64,7 @@ public class servletVentas extends HttpServlet {
             
             Producto product = prodDAO.buscarProducto(idProduct);
                                 
-            if(prodDAO.buscarProducto(idProduct).getStock() != 0 & prodDAO.buscarProducto(idProduct).getStock() > cantidad){
+            if(prodDAO.buscarProducto(idProduct).getStock() != 0 & prodDAO.buscarProducto(idProduct).getStock() >= cantidad){
                 
                 int newStock = product.getStock() - cantidad;                                
                 Ventas venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
@@ -76,6 +76,10 @@ public class servletVentas extends HttpServlet {
                 List<Ventas> listVentas = ventasDAO.listarVentas();
                 req.setAttribute("listaVentas", listVentas);                                            
                 
+            }else{
+                dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+                List<Ventas> listVentas = ventasDAO.listarVentas();
+                req.setAttribute("listaVentas", listVentas);    
             }            
                                     
         }else if("Eliminar".equals(accion)){

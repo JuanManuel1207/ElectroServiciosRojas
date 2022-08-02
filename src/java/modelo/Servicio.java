@@ -11,15 +11,18 @@ import java.util.Date;
  * @author juanm
  */
 public class Servicio {
-    String Id, Cliente, tipoServicio, estado,fechaIngreso, fechaSalida;
+    String Id, Cliente, tipoServicio, estado,fechaIngreso, fechaSalida, descripcion, precio, empleado;
 
-    public Servicio(String Id, String Cliente, String tipoServicio, String estado, String fechaIngreso, String fechaSalida) {
+    public Servicio(String Id, String Cliente, String tipoServicio, String estado, String fechaIngreso, String fechaSalida, String descripcion, String precio, String empleado) {
         this.Id = Id;
         this.Cliente = Cliente;
         this.tipoServicio = tipoServicio;
         this.estado = estado;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.empleado = empleado;
     }
 
     public String getId() {
@@ -70,4 +73,29 @@ public class Servicio {
         this.fechaSalida = fechaSalida;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    public String getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(String empleado) {
+        this.empleado = empleado;
+    }
+
+    
 }

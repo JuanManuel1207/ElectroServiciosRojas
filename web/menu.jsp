@@ -93,7 +93,11 @@
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100">
-              
+                <div class="container">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="text-center">Bienvenido ### al Sistema WEBESR</h4>
+                    </div>
+                </div>
 
             </div>
         </div>

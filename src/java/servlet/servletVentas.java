@@ -76,7 +76,7 @@ public class servletVentas extends HttpServlet {
                 List<Ventas> listVentas = ventasDAO.listarVentas();
                 req.setAttribute("listaVentas", listVentas);                                            
                 
-            }else{
+            }else{                
                 dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
                 List<Ventas> listVentas = ventasDAO.listarVentas();
                 req.setAttribute("listaVentas", listVentas);    

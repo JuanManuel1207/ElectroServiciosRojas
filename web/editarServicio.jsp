@@ -1,7 +1,7 @@
 <%-- 
-    Document   : gestionServicios
-    Created on : 24/05/2022, 3:46:36 p. m.
-    Author     : Asus
+    Document   : editarServicio
+    Created on : 2/08/2022, 09:59:24 AM
+    Author     : juanm
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gesti&oacute;n Servicios</title>
+        <title>Editar Servicios</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->

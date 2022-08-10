@@ -145,9 +145,22 @@ public class ServicioDAO {
     }
     
     public boolean actualizarServicio(Servicio servicio){
-        if(eliminarServicio(servicio.getId())){
-            return ingresarServicio(servicio);
-        }else{
+        PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement("UPDATE SERVICE SET cliente=?,tipo=?,estado=?,entrada=?,salida=?,descripcion=?,precio=?,empleado=? WHERE id = ?");
+            ps.setString(1, servicio.getCliente());
+            ps.setString(2, servicio.getTipoServicio());
+            ps.setString(3, servicio.getEstado());            
+            ps.setDate(4, java.sql.Date.valueOf(servicio.getFechaIngreso()));
+            ps.setDate(5, java.sql.Date.valueOf(servicio.getFechaSalida()));
+            ps.setString(6, servicio.getDescripcion());
+            ps.setDouble(7, Double.parseDouble(servicio.getPrecio()) );
+            ps.setInt(8, Integer.parseInt(servicio.getEmpleado()));
+            ps.setString(9, servicio.getId());
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
             return false;
         }
     }

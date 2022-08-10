@@ -54,22 +54,42 @@ public class servletServicio extends HttpServlet {
             String precio = request.getParameter("precio");
             String empleado = request.getParameter("empleado");
             Servicio servicio = new Servicio(id, cliente, tipoServicio, estado, fechaIngreso, fechaSalida, descripcion, precio, empleado);
-            servicioDAO.ingresarServicio(servicio);
-                        
-            dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
-            List<Servicio> listaServicio = servicioDAO.listarServicio();
-            request.setAttribute("listaServicio", listaServicio);
-            List<Emple> listaEmple = servicioDAO.listarEmpleado();
-            request.setAttribute("empleados", listaEmple);
+            if(servicioDAO.ingresarServicio(servicio)){
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "1");
+            }else{
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "0");
+
+            }
         } else if ("Eliminar".equals(action)) {
             String servicio = request.getParameter("servicio");
-            servicioDAO.eliminarServicio(servicio);
             
-            dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
-            List<Servicio> listaServicio = servicioDAO.listarServicio();
-            request.setAttribute("listaServicio", listaServicio);
-            List<Emple> listaEmple = servicioDAO.listarEmpleado();
-            request.setAttribute("empleados", listaEmple);
+            if(servicioDAO.eliminarServicio(servicio)){
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "1");
+            }else{
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "0");
+            }
+            
+            
         }else if ("Editar".equals(action)) {
             System.out.println("editar");
             String id = request.getParameter("servicio");
@@ -83,8 +103,8 @@ public class servletServicio extends HttpServlet {
         }else if("Consultar".equals(action)){
             String id = request.getParameter("buscarServicio");
             Servicio servicio = servicioDAO.buscarServicio(id);
-            dispatcher = request.getRequestDispatcher("buscarServicio.jsp");
             
+            dispatcher = request.getRequestDispatcher("buscarServicio.jsp");
             request.setAttribute("servicio", servicio);
             List<Emple> listaEmple = servicioDAO.listarEmpleado();
             request.setAttribute("empleados", listaEmple);
@@ -100,14 +120,23 @@ public class servletServicio extends HttpServlet {
             String empleado = request.getParameter("empleado");
             Servicio servicio = new Servicio(id, cliente, tipoServicio, estado, fechaIngreso, fechaSalida, descripcion, precio, empleado);
             
-            servicioDAO.eliminarServicio(id);
-            servicioDAO.ingresarServicio(servicio);
+            if(servicioDAO.actualizarServicio(servicio)){
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "1");
+            }else{
+                dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
+                List<Servicio> listaServicio = servicioDAO.listarServicio();
+                request.setAttribute("listaServicio", listaServicio);
+                List<Emple> listaEmple = servicioDAO.listarEmpleado();
+                request.setAttribute("empleados", listaEmple);
+                request.setAttribute("action", "0");
+            }
             
-            dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
-            List<Servicio> listaServicio = servicioDAO.listarServicio();
-            request.setAttribute("listaServicio", listaServicio);
-            List<Emple> listaEmple = servicioDAO.listarEmpleado();
-            request.setAttribute("empleados", listaEmple);
+            
         }
         dispatcher.forward(request, response);
     }
@@ -135,4 +164,5 @@ public class servletServicio extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
 }

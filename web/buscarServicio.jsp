@@ -32,24 +32,30 @@
                 </div>
                 <div class="card-body">
                     <c:if test="${servicio!=null}">
-                        <ul class="list-group col-md-6">
+                        <ul class="list-group">
                             <li class="list-group-item active text-center" aria-current="true"><b>n° Servicio: </b><c:out value="${servicio.id}"/></li>
-                            <li class="list-group-item"><b>Tipo de Servicio: </b><c:out value="${ (servicio.tipoServicio == '1') ? 'REPARACIÓN':'REVISIÓN' }"/></li>
-                            <li class="list-group-item"><b>Cliente: </b><c:out value="${servicio.cliente}"/></li>
-                            <li class="list-group-item"><b>Estado: </b><c:out value="${ (servicio.estado == '1') ? 'EN PROCESO' : 'TERMINADO' }"/></li>
-                            <li class="list-group-item"><b>Fecha de Ingreso: </b><c:out value="${servicio.fechaIngreso}"/></li>
-                            <li class="list-group-item"><b>Fecha de Salida: </b><c:out value="${servicio.fechaSalida}"/></li>
-                            <li class="list-group-item"><b>Descripci&oacute;n: </b><c:out value="${servicio.descripcion}"/></li>
-                            <li class="list-group-item"><b>Precio: </b><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${servicio.precio}" /></li>
-                            <c:forEach var="emple" items="${empleados}">
-                                <c:if test="${emple.id==servicio.empleado}">
-                                    <li class="list-group-item"><b>Empleado: </b><c:out value="${emple.empleado}"/></li>                        
-                                </c:if>
-                            </c:forEach> 
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item col-sm-4"><b>Tipo de Servicio: </b><c:out value="${ (servicio.tipoServicio == '1') ? 'REPARACIÓN':'REVISIÓN' }"/></li>
+                                <li class="list-group-item col-sm-4"><b>Cliente: </b><c:out value="${servicio.cliente}"/></li>
+                                <li class="list-group-item col-sm-4"><b>Estado: </b><c:out value="${ (servicio.estado == '1') ? 'EN PROCESO' : 'TERMINADO' }"/></li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item col-sm-4"><b>Fecha de Ingreso: </b><c:out value="${servicio.fechaIngreso}"/></li>
+                                <li class="list-group-item col-sm-4"><b>Fecha de Salida: </b><c:out value="${servicio.fechaSalida}"/></li>
+                                <li class="list-group-item col-sm-4"><b>Precio: </b><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${servicio.precio}" /></li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item col-sm-8"><b>Descripci&oacute;n: </b><c:out value="${servicio.descripcion}"/></li>
+                                <c:forEach var="emple" items="${empleados}">
+                                    <c:if test="${emple.id==servicio.empleado}">
+                                        <li class="list-group-item col-sm-4"><b>Empleado: </b><c:out value="${emple.empleado}"/></li>                        
+                                    </c:if>
+                                </c:forEach>  
+                            </ul>
                         </ul>
                     </c:if>
                     <c:if test="${servicio==null}">
-                        <div class="alert alert-danger" role="alert">Lo sentimos, no hemos podido encontrar el servicio.</div>
+                        <div class="alert alert-danger text-center" role="alert">Lo sentimos, no hemos podido encontrar el servicio.</div>
                     </c:if>
                 </div>
                 <div class="card-footer text-center">

@@ -27,9 +27,7 @@
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">		
     </head>
-    
     <body>
-        <!-- Ignoren -->
         <div class="d-flex">
         
             <div id="menu1">
@@ -39,12 +37,11 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <!<!-- ssssss -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="menu">
                                 <a href="gestionEmpleados.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                     Gestión Empleados</a>
-                                <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                <a href="servletServicio?action" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
                                 <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
@@ -145,6 +142,25 @@
                             </div>
                         </c:if>                        
                     </div>
+                    <div class="container">
+                        <c:if test="${action==1}">
+                        <div class=" col-12 alert alert-success alert-dismissible fade show" role="alert">
+                            Acci&oacute;n realizada con &eacute;xito.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        </c:if>
+                        <c:if test="${action==0}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                              Acci&oacute;n no realizada.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                        </c:if>
+                    </div>
+                   
                 </div>
         <!-- Modal Agregar -->
             <form action="servletServicio?action=Agregar" method="POST" autocomplete="off"> 
@@ -162,7 +178,7 @@
                               <div class="form-row">
                                 <div class="form-group col-12 col-sm">
                                     <label for="id">ID</label>
-                                    <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto" required>
+                                    <input type="text" id="id" name="id" class="form-control col" pattern="[0-9]*" placeholder="Ingrese el id del producto" required>
                                 </div>
                                 <div class="form-group col-12 col-sm">
                                     <label for="tipoServicio">Tipo de Servicio</label>
@@ -200,7 +216,7 @@
                             <div class="form-row">
                                 <div class="form-group col-12 col-sm">
                                     <label for="precio">Precio</label>
-                                    <input type="number" id="precio" name="precio" class="form-control"  min="0" max="10000000" placeholder="0 - 10.000.000" required>
+                                    <input type="number" id="precio" name="precio" class="form-control"  min="0" max="10000000" pattern="[0-9]*" placeholder="0 - 10.000.000" required>
                                 </div>
                                 <div class="form-group col-12 col-sm">
                                     <label for="empleado">Empleado</label>
@@ -227,70 +243,10 @@
                   </div>
                 </div>
             </form> 
-        <!-- Modal Editar -->
-            <form action="servletServicio?action=Editar" method="POST" autocomplete="off"> 
-                <div class="modal fade" id="gestionServiciosModalEditar" tabindex="-1" aria-labelledby="gestionServiciosEditar" aria-hidden="true">
-                 <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                      <div class="modal-header bg-warning">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Servicios</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                              <div class="form-row">
-                                <div class="form-group col-12 col-sm">
-                                    <label for="id">ID</label>
-                                    <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto" required>
-                                </div>
-                                <div class="form-group col-12 col-sm">
-                                    <label for="tipoServicio">Tipo de Servicio</label>
-                                    <select id="tipoServicio" name="tipoServicio" class="form-control" aria-label="GG" required>                            
-                                        <option value="0">REPARACIÓN</option>
-                                        <option value="1">REVISIÓN</option>                            
-                                    </select>
-                                </div>                  
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-12 col-sm">
-                                    <label for="cliente">Cliente</label>
-                                    <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
-                                </div>
-                                <div class="form-group col-12 col-sm">
-                                    <label for="estado">Estado</label>
-                                    <select id="estado" name="estado" class="form-control" aria-label="GG" required>                            
-                                        <option value="0">EN PROCESO</option>
-                                        <option value="1">TERMINADO</option>                           
-                                    </select>
-                                </div>                  
-                            </div>                                     
-                            <div class="form-row">
-                                <div class="form-group col-12 col-sm">
-                                    <label for="fecha_ingreso">Fecha Ingreso</label>
-                                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" required>
-                                </div>
-                                <div class="form-group col-12 col-sm">
-                                    <label for="fecha_salida">Fecha Salida</label>
-                                    <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" required>
-                                </div>
-                            </div>
-                      </div>
-
-                      <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary col-4">GUARDAR</button>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">CANCELAR</button>
-                      </div>               
-                    </div>
-                  </div>
-                </div>
-            </form>                                         
-
-                        
             </div>
         </div>
     </div>
-        <!<!-- modal eliminar -->
+     <!-- modal eliminar -->
     <div class="modal fade" id="deleteServicio" tabindex="-1" aria-labelledby="delServicio" aria-hidden="true">
 	<div class="modal-dialog">
             <div class="modal-content">

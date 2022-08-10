@@ -29,7 +29,6 @@
     </head>
     
     <body>
-        <!-- Ignoren -->
         <div class="d-flex">
         
             <div id="menu1">
@@ -148,21 +147,20 @@
                                     <div class="form-row">
                                         <div class="form-group col-sm-4">
                                             <label for="precio">Precio</label>
-                                            <input type="number" id="precio" name="precio" class="form-control"  min="0" max="10000000" value="<c:out value="${serv.precio}"/>" placeholder="0 - 10.000.000" required>
+                                            <input type="number" id="precio" name="precio" class="form-control"  min="0" max="10000000" value="<c:out value="${serv.precio}"/>" pattern="[0-9]*" placeholder="0 - 10.000.000" required>
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="empleado">Empleado</label>
                                             <select id="empleado" name="empleado" class="form-control" aria-label="GG" required> 
                                                 <c:forEach var="emple" items="${empleados}">
                                                     <c:if test="${emple.id==serv.empleado}">
-                                                        <option value="<c:out value="${emple.id}"/>"><c:out value="${emple.empleado}"/></option>
+                                                        <option value="<c:out value="${emple.id}"/>" selected><c:out value="${emple.empleado}"/></option>
                                                     </c:if>
-                                                </c:forEach>
-                                                <c:forEach var="emple" items="${empleados}">
                                                     <c:if test="${emple.id!=serv.empleado}">
                                                         <option value="<c:out value="${emple.id}"/>"><c:out value="${emple.empleado}"/></option>
                                                     </c:if>
                                                 </c:forEach>
+                                               
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-4">
@@ -179,17 +177,9 @@
                     </form>
                   </c:forEach> 
                 </div>
-                
-                
-                
             </div>
         </div>
     </div>
-        
-        
-        
-    
-        
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

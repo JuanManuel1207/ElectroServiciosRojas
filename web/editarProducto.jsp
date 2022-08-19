@@ -1,15 +1,16 @@
 <%-- 
-    Document   : gestionVentas
-    Created on : 30/05/2022, 3:02:07 p. m.
-    Author     : LENOVO
+    Document   : editarProducto
+    Created on : 4/08/2022, 8:29:49 a. m.
+    Author     : Asus
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gestion_Ventas</title>
+        <title>Gestion_Productos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->
@@ -92,104 +93,38 @@
                     
               
             
-            </div>
-         
-        
+            </div>               
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100 h-100">
 
                 <div class="container">
                 <div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
-                    <div>
-                        <h1>
-                            
-                        </h1>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirVenta">Nueva venta</button>
-                        <h1>
-                         
-                        </h1>
+                    <div>                        
                     </div>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Lista de ventas</h4>
+                                    <h4>Lista de productos</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="userList" class="table table-bordered table-hover table-striped">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">ID Venta</th>
-                                                    <th scope="col">ID Producto</th>
-                                                    <th scope="col">Nombre</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Cantidad</th>
-                                                    <th scope="col">Precio c/u</th>
-                                                    <th scope="col">Total</th>
-                                                    <th scope="col">Fecha</th>
-                                                    <th scope="col">Cliente</th>
-                                                    <th scope="col">Accion</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="venta" items="${listaVentas}">
-                                                    <tr>
-                                                        <td><c:out value="${venta.idVenta}"/></td>
-                                                        <td><c:out value="${venta.idProducto}"/></td>
-                                                        <td><c:out value="${venta.productName}"/></td>
-                                                        <td><c:out value="${venta.productType}"/></td>
-                                                        <td><c:out value="${venta.cantidad}"/></td>
-                                                        <td><c:out value="${venta.priceProduct}"/></td>
-                                                        <td><c:out value="${venta.precioTotal}"/></td>
-                                                        <td><c:out value="${venta.fecha}"/></td>
-                                                        <td><c:out value="${venta.cliente}"/></td>
-                                                        <td> <a "><i class="bi bi-pencil-square"></i></a>  |  <a href="servletVentas?accion=Eliminar&venta=${venta.idVenta}"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>                        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <!-- modal añadir -->
-                    <div class="modal" tabindex="-1" aria-hidden="true" id="añadirVenta">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>Nueva venta</h3>
-                                    <button class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="servletVentas?accion=Insertar" method="POST" autocomplete="off">
-                                    <div class="card-body">
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text" id="inputGroup-sizing-default">ID Venta</span>
-                                                </div>
-                                                <input id="idVenta" type="text" class="form-control text-center" name="idVenta" value="" required>                                       
-                                            </div>                                            
-                                        </div>
+                                    <c:forEach var="prod" items="${servicio}">
+                                       <form action="servletProducto?accion=GuardarCambios" method="POST" autocomplete="off">                                        
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
-                                                <input id="idProducto" type="text" class="form-control text-center" name="idProducto" value="" required>                                       
+                                                <input id="idProducto" type="text" class="form-control text-center" readonly name="idProducto" value="<c:out value="${prod.productId}"/>" required>                                       
                                             </div>                                            
-                                        </div>
+                                        </div>                                            
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
                                                 </div>
-                                                <input id="name" type="text" class="form-control text-center" name="name" value="" required>                                       
+                                                <input id="name" type="text" class="form-control text-center" name="name" value="<c:out value="${prod.productName}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
@@ -198,8 +133,8 @@
                                                 <div class="col-sm-8">
                                                     <div class="input-group selection">
                                                         <select class="form-control" id="select" name="select">
-                                                            <option>Electrodomestico</option>
-                                                            <option>Repuesto</option>
+                                                            <option value="0" >Electrodomestico</option>
+                                                            <option value="1">Repuesto</option>
                                                 </select> 
                                                     </div>
                                                 </div>                                
@@ -210,69 +145,40 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
                                                 </div>
-                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="" required>                                       
+                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="<c:out value="${prod.stock}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
-                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="" placeholder="Precio c/u" required>
+                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="<c:out value="${prod.price}"/>" placeholder="Precio c/u" required>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
-                                                <input id="total" type="text" class="form-control text-center" name="total" value="" placeholder="Total" required>
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-caret-up-square"></i></span></div>
+                                                <input id="marca" type="text" class="form-control text-center" name="marca" value="<c:out value="${prod.brand}"/>" placeholder="Marca" required>
                                             </div>
                                         </div>
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">    
-                                                
-                                                <label for="date" class=" col-form-label text-dark">Fecha de venta</label>
-                                                <div class="form-group col-12 col-sm">                                                    
-                                                        <input type="date" id="fecha_venta" name="fecha_venta" class="form-control col" required>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-person-square"></i></span></div>
-                                                <input id="namecliente" type="text" class="form-control text-center" name="namecliente" value="" placeholder="Nombre cliente" required>
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-card-text"></i></span></div>
+                                                <input id="modelo" type="text" class="form-control text-center" name="modelo" value="<c:out value="${prod.model}"/>" placeholder="Modelo" required>
                                             </div>
                                         </div>
 
-                                    </div>
-                                         <div class="modal-footer">
-                                             <button type="submit" class="btn btn-success">Añadir</button>
-                                    <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                </div>
-                                </form>  
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal" tabindex="-1" aria-hidden="true" id="eliminarVenta">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>
-                                        Eliminar venta
-                                    </h3> 
-                                    <button class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>
-                                        ¿Esta seguro de realizar esta acción?
-                                    </h5> 
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Si</button>
-                                    <button class="btn btn-danger" data-dismiss="modal">No</button>
+                                        <div class="modal-footer">
+                                            <button type="submit" id="btnAdd" class="btn btn-success">Añadir</button>
+                                            <a class="btn btn-danger" data-dismiss="modal" href="servletProducto?accion">Cancelar</a>
+                                        </div>
+                                    </form>                                               
+                                    </c:forEach>                                    
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>                    
                 </div>
             </div>
         </div>

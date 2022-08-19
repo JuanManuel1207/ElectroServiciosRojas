@@ -142,7 +142,7 @@
                                                         <td><c:out value="${prod.price}"/></td>
                                                         <td><c:out value="${prod.brand}"/></td>
                                                         <td><c:out value="${prod.model}"/></td>   
-                                                        <td> <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
+                                                        <td> <a href="servletProducto?accion=Actualizar&servicio=${prod.productId}"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
                                                         </td>
                                                     </tr>
                                                     

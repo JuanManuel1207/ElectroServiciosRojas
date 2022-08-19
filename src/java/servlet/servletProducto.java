@@ -6,6 +6,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -63,7 +64,30 @@ public class servletProducto extends HttpServlet {
             List<Producto> listProducts = productoDAO.listarProductos();
             req.setAttribute("listaProductos", listProducts);
             
+        }else if("Actualizar".equals(accion)){            
+            String idProducto = req.getParameter("servicio");            
+            dispatcher = req.getRequestDispatcher("editarProducto.jsp");
+            List<Producto> listProductos = new ArrayList<>();
+            listProductos.add(productoDAO.buscarProducto(idProducto));
+            req.setAttribute("servicio", listProductos);            
+        }else if("GuardarCambios".equals(accion)){
+            String productId = req.getParameter("idProducto");
+            String productName = req.getParameter("name");
+            String productType = req.getParameter("select");  
+            ProductosEnum productEnum = (productType == "0")? ProductosEnum.valueOf("ELECTRODOMESTICO") : ProductosEnum.valueOf("REPUESTO");
+            int stock = Integer.parseInt(req.getParameter("cantidad"));
+            double price = Double.parseDouble(req.getParameter("precio"));
+            String brand = req.getParameter("marca");
+            String modelo = req.getParameter("modelo");
+            Producto product = new Producto(productId, productName, productEnum, stock, price, brand, modelo);
+            productoDAO.actualiarProducto(product);
+            
+            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+            List<Producto> listProducts = productoDAO.listarProductos();
+            req.setAttribute("listaProductos", listProducts);
+            
         }
+        
         dispatcher.forward(req,resp);        
     }
 

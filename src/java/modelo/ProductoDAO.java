@@ -25,7 +25,7 @@ public class ProductoDAO {
         ConexionBD con = new ConexionBD();
         conexionBD = con.getConexionDB();
     }
-    
+           
     public List<Producto> listarProductos(){
             PreparedStatement ps;
             ResultSet rs;

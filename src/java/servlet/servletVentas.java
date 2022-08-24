@@ -50,44 +50,15 @@ public class servletVentas extends HttpServlet {
             listVentas.toString();
             req.setAttribute("listaVentas", listVentas);
             
-        }else if("Insertar".equals(accion)){                
-            String idVenta= req.getParameter("idVenta");            
-            String idProduct = req.getParameter("idProducto");
-            String nameProduct = req.getParameter("name");
-            String productType = req.getParameter("select");
-            ProductosEnum productEnum = (productType == "0")? ProductosEnum.ELECTRODOMESTICO : ProductosEnum.REPUESTO;            
-            int cantidad = Integer.parseInt(req.getParameter("cantidad"));
-            double precio = Double.parseDouble(req.getParameter("precio"));
-            double precioTotal = Double.parseDouble(req.getParameter("total"));
-            String fecha = req.getParameter("fecha_venta");                                    
-            String cliente = req.getParameter("namecliente");  
-            
-            Producto product = prodDAO.buscarProducto(idProduct);
-                                
-            if(prodDAO.buscarProducto(idProduct).getStock() != 0 & prodDAO.buscarProducto(idProduct).getStock() >= cantidad){
-                
-                int newStock = product.getStock() - cantidad;                                
-                Ventas venta = new Ventas(idVenta, cantidad, precioTotal, fecha, cliente, idProduct,nameProduct ,productEnum.toString(), precio);
-                ventasDAO.insertarDB(venta);
-                
-                Producto producto = new Producto(product.getProductId(),product.getProductName(),product.getProductType(),newStock,product.getPrice(),product.getBrand(),product.getModel());
-                prodDAO.actualiarProducto(producto);                
-                dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-                List<Ventas> listVentas = ventasDAO.listarVentas();
-                req.setAttribute("listaVentas", listVentas);                                            
-                
-            }else{                
-                dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-                List<Ventas> listVentas = ventasDAO.listarVentas();
-                req.setAttribute("listaVentas", listVentas);    
-            }            
-                                    
-        }else if("Eliminar".equals(accion)){
-            String id = req.getParameter("venta");
-            ventasDAO.eliminarVenta(id);
+        }else if("BuscarProducto".equals(accion)){            
+            System.out.println("AQUI ENTRA!!!");
+            String idProducto = req.getParameter("codigoProducto");            
+            System.out.println("ID PRODUCTO EN BUSCARPRODUCTO " + idProducto);            
+            Producto product = prodDAO.buscarProducto(idProducto);
+            req.setAttribute("product", product);
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-            List<Ventas> listVentas = ventasDAO.listarVentas();
-            req.setAttribute("listaVentas", listVentas);
+            
+            
         }
         
         dispatcher.forward(req,resp);    

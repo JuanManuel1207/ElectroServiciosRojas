@@ -31,6 +31,8 @@ import modelo.VentasDAO;
  */
 @WebServlet(name = "servletVentas", urlPatterns = {"/servletVentas"})
 public class servletVentas extends HttpServlet {
+    
+    int item;
       
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
@@ -39,7 +41,7 @@ public class servletVentas extends HttpServlet {
         VentasDAO ventasDAO = new VentasDAO();        
         ProductoDAO prodDAO = new ProductoDAO();
                 
-        String accion;
+        String accion;        
         RequestDispatcher dispatcher = null;
         
         accion = req.getParameter("accion");
@@ -48,16 +50,16 @@ public class servletVentas extends HttpServlet {
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
             List<Ventas> listVentas = ventasDAO.listarVentas();
             listVentas.toString();
-            req.setAttribute("listaVentas", listVentas);
-            
-        }else if("BuscarProducto".equals(accion)){            
-            System.out.println("AQUI ENTRA!!!");
-            String idProducto = req.getParameter("codigoProducto");            
-            System.out.println("ID PRODUCTO EN BUSCARPRODUCTO " + idProducto);            
+            req.setAttribute("listaVentas", listVentas);            
+        }else if("BuscarProducto".equals(accion)){                        
+            String idProducto = req.getParameter("codigoProducto");                        
             Producto product = prodDAO.buscarProducto(idProducto);
             req.setAttribute("product", product);
-            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-            
+            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
+        }else if("Agregar".equals(accion)){
+            System.out.println("ENTRA A AGREGAR");
+            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");                        
+            item = item+1;
             
         }
         

@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,9 @@ import modelo.VentasDAO;
 public class servletVentas extends HttpServlet {
     
     int item;
-      
+    Producto product = new Producto();
+    List<Ventas> listVentas = new ArrayList<>();            
+                  
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
@@ -43,28 +46,44 @@ public class servletVentas extends HttpServlet {
                 
         String accion;        
         RequestDispatcher dispatcher = null;
+        Ventas venta = new Ventas();
         
         accion = req.getParameter("accion");
         
         if(accion == null || accion.isEmpty()){
-            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+            //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
             List<Ventas> listVentas = ventasDAO.listarVentas();
             listVentas.toString();
             req.setAttribute("listaVentas", listVentas);            
-        }else if("BuscarProducto".equals(accion)){                        
-            String idProducto = req.getParameter("codigoProducto");                        
-            Producto product = prodDAO.buscarProducto(idProducto);
+        }else if("BuscarProducto".equals(accion)){                
+            String idProducto = req.getParameter("codigoProducto");            
+            product = prodDAO.buscarProducto(idProducto);
             req.setAttribute("product", product);
-            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
-        }else if("Agregar".equals(accion)){
-            System.out.println("ENTRA A AGREGAR");
-            dispatcher = req.getRequestDispatcher("gestionVentas.jsp");                        
+            req.setAttribute("listVentas", listVentas);
+            //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
+        }else if("Agregar".equals(accion)){                              
+            System.out.println("ENTRA A AGREGAR VENTA");            
             item = item+1;
+            String idProducto = product.getProductId();                  
+            String nombreProducto = product.getProductName();
+            String tipoProducto = product.getProductType().toString();
+            double price = product.getPrice();
+            String cantidad = req.getParameter("cantidad"); //no trae cantidad
+            int cantidad2 = Integer.parseInt(cantidad);
+            System.out.println("La cantidad es: "+cantidad ); 
+            String fechaVenta = req.getParameter("fecha");
+            String cliente = req.getParameter("nombreCliente");
             
+            double total = cantidad2*price;            
+            venta = new Ventas(item+"" , cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
+            listVentas.add(venta);
+            System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
+            req.setAttribute("listVentas", listVentas);                        
         }
+        dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         
         dispatcher.forward(req,resp);    
- 
+                 
     }
 
     @Override

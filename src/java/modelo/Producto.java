@@ -18,6 +18,10 @@ public class Producto {
     private String brand;
     private String model;
     
+   public Producto(){
+       
+   }
+    
    public Producto(String productId, String productName, ProductosEnum productType, int stock, 
            double price,String brand, String model){
        

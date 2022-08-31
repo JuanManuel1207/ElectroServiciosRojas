@@ -22,6 +22,10 @@ public class Ventas {
     private String productName;
     private String productType;
     private double priceProduct;
+    
+    public Ventas(){
+        
+    }
 
     public Ventas(String idVenta, int cantidad, double precioTotal, String fecha, String cliente, String idProducto, String productName, String typeProduct, double priceProduct) {
         this.idVenta = idVenta;

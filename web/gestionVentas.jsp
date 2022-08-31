@@ -113,25 +113,28 @@
                                 <div class="col-sm-3 d-flex">
                                     <input type="text" name="stockDisponible" value="${product.getStock()}"class="form-control" placeholder="stock" readonly>                                                                   
                                 </div>                                
-                            </div>                            
-                            <div class="form-group d-flex">
-                                <div class="col-sm-6 d-flex">
-                                    <input type="date" name="fecha" class="form-control ">
-                                </div>                            
-                                <div class="col-sm-4 d-flex">
-                                    <input typ="text" name="nombresCliente" class="form-control " placeholder="Cliente">
-                                </div>
-                                <div class="col-sm-3 d-flex">
-                                    <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="1">                                    
-                                </div>                                
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm">
-                                        <button type="submit" name="accion" value="Agregar" class="btn btn-outline-info">AGREGAR</button>
-                                </div>
-                            </div>
-                        </div>                        
-                    </form>                                        
+                    </form>
+                                <form action="servletVentas?accion=Agregar" method="POST">
+                                    
+                                    <div class="form-group d-flex">
+                                        <div class="col-sm-6 d-flex">
+                                            <input type="date" name="fecha" class="form-control ">
+                                        </div>                            
+                                        <div class="col-sm-4 d-flex">
+                                            <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente">
+                                        </div>
+                                        <div class="col-sm-3 d-flex">
+                                            <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="0">                                    
+                                        </div>                                
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm">
+                                            <button type="submit" name="accion" value="Agregar"  class="btn btn-outline-info">AGREGAR</button>
+                                        </div>
+                                    </div>
+                                </form>                                        
+                        </div>                                            
                 </div>
                 
             </div>
@@ -159,13 +162,16 @@
 
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="prod" items="${listaProd}">
+                                            <c:forEach var="list" items="${listVentas}">
                                               <tr>
-                                                <td><c:out value="${prod.codigo}"/></td>
-                                                <td><c:out value="${prod.nombre}"/></td>
-                                                <td><c:out value="${prod.cantidad}"/></td>
-                                                <td><c:out value="${prod.valor}"/></td>
-                                                <td><c:out value="${prod.descripcion}"/></td>
+                                                <td><c:out value="${list.idVenta}"/></td>
+                                                <td><c:out value="${list.idProducto}"/></td>
+                                                <td><c:out value="${list.productName}"/></td>
+                                                <td><c:out value="${list.productType}"/></td>
+                                                <td><c:out value="${list.priceProduct}"/></td>                                                
+                                                <td><c:out value="${list.cantidad}"/></td>
+                                                <td><c:out value="${list.fecha}"/></td>
+                                                <td><c:out value="${list.precioTotal}"/></td>
                                               </tr>
                                             </c:forEach>
                                         </tbody>

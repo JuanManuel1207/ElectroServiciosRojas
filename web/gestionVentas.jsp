@@ -172,17 +172,23 @@
                                                 <td><c:out value="${list.cantidad}"/></td>
                                                 <td><c:out value="${list.fecha}"/></td>
                                                 <td><c:out value="${list.precioTotal}"/></td>
+                                                <td>
+                                                     <a href="servletVentas?accion=Actualizar&servicio=${prod.productId}"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletVentas?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
+                                                </td>
                                               </tr>
                                             </c:forEach>
                                         </tbody>
                                 </table>
                             </div>                            
                         </div>
-                        <div class="card-footer">
-                                <div>
-                                    <button type="submit" class="btn btn-success">Generar Venta</button>
-                                    <button type="submit" class="btn btn-danger">Cancelar Venta</button>
-                                </div>
+                        <div class="card-footer d-flex">
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-success">Generar Venta</button>
+                                <button type="submit" class="btn btn-danger">Cancelar Venta</button>
+                            </div>                                                            
+                            <div class="col-sm-4 ml-auto">                             
+                                <input type="text" class="form-control" value="${totalPagar}"name="txtTotal">
+                            </div>
                                 
                             </div> 
                     </div>

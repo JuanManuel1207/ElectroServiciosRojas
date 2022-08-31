@@ -34,8 +34,10 @@ import modelo.VentasDAO;
 public class servletVentas extends HttpServlet {
     
     int item;
+    double totalPagar;
     Producto product = new Producto();
-    List<Ventas> listVentas = new ArrayList<>();            
+    List<Ventas> listVentas = new ArrayList<>();  
+    
                   
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
@@ -58,10 +60,12 @@ public class servletVentas extends HttpServlet {
         }else if("BuscarProducto".equals(accion)){                
             String idProducto = req.getParameter("codigoProducto");            
             product = prodDAO.buscarProducto(idProducto);
-            req.setAttribute("product", product);
+            req.setAttribute("product", product);            
             req.setAttribute("listVentas", listVentas);
+            req.setAttribute("totalPagar", totalPagar);
             //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
-        }else if("Agregar".equals(accion)){                              
+        }else if("Agregar".equals(accion)){    
+            totalPagar = 0;
             System.out.println("ENTRA A AGREGAR VENTA");            
             item = item+1;
             String idProducto = product.getProductId();                  
@@ -72,12 +76,15 @@ public class servletVentas extends HttpServlet {
             int cantidad2 = Integer.parseInt(cantidad);
             System.out.println("La cantidad es: "+cantidad ); 
             String fechaVenta = req.getParameter("fecha");
-            String cliente = req.getParameter("nombreCliente");
-            
+            String cliente = req.getParameter("nombreCliente");            
             double total = cantidad2*price;            
             venta = new Ventas(item+"" , cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
             listVentas.add(venta);
             System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
+            for(int i=0; i<listVentas.size(); i++){
+                totalPagar = totalPagar+listVentas.get(i).getPrecioTotal();
+            }            
+            req.setAttribute("totalPagar", totalPagar);
             req.setAttribute("listVentas", listVentas);                        
         }
         dispatcher = req.getRequestDispatcher("gestionVentas.jsp");

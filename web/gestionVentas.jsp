@@ -187,7 +187,7 @@
                                 <button type="submit" class="btn btn-danger">Cancelar Venta</button>
                             </div>                                                            
                             <div class="col-sm-4 ml-auto">                             
-                                <input type="text" class="form-control" value="${totalPagar}"name="txtTotal">
+                                <input type="text" class="form-control" value="$ ${totalPagar}"name="txtTotal">
                             </div>
                                 
                             </div> 

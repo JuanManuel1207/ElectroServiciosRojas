@@ -27,6 +27,10 @@ public class VentasDAO {
         conexionBD = con.getConexionDB();
     }
     
+    
+    
+   
+   /** 
     public List<Ventas> listarVentas(){
             PreparedStatement ps;
             ResultSet rs;
@@ -121,5 +125,5 @@ public class VentasDAO {
             return false;
         }
         
-    }
+    }*/
 }

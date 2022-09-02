@@ -52,12 +52,7 @@ public class servletVentas extends HttpServlet {
         
         accion = req.getParameter("accion");
         
-        if(accion == null || accion.isEmpty()){
-            //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
-            List<Ventas> listVentas = ventasDAO.listarVentas();
-            listVentas.toString();
-            req.setAttribute("listaVentas", listVentas);            
-        }else if("BuscarProducto".equals(accion)){                
+        if("BuscarProducto".equals(accion)){                
             String idProducto = req.getParameter("codigoProducto");            
             product = prodDAO.buscarProducto(idProducto);
             req.setAttribute("product", product);            

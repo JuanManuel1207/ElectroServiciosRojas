@@ -35,7 +35,7 @@ public class ProductoDAO {
                 ps = conexionBD.prepareStatement("SELECT * FROM productos");
                 rs = ps.executeQuery();
                 while(rs.next()){
-                    String productId = rs.getString("id");
+                    String productId = rs.getInt("id")+"";
                     String productName = rs.getString("name");
                     ProductosEnum productEnum = ProductosEnum.valueOf(rs.getString("tipo"));  
                     String productType = rs.getString("tipo");                    
@@ -58,7 +58,7 @@ public class ProductoDAO {
         PreparedStatement ps;
         try{
             ps = conexionBD.prepareStatement("INSERT INTO productos(id, name, tipo, cantidad, precio, marca, modelo) values(?,?,?,?,?,?,?)");
-            ps.setString(1, product.getProductId());
+            ps.setInt(1, Integer.parseInt(product.getProductId()));
             ps.setString(2, product.getProductName());
             ps.setString(3, product.getProductType().toString());
             ps.setInt(4, product.getStock());
@@ -85,7 +85,7 @@ public class ProductoDAO {
                 rs = ps.executeQuery();
                 
                 while(rs.next()){
-                    String productId = rs.getString("id");
+                    String productId = rs.getInt("id")+"";
                     String productName = rs.getString("name");
                     ProductosEnum productEnum = ProductosEnum.valueOf(rs.getString("tipo"));                    
                     int stock = rs.getInt("cantidad");
@@ -105,7 +105,7 @@ public class ProductoDAO {
         PreparedStatement ps;
         try{
             ps = conexionBD.prepareStatement("DELETE FROM productos WHERE id=?");
-            ps.setString(1, id);
+            ps.setInt(1, Integer.parseInt(id));
             ps.execute();
             return true;
         }catch(SQLException ex){
@@ -118,7 +118,7 @@ public class ProductoDAO {
         PreparedStatement ps;
         try{
             ps= conexionBD.prepareStatement("UPDATE productos SET id=?, name=?, tipo=?, cantidad=?, precio=?, marca=?, modelo=? WHERE id=?");
-            ps.setString(1, product.getProductId());
+            ps.setInt(1, Integer.parseInt(product.getProductId()));
             ps.setString(2, product.getProductName());
             ps.setString(3, product.getProductType().toString());
             ps.setString(4, String.valueOf(product.getStock()));

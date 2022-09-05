@@ -35,6 +35,9 @@ public class servletVentas extends HttpServlet {
     
     int item;
     double totalPagar;
+    String fechaVenta;
+    String cliente;
+    double total;
     Producto product = new Producto();
     List<Ventas> listVentas = new ArrayList<>();  
     
@@ -67,13 +70,12 @@ public class servletVentas extends HttpServlet {
             String nombreProducto = product.getProductName();
             String tipoProducto = product.getProductType().toString();
             double price = product.getPrice();
-            String cantidad = req.getParameter("cantidad"); //no trae cantidad
-            int cantidad2 = Integer.parseInt(cantidad);
-            System.out.println("La cantidad es: "+cantidad ); 
-            String fechaVenta = req.getParameter("fecha");
-            String cliente = req.getParameter("nombreCliente");            
-            double total = cantidad2*price;            
-            venta = new Ventas(item+"" , cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
+            String cantidad = req.getParameter("cantidad"); 
+            int cantidad2 = Integer.parseInt(cantidad);            
+            fechaVenta = req.getParameter("fecha");
+            cliente = req.getParameter("nombreCliente");            
+            total = cantidad2*price;            
+            venta = new Ventas(item+"", cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
             listVentas.add(venta);
             System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
             for(int i=0; i<listVentas.size(); i++){
@@ -81,12 +83,38 @@ public class servletVentas extends HttpServlet {
             }            
             req.setAttribute("totalPagar", totalPagar);
             req.setAttribute("listVentas", listVentas);                        
-        }
+        }else if("generarVenta".equals(accion)){
+            System.out.println("ENTRA A GENERAR VENTA");     
+            venta.setCliente(cliente);
+            venta.setFecha(fechaVenta);            
+            venta.setPrecioTotal(totalPagar);
+            ventasDAO.insertarVenta(venta);            
+            String idVenta = ventasDAO.buscarIdVenta();                        
+            for(int i = 0; i < listVentas.size(); i++){
+                venta = new Ventas();
+                venta.setIdVenta(idVenta);
+                venta.setIdProducto(listVentas.get(i).getIdProducto());
+                venta.setCantidad(listVentas.get(i).getCantidad());
+                venta.setPriceProduct(listVentas.get(i).getPriceProduct());
+                ventasDAO.guardarDetalleVenta(venta);
+            }
+            
+        }else if("Cancelar".equals(accion)){
+            listVentas.clear();
+            totalPagar = 0;
+            req.setAttribute("totalPagar",totalPagar);
+            req.setAttribute("listVentas", listVentas);
+        }else if("Eliminar".equals(accion)){
+            System.out.println("ELIMINAR");
+            String id = req.getParameter("venta");
+            System.out.println("ID ---->"+id);                                    
+        }      
         dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         
         dispatcher.forward(req,resp);    
                  
     }
+       
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 

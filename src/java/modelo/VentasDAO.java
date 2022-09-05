@@ -27,8 +27,55 @@ public class VentasDAO {
         conexionBD = con.getConexionDB();
     }
     
+    public boolean insertarVenta(Ventas venta){
+        PreparedStatement ps;        
+        try{
+            ps = conexionBD.prepareStatement("INSERT INTO ventas (cliente,fechaVenta,monto) values(?,?,?)");            
+            ps.setString(1,venta.getCliente());
+            ps.setString(2, venta.getFecha());            
+            ps.setDouble(3,venta.getPrecioTotal());                        
+            ps.execute();
+            return true;
+        }catch(SQLException e){
+            System.out.println(e.toString());
+            return false;
+            
+        }        
+    }               
     
+    public String buscarIdVenta(){
+        PreparedStatement ps;
+        ResultSet rs;        
+        String idVenta="";
+        try{
+            ps = conexionBD.prepareStatement("SELECT MAX(idVenta) FROM ventas");            
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                idVenta = rs.getInt(1)+"";                                              
+                
+            }            
+        }catch(SQLException e){
+            System.out.println(e.toString());            
+        }       
+        return idVenta;
+    }
     
+    public boolean guardarDetalleVenta(Ventas venta){
+        PreparedStatement ps;
+        try{
+            ps = conexionBD.prepareStatement("INSERT INTO DETALLEVENTA(idVenta,idProducto,cantidad,precioVenta) VALUES(?,?,?,?)");
+            ps.setInt(1, Integer.parseInt(venta.getIdVenta()));
+            ps.setInt(2, Integer.parseInt(venta.getIdProducto()));
+            ps.setInt(3,venta.getCantidad());
+            ps.setDouble(4, venta.getPriceProduct());
+            ps.execute();
+            return true;            
+        }catch(SQLException e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
    
    /** 
     public List<Ventas> listarVentas(){

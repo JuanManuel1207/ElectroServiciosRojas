@@ -27,6 +27,13 @@ public class Ventas {
         
     }
 
+    public Ventas(String cliente, String fecha, double monto){
+        this.cliente = cliente;
+        this.fecha = fecha;
+        this.precioTotal = monto;        
+    }
+    
+    
     public Ventas(String idVenta, int cantidad, double precioTotal, String fecha, String cliente, String idProducto, String productName, String typeProduct, double priceProduct) {
         this.idVenta = idVenta;
         this.cantidad = cantidad;

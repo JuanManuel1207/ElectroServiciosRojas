@@ -37,8 +37,7 @@ public class ProductoDAO {
                 while(rs.next()){
                     String productId = rs.getInt("id")+"";
                     String productName = rs.getString("name");
-                    ProductosEnum productEnum = ProductosEnum.valueOf(rs.getString("tipo"));  
-                    String productType = rs.getString("tipo");                    
+                    ProductosEnum productEnum = ProductosEnum.valueOf(rs.getString("tipo"));                                        
                     int stock = rs.getInt("cantidad");
                     double price = rs.getDouble("precio");
                     String brand = rs.getString("marca");
@@ -100,6 +99,21 @@ public class ProductoDAO {
                 return null;
             }
         }
+    
+    public boolean actualizarStock(int idProducto, int stock){
+        PreparedStatement ps;
+        String sql = "UPDATE PRODUCTOS SET cantidad=? WHERE id=?";
+        try{
+            ps = conexionBD.prepareStatement(sql);
+            ps.setInt(1,stock);
+            ps.setInt(2,idProducto);
+            ps.execute();
+        }catch(SQLException e){
+            System.out.println(e.toString());
+            return false;
+        }
+       return true;
+    }
     
     public boolean eliminarProducto(String id){
         PreparedStatement ps;

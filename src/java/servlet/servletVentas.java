@@ -63,8 +63,9 @@ public class servletVentas extends HttpServlet {
             req.setAttribute("totalPagar", totalPagar);
             //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
         }else if("Agregar".equals(accion)){    
-            totalPagar = 0;
-            System.out.println("ENTRA A AGREGAR VENTA");            
+            totalPagar = 0;            
+            System.out.println("ENTRA A AGREGAR VENTA"); 
+            
             item = item+1;
             String idProducto = product.getProductId();                  
             String nombreProducto = product.getProductName();
@@ -77,6 +78,7 @@ public class servletVentas extends HttpServlet {
             total = cantidad2*price;            
             venta = new Ventas(item+"", cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
             listVentas.add(venta);
+            
             System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
             for(int i=0; i<listVentas.size(); i++){
                 totalPagar = totalPagar+listVentas.get(i).getPrecioTotal();
@@ -84,16 +86,20 @@ public class servletVentas extends HttpServlet {
             req.setAttribute("totalPagar", totalPagar);
             req.setAttribute("listVentas", listVentas);                        
         }else if("generarVenta".equals(accion)){
-            System.out.println("ENTRA A GENERAR VENTA");     
-            venta.setCliente(cliente);
-            venta.setFecha(fechaVenta);            
-            venta.setPrecioTotal(totalPagar);
-            ventasDAO.insertarVenta(venta);            
+            System.out.println("ENTRA A GENERAR VENTA");  
+            venta = new Ventas(cliente,fechaVenta,totalPagar);            
+                        
             String idVenta = ventasDAO.buscarIdVenta();                        
             for(int i = 0; i < listVentas.size(); i++){
                 venta = new Ventas();
-                venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                
-                ventasDAO.guardarDetalleVenta(venta);
+                Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());
+                if(producto.getStock() != 0 && producto.getStock() >= listVentas.get(i).getCantidad()){
+                    venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                
+                    ventasDAO.insertarVenta(venta);
+                    ventasDAO.guardarDetalleVenta(venta);                    
+                }else{
+                    System.out.println("NO SE PUDO VENDER");                    
+                }                
             }
             listVentas.removeAll(listVentas);
             

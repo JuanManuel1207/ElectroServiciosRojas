@@ -26,6 +26,23 @@ public class Ventas {
     public Ventas(){
         
     }
+    
+    public Ventas(String idVenta,String idProducto, int cantidad, double priceProduct){
+        this.idVenta = idVenta;
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.priceProduct = priceProduct;
+        
+    }
+    
+    public Ventas(String idVenta,String cliente, int cantidad, double valorUnitario, String fecha,String nombreProducto){
+        this.idVenta = idVenta;
+        this.cliente = cliente;
+        this.cantidad = cantidad;
+        this.priceProduct = valorUnitario;
+        this.fecha = fecha;
+        this.productName = nombreProducto;
+    }
 
     public Ventas(String cliente, String fecha, double monto){
         this.cliente = cliente;

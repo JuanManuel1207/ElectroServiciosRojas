@@ -99,7 +99,7 @@
                         <a class="nav-link" href="reporteServicios.jsp">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reporteVentas.jsp">Ventas</a>
+                        <a class="nav-link" href="servletReporte">Ventas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reporteProductos.jsp">Productos</a>

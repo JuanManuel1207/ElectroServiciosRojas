@@ -45,7 +45,7 @@ public class servletProducto extends HttpServlet {
             String productId = req.getParameter("idProducto");
             String productName = req.getParameter("name");
             String productType = req.getParameter("select");  
-            ProductosEnum productEnum = (productType == "0")? ProductosEnum.valueOf("ELECTRODOMESTICO") : ProductosEnum.valueOf("REPUESTO");
+            ProductosEnum productEnum = (productType.equals("0"))? ProductosEnum.valueOf("ELECTRODOMESTICO") : ProductosEnum.valueOf("REPUESTO");
             int stock = Integer.parseInt(req.getParameter("cantidad"));
             double price = Double.parseDouble(req.getParameter("precio"));
             String brand = req.getParameter("marca");

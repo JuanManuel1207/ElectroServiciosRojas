@@ -92,22 +92,28 @@ public class servletVentas extends HttpServlet {
             String idVenta = ventasDAO.buscarIdVenta();                        
             for(int i = 0; i < listVentas.size(); i++){
                 venta = new Ventas();
-                venta.setIdVenta(idVenta);
-                venta.setIdProducto(listVentas.get(i).getIdProducto());
-                venta.setCantidad(listVentas.get(i).getCantidad());
-                venta.setPriceProduct(listVentas.get(i).getPriceProduct());
+                venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                
                 ventasDAO.guardarDetalleVenta(venta);
             }
+            listVentas.removeAll(listVentas);
             
         }else if("Cancelar".equals(accion)){
-            listVentas.clear();
+            listVentas.removeAll(listVentas);
             totalPagar = 0;
             req.setAttribute("totalPagar",totalPagar);
             req.setAttribute("listVentas", listVentas);
         }else if("Eliminar".equals(accion)){
             System.out.println("ELIMINAR");
             String id = req.getParameter("venta");
-            System.out.println("ID ---->"+id);                                    
+            System.out.println("EN ARRAYLIST "+listVentas.size());
+            System.out.println("ID ---->"+id);
+            for(int i = 0; i < listVentas.size(); i++){
+                if(listVentas.get(i).getIdVenta().equals(id))
+                    listVentas.remove(i);
+            }
+            System.out.println("EN ARRAYLIST DESPUÉS DE ELIMINAR "+listVentas.size());
+            totalPagar = 0;
+            req.setAttribute("totalPagar",totalPagar);
         }      
         dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         

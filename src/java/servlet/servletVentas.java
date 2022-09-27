@@ -75,10 +75,11 @@ public class servletVentas extends HttpServlet {
             int cantidad2 = Integer.parseInt(cantidad);            
             fechaVenta = req.getParameter("fecha");
             cliente = req.getParameter("nombreCliente");            
-            total = cantidad2*price;            
-            venta = new Ventas(item+"", cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
-            listVentas.add(venta);
-            
+            total = cantidad2*price;
+            if(prodDAO.buscarProducto(idProducto).getStock() != 0 && prodDAO.buscarProducto(idProducto).getStock() >= cantidad2){
+                venta = new Ventas(item+"", cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
+                listVentas.add(venta);                
+            }                        
             System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
             for(int i=0; i<listVentas.size(); i++){
                 totalPagar = totalPagar+listVentas.get(i).getPrecioTotal();
@@ -89,7 +90,8 @@ public class servletVentas extends HttpServlet {
             System.out.println("ENTRA A GENERAR VENTA");  
             venta = new Ventas(cliente,fechaVenta,totalPagar);            
                         
-            String idVenta = ventasDAO.buscarIdVenta();                        
+            String idVenta = ventasDAO.buscarIdVenta();
+                        
             for(int i = 0; i < listVentas.size(); i++){
                 venta = new Ventas();
                 Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());

@@ -89,19 +89,14 @@ public class servletVentas extends HttpServlet {
         }else if("generarVenta".equals(accion)){
             System.out.println("ENTRA A GENERAR VENTA");  
             venta = new Ventas(cliente,fechaVenta,totalPagar);            
-                        
+            ventasDAO.insertarVenta(venta);                        
             String idVenta = ventasDAO.buscarIdVenta();
                         
             for(int i = 0; i < listVentas.size(); i++){
                 venta = new Ventas();
-                Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());
-                if(producto.getStock() != 0 && producto.getStock() >= listVentas.get(i).getCantidad()){
-                    venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                
-                    ventasDAO.insertarVenta(venta);
-                    ventasDAO.guardarDetalleVenta(venta);                    
-                }else{
-                    System.out.println("NO SE PUDO VENDER");                    
-                }                
+                //Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
+                venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
+                ventasDAO.guardarDetalleVenta(venta);                                    
             }
             listVentas.removeAll(listVentas);
             

@@ -58,7 +58,7 @@ public class VentasDAO {
     public boolean insertarVenta(Ventas venta){
         PreparedStatement ps;        
         try{
-            ps = conexionBD.prepareStatement("INSERT INTO ventas (cliente,fechaVenta,monto) values(?,?,?)");            
+            ps = conexionBD.prepareStatement("INSERT INTO ventas(cliente,fechaVenta,monto) values(?,?,?)");            
             ps.setString(1,venta.getCliente());
             ps.setString(2, venta.getFecha());            
             ps.setDouble(3,venta.getPrecioTotal());                        

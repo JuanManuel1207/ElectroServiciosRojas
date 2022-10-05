@@ -42,7 +42,7 @@
                             <div class="menu">
                                 <a href="gestionEmpleados.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                     Gestión Empleados</a>
-                                <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                <a href="servletServicio?action" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
                                 <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
@@ -93,7 +93,11 @@
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100">
-              
+                <div class="container">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="text-center">Bienvenido ### al Sistema WEBESR</h4>
+                    </div>
+                </div>
 
             </div>
         </div>

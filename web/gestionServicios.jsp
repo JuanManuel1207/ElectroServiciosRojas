@@ -5,14 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Reporte Productos</title>
+        <title>Gesti&oacute;n Servicios</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">		
         <link rel="icon" href="./resources/Logo_1.ico" type="image/ico" />
         <link rel="icon1" href="./resources/Logo.ico" type="image/ico" />
         <link rel="iconElectro" href="./resources/Electro.jpg" type="image/jpg" />
@@ -23,11 +25,9 @@
         <link rel="stylesheet" href="./css/styles.css">
         <link href="https://fonts.googleapis.com/css?family=Muli:300,700&display=swap" rel="stylesheet">
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">		
     </head>
-    
     <body>
-        <!-- Ignoren -->
         <div class="d-flex">
         
             <div id="menu1">
@@ -37,12 +37,11 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <!<!-- ssssss -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="menu">
                                 <a href="gestionEmpleados.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                     Gestión Empleados</a>
-                                <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                <a href="servletServicio?action" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
                                 <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
@@ -83,50 +82,89 @@
                               </li>
                             </ul>
                             </form>
-                        
-                    
-              
-            
             </div>
          
         
         
         <!-- Contenido Pagina -->
-            <div id="content" class="w-100">
-                        <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionServiciosModal">
-                    AGREGAR
-                </button>
-        
+            <div id="content" class="w-100">                
                 <div class="form-row">
-                        <div class="table-responsive" id="tablaProd">
-                            <table class="table table-striped">
-                                    <thead>
-                                    <th>ID</th>
-                                    <th>Tipo Servicio</th>
-                                    <th>Cliente</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Ingreso</th>
-                                    <th>Fecha Salida</th>
-                                    <th>Acciones</th>
-                                    
+                    <div class="container">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionServiciosModal">
+                            AGREGAR
+                        </button>
+                        <p></p>
+                    </div>
+                    <div class="container">
+                        <c:if test="${listaServicio.isEmpty()}">
+                            <div class="alert alert-danger" role="alert">Lo sentimos, no hay servicios que mostrar.</div>
+                        </c:if>
+                        <c:if test="${listaServicio.isEmpty() == false}">
+                            <div class="table-responsive">
+                                <table id="tableServicios" class="table table-bordered table-striped table-hover">
+                                    <thead class="text-center">
+                                        <th>ID</th>
+                                        <th>Tipo Servicio</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Ingreso</th>
+                                        <th>Fecha Salida</th>
+                                        <th>Descripci&oacute;n</th>
+                                        <th>Precio</th>
+                                        <th>Empleado</th>
+                                        <th>Acciones</th>    
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="prod" items="${listaProd}">
-                                          <tr>
-                                            <td><c:out value="${prod.codigo}"/></td>
-                                            <td><c:out value="${prod.nombre}"/></td>
-                                            <td><c:out value="${prod.cantidad}"/></td>
-                                            <td><c:out value="${prod.valor}"/></td>
+                                         <c:forEach var="prod" items="${listaServicio}">
+                                          <tr class="text-center">
+                                            <td><c:out value="${prod.id}"/></td>
+                                            <td><c:out value="${ (prod.tipoServicio == '1') ? 'REPARACIÓN':'REVISIÓN' }"/></td>
+                                            <td><c:out value="${prod.cliente}"/></td>
+                                            <td><c:out value="${ (prod.estado == '1') ? 'EN PROCESO' : 'TERMINADO' }"/></td>
+                                            <td><c:out value="${prod.fechaIngreso}"/></td>
+                                            <td><c:out value="${prod.fechaSalida}"/></td>
                                             <td><c:out value="${prod.descripcion}"/></td>
+                                            <td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${prod.precio}" /></td>
+                                            <c:forEach var="emple" items="${empleados}">
+                                                <c:if test="${emple.id==prod.empleado}">
+                                                    <td><c:out value="${emple.empleado}"/></td>
+                                                </c:if>
+                                            </c:forEach> 
+                                            <td>
+                                                <a href="servletServicio?action=Editar&servicio=${prod.id}" class="btn btn-warning btn-sm bi bi-pencil-square"></a>
+<!--                                                <a class="btn btn-danger btn-sm bi bi-x-lg" style="color:#fff" href="servletServicio?action=Eliminar&servicio=${prod.id}"></a>-->
+                                                <a href="#" data-href="servletServicio?action=Eliminar&servicio=${prod.id}" class="btn btn-danger btn-sm bi bi-x-lg" data-toggle="modal" data-target="#deleteServicio"></a> 
+                                            </td>
                                           </tr>
-                                        </c:forEach>
+                                        </c:forEach>       
                                     </tbody>
-                            </table>
+                                </table>
+                            </div>
+                        </c:if>                        
+                    </div>
+                    <div class="container">
+                        <c:if test="${action==1}">
+                        <div class=" col-12 alert alert-success alert-dismissible fade show" role="alert">
+                            Acci&oacute;n realizada con &eacute;xito.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div
-                    <!--Gg-->
-        <!-- Modal -->
+                        </c:if>
+                        <c:if test="${action==0}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                              Acci&oacute;n no realizada.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                        </c:if>
+                    </div>
+                   
+                </div>
+        <!-- Modal Agregar -->
+            <form action="servletServicio?action=Agregar" method="POST" autocomplete="off"> 
+
                 <div class="modal fade" id="gestionServiciosModal" tabindex="-1" aria-labelledby="gestionServicios" aria-hidden="true">
                  <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
@@ -137,63 +175,98 @@
                         </button>
                       </div>
                       <div class="modal-body">
-
-                <div class="card-body">   
-
-                        <div class="form-row">
-                            <div class="form-group col-12 col-sm">
-                                <label for="ID">ID</label>
-                                <input type="text" id="id" name="id" class="form-control col" placeholder="Ingrese el id del producto"required>
-                            </div>
-                            <div class="form-group col-12 col-sm">
-                                <label for="Nombre">Tipo de Servicio</label>
-                                <select class="form-control" aria-label="GG" required>                            
-                                    <option value="0">REPARACIÓN</option>
-                                    <option value="1">REVISIÓN</option>                            
-                                </select>
-                            </div>                  
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-12 col-sm">
-                                <label for="Cliente">Cliente</label>
-                                <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
-                            </div>
-                            <div class="form-group col-12 col-sm">
-                                <label for="Nombre">ESTADO</label>
-                                <select class="form-control" aria-label="GG" required>                            
-                                    <option value="2">EN PROCESO</option>
-                                    <option value="3">TERMINADO</option>                           
-                                </select>
-                            </div>                  
-                        </div>                                     
-
-                        <div class="form-row">
+                              <div class="form-row">
                                 <div class="form-group col-12 col-sm">
-                                    <label for="Valor">Fecha Ingreso</label>
+                                    <label for="id">ID</label>
+                                    <input type="text" id="id" name="id" class="form-control col" pattern="[0-9]*" placeholder="Ingrese el id del producto" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="tipoServicio">Tipo de Servicio</label>
+                                    <select id="tipoServicio" name="tipoServicio" class="form-control" aria-label="GG" required>                            
+                                        <option value="1">REPARACIÓN</option>
+                                        <option value="2">REVISIÓN</option>                            
+                                    </select>
+                                </div>                  
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="cliente">Cliente</label>
+                                    <input type="text" id="cliente" name="cliente" class="form-control col" placeholder="Nombre del cliente" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="estado">Estado</label>
+                                    <select id="estado" name="estado" class="form-control" aria-label="GG" required>                            
+                                        <option value="1">EN PROCESO</option>
+                                        <option value="2">TERMINADO</option>                           
+                                    </select>
+                                </div>                  
+                            </div>                                     
+
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="fecha_ingreso">Fecha Ingreso</label>
                                     <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" required>
                                 </div>
                                 <div class="form-group col-12 col-sm">
-                                    <label for="Descripcion">Fecha Salida</label>
+                                    <label for="fecha_salida">Fecha Salida</label>
                                     <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" required>
                                 </div>
-                        </div>                           
-                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="precio">Precio</label>
+                                    <input type="number" id="precio" name="precio" class="form-control"  min="0" max="10000000" pattern="[0-9]*" placeholder="0 - 10.000.000" required>
+                                </div>
+                                <div class="form-group col-12 col-sm">
+                                    <label for="empleado">Empleado</label>
+                                    <select id="empleado" name="empleado" class="form-control" aria-label="GG" required>                            
+                                        <c:forEach var="emple" items="${empleados}">
+                                            <option value="<c:out value="${emple.id}"/>"><c:out value="${emple.empleado}"/></option>
+                                        </c:forEach> 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm">
+                                    <label for="descripcion">Descripci&oacute;n</label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                                </div>
+                            </div>
                       </div>
 
                       <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">SI</button>
-                      <button type="button" class="btn btn-primary">NO</button>
+                          <button type="submit" class="btn btn-secondary col-2">SI</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
                       </div>               
                     </div>
                   </div>
                 </div>
-              
-                        
+            </form> 
             </div>
         </div>
     </div>
+     <!-- modal eliminar -->
+    <div class="modal fade" id="deleteServicio" tabindex="-1" aria-labelledby="delServicio" aria-hidden="true">
+	<div class="modal-dialog">
+            <div class="modal-content">
+		<div class="modal-header bg-danger">
+                    <h5 class="modal-title text-center" style="color: white"  id="delServicio">Eliminar Servicio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white">&times;</span></button>
+		</div>
+		<div class="modal-body">
+                    <p>¿Est&aacute; seguro de que desea eliminar este Servicio?</p>
+		</div>
+		<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-danger btn-ok">Eliminar</a>
+		</div>
+            </div>
+	</div>
+    </div>
         
+        
+    
         
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -205,6 +278,11 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-        
+     <script>
+	$('#deleteServicio').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+	});
+    </script>
     </body>
 </html>

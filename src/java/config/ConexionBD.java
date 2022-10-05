@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * @author Asus
  */
 public class ConexionBD {
+    /**
     private Connection conexion = null;
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost:3306/db_computers?serverTimeZone=UTC";
@@ -34,6 +35,26 @@ public class ConexionBD {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    } 
+    } **/
     
+    private Connection conexion_DB = null;
+    private final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private final String URL_DB = "jdbc:mysql://localhost:3306/pruebas_proyectoSW?serverTimeZone=UTC";
+    private final String USER_DB = "root";
+    private final String PASS_DB = "root";
+    
+    public Connection getConexionDB(){
+        try{
+            Class.forName(DRIVER);
+            conexion_DB = DriverManager.getConnection(URL_DB,USER_DB,PASS_DB);
+            //System.out.println("Conexión éxitosa a BD");
+            return conexion_DB;
+        }catch(SQLException ex){
+            System.out.println(ex.toString());
+            return null;
+        }catch(ClassNotFoundException ex){
+            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE,null, ex);
+            return null;
+        }
+    }
 }

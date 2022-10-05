@@ -4,6 +4,7 @@
     Author     : juanm
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -44,9 +45,9 @@
                                     Gestión Empleados</a>
                                 <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
-                                <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
-                                <a href="gestionsProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
                                 <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
@@ -95,7 +96,7 @@
                         <a class="nav-link" href="reporteServicios.jsp">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reporteVentas.jsp">Ventas</a>
+                        <a class="nav-link" href="servletReporte">Ventas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reporteProductos.jsp">Productos</a>
@@ -105,36 +106,25 @@
                     <div class="table-responsive" id="tableReporteProductos">
                         <table class="table table-striped table-bordered">
                             <thead>
-                                <th>Id Venta</th>
-                                <th>Producto</th>
+                                <th>Id Venta</th>                                
                                 <th>Cliente</th>
-                                <th>Valor total</th>
+                                <th>Fecha de Venta</th>                                
                                 <th>Unidades</th>
                                 <th>Valor unitario</th>
-                                <th>Fecha de Venta</th>
-                                <th>Descripci&oacute;n</th>
+                                <th>Producto</th>
+                                <th>Valor total</th>                                                                
                             </thead>
                             <tbody>
+                            <c:forEach var="ventas" items="${listaVentas}">
                                 <tr>
-                                <td>123</td>
-                                <td>Motor Licuadora Oster</td>
-                                <td>Harold Cruz</td>
-                                <td>160000</td>
-                                <td>2</td>
-                                <td>80000</td>
-                                <td>21/05/2022</td>
-                                <td>motor licuadora oster</td>
+                                    <td><c:out value="${ventas.idVenta}"/></td>
+                                    <td><c:out value="${ventas.cliente}"/></td>
+                                    <td><c:out value="${ventas.fecha}"/></td>
+                                    <td><c:out value="${ventas.cantidad}"/></td>
+                                    <td><c:out value="${ventas.priceProduct}"/></td>
+                                    <td><c:out value="${ventas.productName}"/></td>                                    
                                 </tr>
-                                <tr>
-                                <td>456</td>
-                                <td>Motor Licuadora Samurai</td>
-                                <td>Felipe Muñoz</td>
-                                <td>160000</td>
-                                <td>2</td>
-                                <td>80000</td>
-                                <td>21/06/2021</td>
-                                <td>motor licuadora samurai</td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>

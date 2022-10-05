@@ -44,9 +44,9 @@
                                     Gestión Empleados</a>
                                 <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
-                                <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
-                                <a href="gestionProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
                                 <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
@@ -99,7 +99,7 @@
                         <a class="nav-link" href="reporteServicios.jsp">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reporteVentas.jsp">Ventas</a>
+                        <a class="nav-link" href="servletReporte">Ventas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="reporteProductos.jsp">Productos</a>

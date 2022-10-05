@@ -23,7 +23,7 @@ public class ServicioDAO {
     
     public ServicioDAO(){
         ConexionBD connectBD = new ConexionBD();
-        connection = connectBD.getConexion();
+        //connection = connectBD.getConexion();
     }
     
     public List<Emple> listarEmpleado(){

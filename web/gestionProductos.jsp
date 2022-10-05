@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,9 +50,9 @@
                                     Gestión Empleados</a>
                                 <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
-                                <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
-                                <a href="gestionProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
                                 <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
@@ -131,30 +133,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">7644</th>
-                                                        <td>Licuadora</td>
-                                                        <td>Electrodomestico</td>
-                                                        <td>2</td>
-                                                        <td>20000</td>
-                                                        <td>Oster</td>
-                                                        <td>Clasic</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarProducto"><i class="bi bi-trash3-fill"></i></a>
+                                                <c:forEach var="prod" items="${listaProductos}"> 
+                                                    <tr>
+                                                        <td><c:out value="${prod.productId}"/></td>
+                                                        <td><c:out value="${prod.productName}"/></td>
+                                                        <td><c:out value="${prod.productType}"/></td>
+                                                        <td><c:out value="${prod.stock}"/></td>
+                                                        <td><c:out value="${prod.price}"/></td>
+                                                        <td><c:out value="${prod.brand}"/></td>
+                                                        <td><c:out value="${prod.model}"/></td>   
+                                                        <td> <a href="servletProducto?accion=Actualizar&servicio=${prod.productId}"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletProducto?accion=Eliminar&producto=${prod.productId}"><i class="bi bi-trash3-fill"></i></a>
                                                         </td>
-                                                 </tr>
-                                                 <tr>
-                                                    <th scope="row">2624</th>
-                                                        <td>Empaque Olla</td>
-                                                        <td>Repuesto</td>
-                                                        <td>2</td>
-                                                        <td>5000</td>
-                                                        <td>Corona</td>
-                                                        <td>x-332</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-pencil-square"></i></a>  |  <a data-toggle="modal" data-target="#eliminarProducto"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
+                                                    </tr>
+                                                    
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>                        
@@ -172,14 +164,14 @@
                                     <button class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="servletProducto?accion=Insertar" method="POST" autocomplete="off">
                                     <div class="card-body">
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
-                                                <input id="idProducto" type="text" class="form-control text-center" name="idProducto" value="" required>                                       
+                                                <input id="idProducto" type="text" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
@@ -187,17 +179,17 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
                                                 </div>
-                                                <input id="name" type="text" class="form-control text-center" name="name" value="" required>                                       
+                                                <input id="name" type="text" class="form-control text-center" name="name" value="<c:out value="${producto.id}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <label for="selection" class=" col-form-label text-dark">Tipo de producto</label>
+                                                <label for="select" class=" col-form-label text-dark">Tipo de producto</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group selection">
-                                                        <select class="form-control" id="exampleFormControlSelect1">
-                                                            <option>Electrodomestico</option>
-                                                            <option>Repuesto</option>
+                                                        <select class="form-control" id="select" name="select">
+                                                            <option value="0" >Electrodomestico</option>
+                                                            <option value="1">Repuesto</option>
                                                 </select> 
                                                     </div>
                                                 </div>                                
@@ -208,36 +200,36 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
                                                 </div>
-                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="" required>                                       
+                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="<c:out value="${producto.id}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
-                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="" placeholder="Precio c/u" required>
+                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="<c:out value="${producto.id}"/>" placeholder="Precio c/u" required>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-caret-up-square"></i></span></div>
-                                                <input id="marca" type="text" class="form-control text-center" name="marca" value="" placeholder="Marca" required>
+                                                <input id="marca" type="text" class="form-control text-center" name="marca" value="<c:out value="${producto.id}"/>" placeholder="Marca" required>
                                             </div>
                                         </div>
                                         
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-card-text"></i></span></div>
-                                                <input id="modelo" type="text" class="form-control text-center" name="modelo" value="" placeholder="Modelo" required>
+                                                <input id="modelo" type="text" class="form-control text-center" name="modelo" value="<c:out value="${producto.id}"/>" placeholder="Modelo" required>
                                             </div>
                                         </div>
 
                                     </div>
-                                </form>  
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Añadir</button>
+                                        <div class="modal-footer">
+                                    <button type="submit" id="btnAdd" class="btn btn-success">Añadir</button>
                                     <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
+                                    </form>  
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -251,12 +243,14 @@
                                     <button class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
+                                    
                                     <h5>
                                         ¿Esta seguro de realizar esta acción?
                                     </h5> 
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-success">Si</button>
+                                    <button type="submit" class="btn btn-success">Si</button>
+                                    
                                     <button class="btn btn-danger" data-dismiss="modal">No</button>
                                 </div>
                             </div>

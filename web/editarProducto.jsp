@@ -1,14 +1,16 @@
 <%-- 
-    Document   : gestionEmpleados.jsp
-    Created on : 24/05/2022, 10:21:27 a. m.
-    Author     : LENOVO
+    Document   : editarProducto
+    Created on : 4/08/2022, 8:29:49 a. m.
+    Author     : Asus
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gestión_Empleados</title>
+        <title>Gestion_Productos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/bootstrap.min.css" >-->
@@ -91,178 +93,92 @@
                     
               
             
-            </div>
-         
-        
+            </div>               
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100 h-100">
 
                 <div class="container">
                 <div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
-                    <div>
-                        <h1>
-                            
-                        </h1>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirEmpleado">Nuevo empleado</button>
-                        <h1>
-                         
-                        </h1>
+                    <div>                        
                     </div>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Lista de empleados</h4>
+                                    <h4>Lista de productos</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="userList" class="table table-bordered table-hover table-striped">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Nombres</th>
-                                                    <th scope="col">Apellidos</th>
-                                                    <th scope="col">C.C.</th>
-                                                    <th scope="col">Fecha de Nacimiento</th>
-                                                    <th scope="col">Celular</th>
-                                                    <th scope="col">Salario</th>
-                                                    <th scope="col">E-mail</th>
-                                                    <th scope="col">Accion</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">8775</th>
-                                                        <td>Administrdor</td>
-                                                        <td>Yesika</td>
-                                                        <td>Nuñez</td>
-                                                        <td>7777777</td>
-                                                        <td>xx/xx/xx</td>
-                                                        <td>2222222</td>
-                                                        <td>1000</td>
-                                                        <td>xxxx@xxxx</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirEmpleado"><i class="bi bi-pencil-square"></i></a> | <a data-toggle="modal" data-target="#eliminarEmpleado"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
-                                                 <tr>
-                                                    <th scope="row">6455</th>
-                                                        <td>Empleado</td>
-                                                        <td>Andrea</td>
-                                                        <td>Rojas</td>
-                                                        <td>5555555</td>
-                                                        <td>xx/xx/xx</td>
-                                                        <td>2222222</td>
-                                                        <td>1000</td>
-                                                        <td>xxxx@xxxx</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#añadirEmpleado"><i class="bi bi-pencil-square"></i></a> | <a data-toggle="modal" data-target="#eliminarEmpleado"><i class="bi bi-trash3-fill"></i></a>
-                                                        </td>
-                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>                        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <!-- modal añadir -->
-                    <div class="modal" tabindex="-1" aria-hidden="true" id="añadirEmpleado">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>Nuevo empleado</h3>
-                                    <button class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                    <div class="card-body">
+                                    <c:forEach var="prod" items="${servicio}">
+                                       <form action="servletProducto?accion=GuardarCambios" method="POST" autocomplete="off">                                        
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text" id="inputGroup-sizing-default">Nombres</span>
+                                                  <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
-                                                <input id="name" type="text" class="form-control text-center" name="name" value="" required>                                       
+                                                <input id="idProducto" type="text" class="form-control text-center" readonly name="idProducto" value="<c:out value="${prod.productId}"/>" required>                                       
+                                            </div>                                            
+                                        </div>                                            
+                                        <div style="margin-bottom: 10px" class="input-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                                </div>
+                                                <input id="name" type="text" class="form-control text-center" name="name" value="<c:out value="${prod.productName}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text" id="inputGroup-sizing-default">Apellidos</span>
-                                                </div>
-                                                <input id="lastName" type="text" class="form-control text-center" name="lastName" value="" required>                                       
-                                            </div>                                            
-                                        </div>
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text" id="inputGroup-sizing-default">N° documento</span>
-                                                </div>
-                                                <input id="cc" type="text" class="form-control text-center" name="cc" value="" required>                                       
-                                            </div>                                            
-                                        </div>
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">    
-                                                
-                                                <label for="date" class=" col-form-label text-dark">Fecha de nacimiento</label>
-                                                <div class="col-sm-7">
-                                                    <div class="input-group date" id="datepicker">
-                                                        <input type="text" class="form-control">
-                                                        <span class="input-group-append">
-                                                            <span class="input-group-text bg-white"><i class="bi bi-calendar3"></i>
-                                                            </span>
-                                                        </span>
+                                                <label for="select" class=" col-form-label text-dark">Tipo de producto</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group selection">
+                                                        <select class="form-control" id="select" name="select">
+                                                            <option value="0" >Electrodomestico</option>
+                                                            <option value="1">Repuesto</option>
+                                                </select> 
                                                     </div>
+                                                </div>                                
+                                            </div>                                            
+                                        </div>
+                                        <div style="margin-bottom: 10px" class="input-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
                                                 </div>
+                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="<c:out value="${prod.stock}"/>" required>                                       
+                                            </div>                                            
+                                        </div>
+                                        <div style="margin-bottom: 10px" class="input-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
+                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="<c:out value="${prod.price}"/>" placeholder="Precio c/u" required>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 10px" class="input-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-caret-up-square"></i></span></div>
+                                                <input id="marca" type="text" class="form-control text-center" name="marca" value="<c:out value="${prod.brand}"/>" placeholder="Marca" required>
                                             </div>
                                         </div>
                                         
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-at"></i></span></div>
-                                                <input id="mail" type="text" class="form-control text-center" name="mail" value="" placeholder="Correo electronico" required>
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-card-text"></i></span></div>
+                                                <input id="modelo" type="text" class="form-control text-center" name="modelo" value="<c:out value="${prod.model}"/>" placeholder="Modelo" required>
                                             </div>
                                         </div>
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-telephone"></i></span></div>
-                                                <input id="cell" type="text" class="form-control text-center" name="cell" value="" placeholder="Telefono de contacto" required>
-                                            </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" id="btnAdd" class="btn btn-success">Añadir</button>
+                                            <a class="btn btn-danger" data-dismiss="modal" href="servletProducto?accion">Cancelar</a>
                                         </div>
-                                    </div>
-                                </form>  
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Añadir</button>
-                                    <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    </form>                                               
+                                    </c:forEach>                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal" tabindex="-1" aria-hidden="true" id="eliminarEmpleado">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3>
-                                        Eliminar empleado
-                                    </h3> 
-                                    <button class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>
-                                        ¿Esta seguro de realizar esta acción?
-                                    </h5> 
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">Si</button>
-                                    <button class="btn btn-danger" data-dismiss="modal">No</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>                    
                 </div>
             </div>
         </div>
@@ -296,3 +212,4 @@
 </head>
     </body>
 </html>
+

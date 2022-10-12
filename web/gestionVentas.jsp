@@ -140,12 +140,7 @@
             </div>
             <div class="col-sm-8">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex col-sm-6 ml-auto">
-                            <label>Número Serie</label>
-                            <input type="text" name="numSerie" class="form-control">                    
-                        </div>
-                        
+                    <div class="card-body">                                                
                         <div class="form-row">
                             <div class="table-responsive" id="tablaProd">
                                 <table class="table table-striped">
@@ -189,6 +184,24 @@
                             <div class="col-sm-4 ml-auto">                             
                                 <input type="text" class="form-control" value="$ ${totalPagar}"name="txtTotal">
                             </div>
+                            <div class="container">
+                                    <c:if test="${action==1}">
+                                        <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
+                                            Acción realizada con éxito.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${action==0}">
+                                        <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
+                                            Acción no realizada.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>                                    
+                                </div>
                                 
                             </div> 
                     </div>

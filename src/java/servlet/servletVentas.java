@@ -79,6 +79,8 @@ public class servletVentas extends HttpServlet {
             if(prodDAO.buscarProducto(idProducto).getStock() != 0 && prodDAO.buscarProducto(idProducto).getStock() >= cantidad2){
                 venta = new Ventas(item+"", cantidad2, total, fechaVenta, cliente, idProducto, nombreProducto, tipoProducto, price);                                                            
                 listVentas.add(venta);                
+            }else{
+                req.setAttribute("action", "0");
             }                        
             System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
             for(int i=0; i<listVentas.size(); i++){
@@ -98,7 +100,8 @@ public class servletVentas extends HttpServlet {
                 int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
                 prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
                 venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
-                ventasDAO.guardarDetalleVenta(venta);                                    
+                ventasDAO.guardarDetalleVenta(venta);
+                req.setAttribute("action", "1");
             }
             listVentas.removeAll(listVentas);
             

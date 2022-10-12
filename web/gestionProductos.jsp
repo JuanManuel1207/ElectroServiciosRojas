@@ -99,18 +99,11 @@
         
         <!-- Contenido Pagina -->
             <div id="content" class="w-100 h-100">
-
                 <div class="container">
-                <div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
-                    <div>
-                        <h1>
-                            
-                        </h1>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirProducto">Nuevo producto</button>
-                        <h1>
-                         
-                        </h1>
-                    </div>
+                    <div class="mx-auto col-sm-12 main-section" id="myTab" role="tablist">
+                        <div>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirProducto">Nuevo producto</button>                        
+                        </div>                
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
                             <div class="card">
@@ -119,7 +112,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="userList" class="table table-bordered table-hover table-striped">
+                                        <table id="productsList" class="table table-bordered table-hover table-striped">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th scope="col">ID Producto</th>
@@ -151,7 +144,25 @@
                                         </table>
                                     </div>                        
                                 </div>
-                            </div>
+                                <div class="container">
+                                    <c:if test="${action==1}">
+                                        <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
+                                            Acción realizada con éxito.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${action==0}">
+                                        <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
+                                            Acción no realizada.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>                                    
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>

@@ -50,18 +50,32 @@ public class servletProducto extends HttpServlet {
             String modelo = req.getParameter("modelo");
             
             Producto product = new Producto(productId, productName, productEnum, stock, price, brand, modelo);
-            productoDAO.insertarDB(product);
-            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
-            List<Producto> listProducts = productoDAO.listarProductos();
-            req.setAttribute("listaProductos", listProducts);
+            if(productoDAO.insertarDB(product)){
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "1");                
+            }else{
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "0");
+            }
+            //productoDAO.insertarDB(product);            
             
         }else if("Eliminar".equals(accion)){
             String id = req.getParameter("producto");
-            productoDAO.eliminarProducto(id);
-            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
-            List<Producto> listProducts = productoDAO.listarProductos();
-            req.setAttribute("listaProductos", listProducts);
-            
+            if(productoDAO.eliminarProducto(id)){
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "1");
+            }else{
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "0");
+            }                                    
         }else if("Actualizar".equals(accion)){            
             String idProducto = req.getParameter("servicio");            
             dispatcher = req.getRequestDispatcher("editarProducto.jsp");
@@ -80,11 +94,20 @@ public class servletProducto extends HttpServlet {
             String brand = req.getParameter("marca");
             String modelo = req.getParameter("modelo");
             Producto product = new Producto(productId, productName, productEnum, stock, price, brand, modelo);
-            productoDAO.actualiarProducto(product);
+            if(productoDAO.actualiarProducto(product)){
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "1");
+            }else{
+                dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
+                List<Producto> listProducts = productoDAO.listarProductos();
+                req.setAttribute("listaProductos", listProducts);
+                req.setAttribute("action", "0");
+            }
             
-            dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
-            List<Producto> listProducts = productoDAO.listarProductos();
-            req.setAttribute("listaProductos", listProducts);
+            
+            
             
         }
         

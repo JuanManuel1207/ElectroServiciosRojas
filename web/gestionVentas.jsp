@@ -168,7 +168,7 @@
                                                 <td><c:out value="${list.fecha}"/></td>
                                                 <td><c:out value="${list.precioTotal}"/></td>
                                                 <td>
-                                                     <a href="servletVentas?accion=Actualizar&servicio=${prod.productId}"><i class="bi bi-pencil-square"></i></a>  |  <a href="servletVentas?accion=Eliminar&venta=${list.idVenta}"><i class="bi bi-trash3-fill"></i></a>
+                                                    <a href="servletVentas?accion=Eliminar&venta=${list.idVenta}"><i class="bi bi-trash3-fill"></i></a>
                                                 </td>
                                               </tr>
                                             </c:forEach>

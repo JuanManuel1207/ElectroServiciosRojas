@@ -36,8 +36,8 @@ public class servletServicio extends HttpServlet {
         RequestDispatcher dispatcher = null;
         
         action = request.getParameter("action");
-        
-        if (action==null | action.isEmpty()) {
+        System.out.println(action);
+        if (action==null || action.isEmpty()) {
             dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
             List<Servicio> listaServicio = servicioDAO.listarServicio();
             List<Emple> listaEmple = servicioDAO.listarEmpleado();

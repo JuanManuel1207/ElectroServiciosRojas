@@ -24,7 +24,7 @@ public class VentasDAO {
     
     public VentasDAO(){
         ConexionBD con = new ConexionBD();
-        conexionBD = con.getConexionDB();
+        conexionBD = con.getConexion();
     }
     
      public List<Ventas> listarVentas(){

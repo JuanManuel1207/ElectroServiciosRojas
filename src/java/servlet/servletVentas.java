@@ -51,8 +51,7 @@ public class servletVentas extends HttpServlet {
                 
         String accion;        
         RequestDispatcher dispatcher = null;
-        Ventas venta = new Ventas();
-        System.out.println("kajsdhsahdsaljdsad "+ ventasDAO.buscarIdVenta());
+        Ventas venta = new Ventas();        
         accion = req.getParameter("accion");
         req.setAttribute("dateNow", LocalDate.now());        
         if("BuscarProducto".equals(accion)){      

@@ -79,7 +79,7 @@ public class VentasDAO {
             ps = conexionBD.prepareStatement("SELECT MAX(idVenta) FROM ventas");            
             rs = ps.executeQuery();            
             while(rs.next()){
-                idVenta = rs.getInt(1)+"";                                                              
+                idVenta = rs.getInt(1)+1+"";                                                              
             }            
         }catch(SQLException e){
             System.out.println(e.toString());            

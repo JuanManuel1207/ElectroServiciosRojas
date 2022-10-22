@@ -52,14 +52,13 @@ public class servletVentas extends HttpServlet {
         String accion;        
         RequestDispatcher dispatcher = null;
         Ventas venta = new Ventas();
-        
+        System.out.println("kajsdhsahdsaljdsad "+ ventasDAO.buscarIdVenta());
         accion = req.getParameter("accion");
         req.setAttribute("dateNow", LocalDate.now());        
         if("BuscarProducto".equals(accion)){      
             String idProducto = req.getParameter("codigoProducto");            
             if(prodDAO.buscarProducto(idProducto) != null ){
-                product = prodDAO.buscarProducto(idProducto);
-                System.out.println(" aqui");
+                product = prodDAO.buscarProducto(idProducto);                
                 req.setAttribute("product", product);            
                 req.setAttribute("listVentas", listVentas);
                 req.setAttribute("totalPagar", totalPagar);                

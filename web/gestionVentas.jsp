@@ -119,7 +119,7 @@
                                     
                                     <div class="form-group d-flex">
                                         <div class="col-sm-6 d-flex">
-                                            <input type="date" name="fecha" class="form-control" value="${dateNow}" disabled="">
+                                            <input type="date" name="fecha" class="form-control" value="${dateNow}" readonly>
                                         </div>                            
                                         <div class="col-sm-4 d-flex">
                                             <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente" required>

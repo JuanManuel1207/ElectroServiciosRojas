@@ -23,7 +23,7 @@ public class ProductoDAO {
     
     public ProductoDAO(){
         ConexionBD con = new ConexionBD();
-        conexionBD = con.getConexionDB();
+        conexionBD = con.getConexion();
     }
            
     public List<Producto> listarProductos(){

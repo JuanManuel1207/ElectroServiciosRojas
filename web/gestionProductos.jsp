@@ -182,7 +182,7 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
-                                                <input id="idProducto" type="number" min="0" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                       
+                                                <input id="idProducto" type="number" min="0" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                                                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">

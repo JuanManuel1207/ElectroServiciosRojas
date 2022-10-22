@@ -45,12 +45,12 @@
                                 <li class="list-group-item col-sm-4"><b>Precio: </b><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${servicio.precio}" /></li>
                             </ul>
                             <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item col-sm-8"><b>Descripci&oacute;n: </b><c:out value="${servicio.descripcion}"/></li>
                                 <c:forEach var="emple" items="${empleados}">
                                     <c:if test="${emple.id==servicio.empleado}">
                                         <li class="list-group-item col-sm-4"><b>Empleado: </b><c:out value="${emple.empleado}"/></li>                        
                                     </c:if>
-                                </c:forEach>  
+                                </c:forEach>
+                                <li class="list-group-item col-sm-8"><b>Descripci&oacute;n: </b><c:out value="${servicio.descripcion}"/></li>  
                             </ul>
                         </ul>
                     </c:if>

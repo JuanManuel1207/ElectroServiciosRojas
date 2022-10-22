@@ -96,7 +96,7 @@
                             </div>
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">                                    
-                                    <input type="number" min="0" name="codigoProducto" value="${product.getProductId()}" class="form-control" placeholder="idProducto" >
+                                    <input type="number" min="0" name="codigoProducto" value="${product.getProductId()}" class="form-control" placeholder="idProducto" required>
                                     <button type="submit" name="accion" value="Buscar" class="btn btn-outline-info ">Buscar</button>
                                 </div>                            
                                 <div class="col-sm-7">
@@ -119,13 +119,13 @@
                                     
                                     <div class="form-group d-flex">
                                         <div class="col-sm-6 d-flex">
-                                            <input type="date" name="fecha" class="form-control ">
+                                            <input type="date" name="fecha" class="form-control" value="${dateNow}" disabled="">
                                         </div>                            
                                         <div class="col-sm-4 d-flex">
-                                            <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente">
+                                            <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente" required>
                                         </div>
                                         <div class="col-sm-3 d-flex">
-                                            <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="0">                                    
+                                            <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="0" required>                                    
                                         </div>                                
                                     </div>
                                     <div class="form-group">
@@ -201,7 +201,15 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    </c:if>                                    
+                                    </c:if>                                
+                                    <c:if test="${action==2}">
+                                        <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
+                                            Producto no encontrado. Revisar que ID exista.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
                                 </div>
                     </div>
                     

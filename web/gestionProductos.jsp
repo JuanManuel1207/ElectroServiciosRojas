@@ -155,7 +155,7 @@
                                     </c:if>
                                     <c:if test="${action==0}">
                                         <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
-                                            Acción no realizada.
+                                            Acción no realizada. ID Duplicado
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>

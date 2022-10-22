@@ -54,13 +54,18 @@ public class servletVentas extends HttpServlet {
         Ventas venta = new Ventas();
         
         accion = req.getParameter("accion");
-        
-        if("BuscarProducto".equals(accion)){             
+        req.setAttribute("dateNow", LocalDate.now());        
+        if("BuscarProducto".equals(accion)){      
             String idProducto = req.getParameter("codigoProducto");            
-            product = prodDAO.buscarProducto(idProducto);
-            req.setAttribute("product", product);            
-            req.setAttribute("listVentas", listVentas);
-            req.setAttribute("totalPagar", totalPagar);
+            if(prodDAO.buscarProducto(idProducto) != null ){
+                product = prodDAO.buscarProducto(idProducto);
+                System.out.println(" aqui");
+                req.setAttribute("product", product);            
+                req.setAttribute("listVentas", listVentas);
+                req.setAttribute("totalPagar", totalPagar);                
+            }else{
+                req.setAttribute("action", "2");
+            }                        
             //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
         }else if("Agregar".equals(accion)){    
             totalPagar = 0;                        
@@ -71,7 +76,7 @@ public class servletVentas extends HttpServlet {
             double price = product.getPrice();
             String cantidad = req.getParameter("cantidad"); 
             int cantidad2 = Integer.parseInt(cantidad);            
-            fechaVenta = req.getParameter("fecha");
+            fechaVenta = req.getParameter("fecha");            
             cliente = req.getParameter("nombreCliente");            
             total = cantidad2*price;
             if(prodDAO.buscarProducto(idProducto).getStock() != 0 && prodDAO.buscarProducto(idProducto).getStock() >= cantidad2){

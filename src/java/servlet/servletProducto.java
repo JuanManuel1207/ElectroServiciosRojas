@@ -104,11 +104,7 @@ public class servletProducto extends HttpServlet {
                 List<Producto> listProducts = productoDAO.listarProductos();
                 req.setAttribute("listaProductos", listProducts);
                 req.setAttribute("action", "0");
-            }
-            
-            
-            
-            
+            }                                               
         }
         
         dispatcher.forward(req,resp);        

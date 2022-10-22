@@ -22,7 +22,8 @@ import modelo.VentasDAO;
  */
 @WebServlet(name = "servletReporte", urlPatterns = {"/servletReporte"})
 public class servletReporte extends HttpServlet {
-
+    
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
         
@@ -32,17 +33,16 @@ public class servletReporte extends HttpServlet {
         
         accion = req.getParameter("accion");
         
-        if(accion == null || accion.equals("")){
+        if(accion == null || accion.isEmpty()){
             dispatcher = req.getRequestDispatcher("reporteVentas.jsp");
             List<Ventas> listVentas = ventasDAO.listarVentas();
             listVentas.toString();            
-            req.setAttribute("listaVentas", listVentas); 
-            //dispatcher = req.getRequestDispatcher("reporteVentas.jsp");            
-        }
-        dispatcher.forward(req,resp);   
+            req.setAttribute("listaVentas", listVentas);                         
+        }                  
+        dispatcher.forward(req,resp); 
         
     }
-
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException{
         doGet(req, resp);

@@ -109,7 +109,7 @@ public class ProductoDAO {
             ps.setInt(2,idProducto);
             ps.execute();
         }catch(SQLException e){
-            System.out.println(e.toString());
+            System.out.println("ACTUALIZAR STOCK "+e.toString());
             return false;
         }
        return true;

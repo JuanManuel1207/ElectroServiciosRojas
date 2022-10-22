@@ -145,13 +145,13 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
                                                 </div>
-                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="<c:out value="${prod.stock}"/>" required>                                       
+                                                <input id="cantidad" type="number" min="0" class="form-control text-center" name="cantidad" value="<c:out value="${prod.stock}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
-                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="<c:out value="${prod.price}"/>" placeholder="Precio c/u" required>
+                                                <input id="precio" type="number" min="0" class="form-control text-center" name="precio" value="<c:out value="${prod.price}"/>" placeholder="Precio c/u" required>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">

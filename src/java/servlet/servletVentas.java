@@ -85,23 +85,26 @@ public class servletVentas extends HttpServlet {
             }            
             req.setAttribute("totalPagar", totalPagar);
             req.setAttribute("listVentas", listVentas);                        
-        }else if("generarVenta".equals(accion)){           
-            venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
-            String idVenta = ventasDAO.buscarIdVenta();
-            System.out.println("--------: "+idVenta);
-            ventasDAO.insertarVenta(venta);                         
-            
-            for(int i = 0; i < listVentas.size(); i++){                                    
-                Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
-                int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
-                prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
-                venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
-                ventasDAO.guardarDetalleVenta(venta);                                                                
-            }
-            req.setAttribute("listVentas", listVentas);
-            req.setAttribute("action", "1");             
-            listVentas.removeAll(listVentas);
-            
+        }else if("generarVenta".equals(accion)){
+            if(!listVentas.isEmpty()){
+                venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
+                String idVenta = ventasDAO.buscarIdVenta();
+                System.out.println("--------: "+idVenta);
+                ventasDAO.insertarVenta(venta);                         
+
+                for(int i = 0; i < listVentas.size(); i++){                                    
+                    Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
+                    int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
+                    prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
+                    venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
+                    ventasDAO.guardarDetalleVenta(venta);                                                                
+                }
+                req.setAttribute("listVentas", listVentas);
+                req.setAttribute("action", "1");             
+                listVentas.removeAll(listVentas);                
+            }else{
+                req.setAttribute("action", "0");
+            }                        
         }else if("Cancelar".equals(accion)){
             listVentas.removeAll(listVentas);
             totalPagar = 0;

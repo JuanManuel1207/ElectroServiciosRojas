@@ -1,0 +1,111 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 20/10/2022, 11:11:47 a. m.
+    Author     : LENOVO
+*/
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+body{
+    background: url(../resources/fondo_web.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+@media(max-width: 575px){
+
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+    #info{
+        top: 80px;
+    }
+}
+@media(min-width: 576px) and (max-width: 767px){
+    
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+    #info{
+        top: 80px;
+    }
+}
+@media(min-width: 768px) and (max-width: 991px){
+    
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+    #login{
+        top: 35px;
+        right: 45px;
+    }
+    #consulta{
+        left: 45px;
+    }
+    #info{
+        top: 80px;
+    }
+}
+@media(min-width: 992px){
+    
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+    #login{
+        top: 35px;
+        right: 45px;
+    }
+    #consulta{
+        left: 45px;
+    }
+    #info{
+        top: 80px;
+        font-family: sans-serif;
+        font-weight: bolder;
+    }
+    
+}

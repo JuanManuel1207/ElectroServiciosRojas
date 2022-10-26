@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -106,35 +108,81 @@
                     </li>
                 </ul>
                 
-                <div class="row-cols-sm-2">
-                    <div class="table-responsive" id="tableReporteServicios">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <th>Id Servicio</th>
-                                <th>Servicio</th>
-                                <th>Cliente</th>
-                                <th>Valor</th>
-                                <th>Descripci&oacute;n</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td>123</td>
-                                <td>Reparaci&oacute;n</td>
-                                <td>Fabio Orejuela</td>
-                                <td>12300</td>
-                                <td>Cambio motor licuadora</td>
-                                </tr>
-                                <tr>
-                                <td>456</td>
-                                <td>Revisi&oacute;n</td>
-                                <td>Pedro Infante</td>
-                                <td>5000</td>
-                                <td>Inspeccion motor lavadora</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+               
+                
+                <div class="col mb-auto">
+                            <div class="card text-center" id="card2">
+                                <div class="card-header">
+                                    <h5>Reporte de Servicios</h5>
+                                </div>
+                                <form action="servletServicio?action=ReporteServicios" method="POST" autocomplete="off">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-3">
+                                                <label for="fecha_ingreso">Fecha Ingreso: </label>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" required>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <button id="btn-buscar" type="submit" class="btn btn-warning btn-outline-dark btn-block">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                    <div class="card-footer">
+                                        <div class="container">
+                                            <c:if test="${listaServicio.isEmpty() || totalServicios == 0.0}">
+                                                <div class="alert alert-danger" role="alert">Lo sentimos, no hay servicios que mostrar.</div>
+                                            </c:if>
+                                            <c:if test="${listaServicio.isEmpty() == false}">
+                                                <div class="form-row">
+                                                    <div class="form-group col-sm-2">
+                                                        <h6>Total Servicios: <b>$<c:out value="${totalServicios}"/></b></h6>
+                                                    </div>
+                                                    <div class="form-group col-sm-2">
+                                                        <a href="servletServicio?action=generarReporte&date=<c:out value="${fecha_ingreso}"/>" class="btn btn-success">Generar Reporte</a>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table id="tableServicios" class="table table-bordered table-striped table-hover">
+                                                        <thead class="text-center">
+                                                            <th>ID</th>
+                                                            <th>Tipo Servicio</th>
+                                                            <th>Cliente</th>
+                                                            <th>Estado</th>
+                                                            <th>Ingreso</th>
+                                                            <th>Salida</th>
+                                                            <th>Descripci&oacute;n</th>
+                                                            <th>Precio</th>
+                                                            <th>Empleado</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach var="prod" items="${listaServicio}">
+                                                                <tr class="text-center">
+                                                                    <td><c:out value="${prod.id}"/></td>
+                                                                    <td><c:out value="${ (prod.tipoServicio == '1') ? 'REPARACIÓN':'REVISIÓN' }"/></td>
+                                                                    <td><c:out value="${prod.cliente}"/></td>
+                                                                    <td><c:out value="${ (prod.estado == '1') ? 'EN PROCESO' : 'TERMINADO' }"/></td>
+                                                                    <td><c:out value="${prod.fechaIngreso}"/></td>
+                                                                    <td><c:out value="${prod.fechaSalida}"/></td>
+                                                                    <td><c:out value="${prod.descripcion}"/></td>
+                                                                    <td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${prod.precio}" /></td>
+                                                                    <c:forEach var="emple" items="${empleados}">
+                                                                        <c:if test="${emple.id==prod.empleado}">
+                                                                            <td><c:out value="${emple.empleado}"/></td>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </tr>
+                                                            </c:forEach>       
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </c:if>                        
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
            
                 
             </div>

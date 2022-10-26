@@ -4,12 +4,17 @@
  */
 package servlet;
 
+import com.lowagie.text.DocumentException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Emple;
 import modelo.Servicio;
 import modelo.ServicioDAO;
+import pdf.ServiciosPDF;
 
 /**
  *
@@ -34,15 +40,18 @@ public class servletServicio extends HttpServlet {
         ServicioDAO servicioDAO = new ServicioDAO();
         String action;
         RequestDispatcher dispatcher = null;
-        
+        request.setAttribute("dateNow", LocalDate.now());
         action = request.getParameter("action");
-        System.out.println(action);
+        
+
         if (action==null || action.isEmpty()) {
             dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
             List<Servicio> listaServicio = servicioDAO.listarServicio();
             List<Emple> listaEmple = servicioDAO.listarEmpleado();
             request.setAttribute("listaServicio", listaServicio);
             request.setAttribute("empleados", listaEmple);
+            System.out.println( servicioDAO.consultarId());
+            request.setAttribute("idValue", servicioDAO.consultarId());
         } else if("Agregar".equals(action)){
             String id = request.getParameter("id");
             String cliente = request.getParameter("cliente");
@@ -61,6 +70,7 @@ public class servletServicio extends HttpServlet {
                 List<Emple> listaEmple = servicioDAO.listarEmpleado();
                 request.setAttribute("empleados", listaEmple);
                 request.setAttribute("action", "1");
+                request.setAttribute("idValue", servicioDAO.consultarId());
             }else{
                 dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
                 List<Servicio> listaServicio = servicioDAO.listarServicio();
@@ -68,6 +78,7 @@ public class servletServicio extends HttpServlet {
                 List<Emple> listaEmple = servicioDAO.listarEmpleado();
                 request.setAttribute("empleados", listaEmple);
                 request.setAttribute("action", "0");
+                request.setAttribute("idValue", servicioDAO.consultarId());
 
             }
         } else if ("Eliminar".equals(action)) {
@@ -80,6 +91,8 @@ public class servletServicio extends HttpServlet {
                 List<Emple> listaEmple = servicioDAO.listarEmpleado();
                 request.setAttribute("empleados", listaEmple);
                 request.setAttribute("action", "1");
+                request.setAttribute("idValue", servicioDAO.consultarId());
+
             }else{
                 dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
                 List<Servicio> listaServicio = servicioDAO.listarServicio();
@@ -87,6 +100,8 @@ public class servletServicio extends HttpServlet {
                 List<Emple> listaEmple = servicioDAO.listarEmpleado();
                 request.setAttribute("empleados", listaEmple);
                 request.setAttribute("action", "0");
+                request.setAttribute("idValue", servicioDAO.consultarId());
+
             }
             
             
@@ -137,6 +152,30 @@ public class servletServicio extends HttpServlet {
             }
             
             
+        }else if("ReporteServicios".equals(action)){
+            String fechaIngreso = request.getParameter("fecha_ingreso");
+            dispatcher = request.getRequestDispatcher("reporteServicios.jsp");
+            List<Servicio> listaServicio = servicioDAO.listarServicioFecha(fechaIngreso);
+            List<Emple> listaEmple = servicioDAO.listarEmpleado();
+            Double totalServicios = servicioDAO.totalServicios(fechaIngreso);
+            request.setAttribute("listaServicio", listaServicio);
+            request.setAttribute("empleados", listaEmple);
+            request.setAttribute("totalServicios", totalServicios );
+            request.setAttribute("fecha_ingreso", fechaIngreso );            
+        }else if("generarReporte".equals(action)){
+            String date = request.getParameter("date");
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm aaa");
+            String nameFile = dateFormat.format(new Date());
+            String variable1 = "Content-Disposition";
+            String variable2 = "attachment; filename=ReporteServicios_"+date+"_"+nameFile+".pdf";
+            response.setHeader(variable1, variable2);
+            ServiciosPDF serviciosPDF = new ServiciosPDF(servicioDAO.listarServicioFecha(date));
+            try {
+                serviciosPDF.export(response);
+            } catch (DocumentException ex) {
+                Logger.getLogger(servletServicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.getRequestDispatcher("servletServicio?action=ReporteServicios").forward(request, response);
         }
         dispatcher.forward(request, response);
     }

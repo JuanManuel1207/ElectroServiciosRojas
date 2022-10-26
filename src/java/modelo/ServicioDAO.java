@@ -21,9 +21,82 @@ import java.util.logging.Logger;
 public class ServicioDAO {
     Connection connection;
     
+    //select sum(precio) from service where entrada = '2022-10-19';
+    //select id from service order by id desc limit 0,1;
+    
     public ServicioDAO(){
         ConexionBD connectBD = new ConexionBD();
         connection = connectBD.getConexion();
+    }
+    
+    public String consultarId(){
+        PreparedStatement ps;
+        ResultSet rs;
+        String id = "";
+        try {
+            ps = connection.prepareStatement("SELECT id AS asig FROM SERVICE ORDER BY id DESC LIMIT 0,1");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                System.out.println("ENTRA AL WHILE DE DAO");
+                String aux = rs.getString("asig");
+                id = ""+(Integer.parseInt(aux)+1);
+            }
+            return id;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+    public Double totalServicios(String fecha){
+        PreparedStatement ps;
+        ResultSet rs;
+        Double total = 0.0;
+        try {
+            ps = connection.prepareStatement("SELECT SUM(precio) AS total FROM SERVICE WHERE entrada = ?");
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String aux = rs.getString("total");
+                total = ( (aux==null) ? total : Double.parseDouble(aux) );
+            }
+            return total;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+    public List<Servicio> listarServicioFecha(String fecha){
+        PreparedStatement ps;
+        ResultSet rs;
+        
+        List<Servicio> lista = new ArrayList<>();
+        
+        try {
+            ps = connection.prepareStatement("SELECT * FROM SERVICE WHERE entrada = ?");
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                String id = rs.getString("id");
+                String cliente = rs.getString("cliente");
+                String tipoServicio = rs.getString("tipo");
+                String estado = rs.getString("estado");
+                String fechaIngreso = ""+rs.getDate("entrada");
+                String fechaSalida = ""+rs.getDate("salida");
+                String descripcion = rs.getString("descripcion");
+                String precio = ""+rs.getDouble("precio");
+                String empleado = ""+rs.getInt("empleado");
+                                
+                Servicio servicio = new Servicio(id, cliente, tipoServicio, estado, fechaIngreso, fechaSalida, descripcion, precio, empleado);
+                lista.add(servicio);
+            }
+           return lista;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
     }
     
     public List<Emple> listarEmpleado(){

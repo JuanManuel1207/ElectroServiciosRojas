@@ -117,7 +117,7 @@
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="cliente">Cliente</label>
-                                            <input type="text" id="cliente" name="cliente" class="form-control col" value="<c:out value="${serv.cliente}"/>" placeholder="Nombre del cliente" required>
+                                            <input type="text" id="cliente" name="cliente" class="form-control col" value="<c:out value="${serv.cliente}"/>" placeholder="Nombre del cliente" pattern="[a-zA-Z\s]*" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -136,11 +136,11 @@
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="fecha_ingreso">Fecha Ingreso</label>
-                                            <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" value="<c:out value="${serv.fechaIngreso}"/>" required>
+                                            <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control col" value="<c:out value="${serv.fechaIngreso}"/>" readonly required>
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="fecha_salida">Fecha Salida</label>
-                                            <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" value="<c:out value="${serv.fechaSalida}"/>" required>
+                                            <input type="date" id="fecha_salida" name="fecha_salida" class="form-control col" min="<c:out value="${serv.fechaIngreso}"/>" value="<c:out value="${serv.fechaSalida}"/>" required>
                                         </div>
                                     </div>
                                     <div class="form-row">

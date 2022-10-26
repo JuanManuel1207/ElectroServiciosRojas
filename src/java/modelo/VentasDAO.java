@@ -72,6 +72,7 @@ public class VentasDAO {
     }               
     
     public String buscarIdVenta(){
+        
         PreparedStatement ps;
         ResultSet rs;        
         String idVenta="";

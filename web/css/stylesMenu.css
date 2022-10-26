@@ -1,0 +1,120 @@
+/* 
+    Created on : 18/10/2022, 5:30:49 p. m.
+    Author     : LENOVO
+*/
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body{
+    background-color: #263580;
+}
+
+
+
+@media(max-width: 575px){
+    #menu-p{
+        background-color: #DC7633;
+    }
+    
+    #contenido{
+        background-color: #263580;
+        width: 72vw;
+        height: 5vw;
+    }
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+        background: url(../resources/fondo_web.jpg) no-repeat center center fixed;
+        background-size: cover;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+}
+@media(min-width: 576px) and (max-width: 767px){
+    #menu-p{
+        background-color: #DC7633;
+    }
+    #contenido{
+        background-color: #263580;
+        width: 72vw;
+        height: 5vw;
+    }
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+        background: url(../resources/fondo_web.jpg) no-repeat center center fixed;
+        background-size: cover;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+}
+@media(min-width: 768px) and (max-width: 991px){
+    #menu-p{
+        background-color: #DC7633;
+    }
+    #contenido{
+        background-color: #263580;
+        width: 72vw;
+        height: 5vw;
+    }
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+        background: url(../resources/fondo_web.jpg) no-repeat center center fixed;
+        background-size: cover;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+}
+@media(min-width: 992px){
+    #menu-p{
+        background-color: #DC7633;
+    }
+    
+    #contenido{
+        width: 72vw;
+        height: 41vw;
+        background-color: #263580;
+    }
+    #encabezado{
+        width: 100vw;
+        height: 10vw;
+        background: url(../resources/fondo_web.jpg) no-repeat;
+        background-size: cover;
+    }
+    #grande{
+        width: 50%;
+        border-radius: 15px;
+        box-shadow: 0px 3px 5px rgba(15,15,15, .5);
+    }
+    #pequeña{
+        width: 25%;
+        border-radius: 15px;
+    }
+    
+    
+}

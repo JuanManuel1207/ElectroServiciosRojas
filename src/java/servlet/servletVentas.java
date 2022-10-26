@@ -51,21 +51,22 @@ public class servletVentas extends HttpServlet {
                 
         String accion;        
         RequestDispatcher dispatcher = null;
-        Ventas venta = new Ventas();
-        
+        Ventas venta = new Ventas();        
         accion = req.getParameter("accion");
-        
-        if("BuscarProducto".equals(accion)){                
+        req.setAttribute("dateNow", LocalDate.now());        
+        if("BuscarProducto".equals(accion)){      
             String idProducto = req.getParameter("codigoProducto");            
-            product = prodDAO.buscarProducto(idProducto);
-            req.setAttribute("product", product);            
-            req.setAttribute("listVentas", listVentas);
-            req.setAttribute("totalPagar", totalPagar);
+            if(prodDAO.buscarProducto(idProducto) != null ){
+                product = prodDAO.buscarProducto(idProducto);                
+                req.setAttribute("product", product);            
+                req.setAttribute("listVentas", listVentas);
+                req.setAttribute("totalPagar", totalPagar);                
+            }else{
+                req.setAttribute("action", "2");
+            }                        
             //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
         }else if("Agregar".equals(accion)){    
-            totalPagar = 0;            
-            System.out.println("ENTRA A AGREGAR VENTA"); 
-            
+            totalPagar = 0;                        
             item = item+1;
             String idProducto = product.getProductId();                  
             String nombreProducto = product.getProductName();
@@ -73,7 +74,7 @@ public class servletVentas extends HttpServlet {
             double price = product.getPrice();
             String cantidad = req.getParameter("cantidad"); 
             int cantidad2 = Integer.parseInt(cantidad);            
-            fechaVenta = req.getParameter("fecha");
+            fechaVenta = req.getParameter("fecha");            
             cliente = req.getParameter("nombreCliente");            
             total = cantidad2*price;
             if(prodDAO.buscarProducto(idProducto).getStock() != 0 && prodDAO.buscarProducto(idProducto).getStock() >= cantidad2){
@@ -81,45 +82,43 @@ public class servletVentas extends HttpServlet {
                 listVentas.add(venta);                
             }else{
                 req.setAttribute("action", "0");
-            }                        
-            System.out.println("TAMAÑO LISTA VENTAS: "+listVentas.size());
+            }            
             for(int i=0; i<listVentas.size(); i++){
                 totalPagar = totalPagar+listVentas.get(i).getPrecioTotal();
             }            
             req.setAttribute("totalPagar", totalPagar);
             req.setAttribute("listVentas", listVentas);                        
         }else if("generarVenta".equals(accion)){
-            System.out.println("ENTRA A GENERAR VENTA");  
-            venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
-            String idVenta = ventasDAO.buscarIdVenta();
-                        
-            for(int i = 0; i < listVentas.size(); i++){
-                ventasDAO.insertarVenta(venta);     
-                venta = new Ventas();
-                Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
-                int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
-                prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
-                venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
-                ventasDAO.guardarDetalleVenta(venta);
-                req.setAttribute("action", "1");
-            }
-            listVentas.removeAll(listVentas);
-            
+            if(!listVentas.isEmpty()){
+                venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
+                String idVenta = ventasDAO.buscarIdVenta();
+                System.out.println("--------: "+idVenta);
+                ventasDAO.insertarVenta(venta);                         
+
+                for(int i = 0; i < listVentas.size(); i++){                                    
+                    Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
+                    int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
+                    prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
+                    venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
+                    ventasDAO.guardarDetalleVenta(venta);                                                                
+                }
+                req.setAttribute("listVentas", listVentas);
+                req.setAttribute("action", "1");             
+                listVentas.removeAll(listVentas);                
+            }else{
+                req.setAttribute("action", "0");
+            }                        
         }else if("Cancelar".equals(accion)){
             listVentas.removeAll(listVentas);
             totalPagar = 0;
             req.setAttribute("totalPagar",totalPagar);
             req.setAttribute("listVentas", listVentas);
-        }else if("Eliminar".equals(accion)){
-            System.out.println("ELIMINAR");
-            String id = req.getParameter("venta");
-            System.out.println("EN ARRAYLIST "+listVentas.size());
-            System.out.println("ID ---->"+id);
+        }else if("Eliminar".equals(accion)){            
+            String id = req.getParameter("venta");            
             for(int i = 0; i < listVentas.size(); i++){
                 if(listVentas.get(i).getIdVenta().equals(id))
                     listVentas.remove(i);
-            }
-            System.out.println("EN ARRAYLIST DESPUÉS DE ELIMINAR "+listVentas.size());
+            }            
             totalPagar = 0;
             req.setAttribute("totalPagar",totalPagar);
         }      

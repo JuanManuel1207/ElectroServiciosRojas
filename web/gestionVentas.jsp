@@ -51,9 +51,9 @@
                                     Gestión Servicios</a>
                                 <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
-                                <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                <a href="servletProducto?accion" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                     Gestión Productos</a>
-                                <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                <a href="servletReporte?accion" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                     Reporte</a>
                             </div>
                         </div>                        
@@ -96,7 +96,7 @@
                             </div>
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">                                    
-                                    <input type="text" name="codigoProducto" value="${product.getProductId()}" class="form-control" placeholder="idProducto" >
+                                    <input type="number" min="0" name="codigoProducto" value="${product.getProductId()}" class="form-control" placeholder="idProducto" required>
                                     <button type="submit" name="accion" value="Buscar" class="btn btn-outline-info ">Buscar</button>
                                 </div>                            
                                 <div class="col-sm-7">
@@ -119,13 +119,13 @@
                                     
                                     <div class="form-group d-flex">
                                         <div class="col-sm-6 d-flex">
-                                            <input type="date" name="fecha" class="form-control ">
+                                            <input type="date" name="fecha" class="form-control" value="${dateNow}" readonly>
                                         </div>                            
                                         <div class="col-sm-4 d-flex">
-                                            <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente">
+                                            <input type="text" name="nombreCliente" class="form-control " placeholder="Cliente" required>
                                         </div>
                                         <div class="col-sm-3 d-flex">
-                                            <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="0">                                    
+                                            <input type="number" name="cantidad" class="form-control " min="1" max="100" placeholder="0" required>                                    
                                         </div>                                
                                     </div>
                                     <div class="form-group">
@@ -183,7 +183,8 @@
                             </div>                                                            
                             <div class="col-sm-4 ml-auto">                             
                                 <input type="text" class="form-control" value="$ ${totalPagar}"name="txtTotal">
-                            </div>
+                            </div>                                                            
+                        </div> 
                             <div class="container">
                                     <c:if test="${action==1}">
                                         <div class="col-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -200,10 +201,16 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                    </c:if>                                    
+                                    </c:if>                                
+                                    <c:if test="${action==2}">
+                                        <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
+                                            Producto no encontrado. Revisar que ID exista.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
                                 </div>
-                                
-                            </div> 
                     </div>
                     
                 </div>                                

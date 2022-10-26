@@ -48,7 +48,7 @@
                             <div class="menu">
                                 <a href="gestionEmpleados.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                     Gestión Empleados</a>
-                                <a href="servletServicio" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                     Gestión Servicios</a>
                                 <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                     Gestión Ventas</a>
@@ -155,7 +155,7 @@
                                     </c:if>
                                     <c:if test="${action==0}">
                                         <div class="col-12 alert alert-danger alert-dismissible fade show" role="alert">
-                                            Acción no realizada.
+                                            Acción no realizada. ID Duplicado
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -182,7 +182,7 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
-                                                <input id="idProducto" type="number" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                       
+                                                <input id="idProducto" type="number" min="0" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                                                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
@@ -211,13 +211,13 @@
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
                                                 </div>
-                                                <input id="cantidad" type="text" class="form-control text-center" name="cantidad" value="<c:out value="${producto.id}"/>" required>                                       
+                                                <input id="cantidad" type="number" class="form-control text-center" name="cantidad" min="0" value="<c:out value="${producto.id}"/>" required>                                       
                                             </div>                                            
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-coin"></i></span></div>
-                                                <input id="precio" type="text" class="form-control text-center" name="precio" value="<c:out value="${producto.id}"/>" placeholder="Precio c/u" required>
+                                                <input id="precio" type="number" class="form-control text-center" name="precio" min="0" value="<c:out value="${producto.id}"/>" placeholder="Precio c/u" required>
                                             </div>
                                         </div>
                                         <div style="margin-bottom: 10px" class="input-group">

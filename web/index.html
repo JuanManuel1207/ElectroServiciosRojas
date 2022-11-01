@@ -57,18 +57,18 @@
                             <h3>Consultar Servicio</h3>
                             <h6>M&oacute;dulo de Clientes</h6>
                         </div>
-                        <form>
-                            <div class="card-body">
-                                <div class="input-group">
-                                    <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-gear"></i></span></div>
-                                    <input id="buscarFactura" type="text" class="form-control text-center" name="buscarFactura" value="" placeholder="# Factura" required>
+                        <form action="servletServicio?action=Consultar" method="POST" autocomplete="off">
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="bi bi-gear"></i></span></div>
+                                        <input id="buscarServicio" type="number" class="form-control text-center" name="buscarServicio" pattern="[0-9]*" placeholder="# Factura" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="form-group">
-                                    <button id="btn-buscar" type="submit" class="btn btn-success btn-block">Buscar</button>
+                                <div class="card-footer">
+                                    <div class="form-group">
+                                        <button id="btn-buscar" type="submit" class="btn btn-success btn-block">Buscar</button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                     <a href="menu.jsp"><h1>MENU</h1></a>

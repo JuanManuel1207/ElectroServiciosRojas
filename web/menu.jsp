@@ -47,10 +47,10 @@
                                         Gestión Servicios</a>
                                     <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                         Gestión Ventas</a>
-                                    <a href="servletProducto?accion" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                    <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                         Gestión Productos</a>
-                                    <a href="servletReporte?accion" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
-                                        Reporte</a>
+                                    <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                        Reportes</a>
                                 </div>
                             </div>
                         </div>

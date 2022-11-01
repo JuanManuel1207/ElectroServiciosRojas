@@ -20,9 +20,6 @@
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
         <link rel="icon" href="./resources/Logo_1.ico" type="image/ico" />
-        <link rel="icon1" href="./resources/Logo.ico" type="image/ico" />
-        <link rel="iconElectro" href="./resources/Electro.jpg" type="image/jpg" />
-        <link rel="iconAdmin" href="./resources/administrador.png" type="image/png" />
     </head>
     <body>
         <div class="container-fluid">
@@ -43,16 +40,16 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <div id="menus">
-                                    <a href="servletEmpleado?accion" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
+                                    <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                         Gestión Empleados</a>
-                                    <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                    <a href="servletServicio" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                         Gestión Servicios</a>
-                                    <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                    <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                         Gestión Ventas</a>
-                                    <a href="gestionProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                    <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                         Gestión Productos</a>
-                                    <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
-                                        Reporte</a>
+                                    <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                        Reportes</a>
                                     
                                 </div>
                             </div>
@@ -80,11 +77,11 @@
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="cedula">Cedula</label>
-                                            <input id="cedula" type="number" pattern="[0-9]*" class="form-control text-center" name="cedula" value="<c:out value="${empleado.cedula}"/>" required>
+                                            <input id="cedula" type="number" pattern="[0-9]*" class="form-control text-center" name="cedula" value="<c:out value="${empleado.cedula}"/>" readonly required>
                                         </div>
                                         <div class="form-group col-sm-4">
                                             <label for="nombre">Nombre</label>
-                                            <input id="nombre" type="text" class="form-control text-center" name="nombre" pattern="[a-zA-z]*" value="<c:out value="${empleado.nombre}"/>" required>
+                                            <input id="nombre" type="text" class="form-control text-center" name="nombre" pattern="[a-zA-z\s]*" value="<c:out value="${empleado.nombre}"/>" required>
                                         </div>
                                     </div>
                                     <div class="form-row">

@@ -26,6 +26,54 @@ public class VentasDAO {
         ConexionBD con = new ConexionBD();
         conexionBD = con.getConexion();
     }
+    public List<Ventas> listarVentasFecha(String fecha){
+        PreparedStatement ps;
+        ResultSet rs;
+        List<Ventas> lista = new ArrayList<>();
+        
+        try {
+            ps = conexionBD.prepareStatement("SELECT * FROM VENTAS WHERE fechaVenta = ?");
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                String idVenta = rs.getInt("idVenta")+"";
+                String cliente = rs.getString("cliente");
+                    //double total = ProductosEnum.valueOf(rs.getString("tipo"));  
+                String fechaVenta = rs.getDate("fechaVenta")+"";
+             //   int cantidad = rs.getInt("cantidad");                    
+                double valorUnitario = rs.getDouble("monto");
+                System.out.println("dentro de DAO: "+ valorUnitario);
+             //   String nombreProducto = rs.getString("name");
+                    
+                Ventas venta = new Ventas(idVenta, cliente, 0, valorUnitario, fechaVenta, "");            
+                lista.add(venta);
+            }
+           return lista;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+    public Double totalVentas(String fecha){
+        PreparedStatement ps;
+        ResultSet rs;
+        Double total = 0.0;
+        try {
+            ps = conexionBD.prepareStatement("SELECT SUM(monto) AS total FROM VENTAS WHERE fechaVenta = ?");
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String aux = rs.getString("total");
+                total = ( (aux==null) ? total : Double.parseDouble(aux) );
+            }
+            return total;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
     
      public List<Ventas> listarVentas(){
             PreparedStatement ps;

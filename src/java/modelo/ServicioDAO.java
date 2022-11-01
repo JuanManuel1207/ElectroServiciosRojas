@@ -29,25 +29,6 @@ public class ServicioDAO {
         connection = connectBD.getConexion();
     }
     
-    public String consultarId(){
-        PreparedStatement ps;
-        ResultSet rs;
-        String id = "";
-        try {
-            ps = connection.prepareStatement("SELECT id AS asig FROM SERVICE ORDER BY id DESC LIMIT 0,1");
-            rs = ps.executeQuery();
-            while(rs.next()){
-                System.out.println("ENTRA AL WHILE DE DAO");
-                String aux = rs.getString("asig");
-                id = ""+(Integer.parseInt(aux)+1);
-            }
-            return id;
-        } catch (SQLException e) {
-            System.out.println(e.toString());
-            return null;
-        }
-    }
-    
     public Double totalServicios(String fecha){
         PreparedStatement ps;
         ResultSet rs;
@@ -98,29 +79,6 @@ public class ServicioDAO {
             return null;
         }
     }
-    
-    public List<Emple> listarEmpleado(){
-        PreparedStatement ps;
-        ResultSet rs;
-        
-        List<Emple> lista = new ArrayList<>();
-        try {
-            ps = connection.prepareStatement("SELECT * FROM EMPLEADO");
-            rs = ps.executeQuery();
-            
-            while(rs.next()){
-                String id = rs.getString("id");
-                String empleado = rs.getString("empleado");
-                Emple emple = new Emple(id, empleado);
-                lista.add(emple);
-            }
-           return lista;
-        } catch (SQLException ex) {
-            Logger.getLogger(ServicioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-    
     public List<Servicio> listarServicio(){
         PreparedStatement ps;
         ResultSet rs;
@@ -132,7 +90,7 @@ public class ServicioDAO {
             rs = ps.executeQuery();
             
             while(rs.next()){
-                String id = rs.getString("id");
+                String id = ""+rs.getInt("id");
                 String cliente = rs.getString("cliente");
                 String tipoServicio = rs.getString("tipo");
                 String estado = rs.getString("estado");
@@ -156,16 +114,16 @@ public class ServicioDAO {
     public boolean ingresarServicio(Servicio servicio){
         PreparedStatement ps;
         try {
-            ps = connection.prepareStatement("INSERT INTO SERVICE(id,cliente,tipo,estado,entrada,salida,descripcion,precio,empleado) VALUES (?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, servicio.getId());
-            ps.setString(2, servicio.getCliente());
-            ps.setString(3, servicio.getTipoServicio());
-            ps.setString(4, servicio.getEstado());            
-            ps.setDate(5, java.sql.Date.valueOf(servicio.getFechaIngreso()));
-            ps.setDate(6, java.sql.Date.valueOf(servicio.getFechaSalida()));
-            ps.setString(7, servicio.getDescripcion());
-            ps.setDouble(8, Double.parseDouble(servicio.getPrecio()) );
-            ps.setInt(9, Integer.parseInt(servicio.getEmpleado()));
+            ps = connection.prepareStatement("INSERT INTO SERVICE(cliente,tipo,estado,entrada,salida,descripcion,precio,empleado) VALUES (?,?,?,?,?,?,?,?)");
+           // ps.setInt(1, Integer.parseInt(servicio.getId()));
+            ps.setString(1, servicio.getCliente());
+            ps.setString(2, servicio.getTipoServicio());
+            ps.setString(3, servicio.getEstado());            
+            ps.setDate(4, java.sql.Date.valueOf(servicio.getFechaIngreso()));
+            ps.setDate(5, java.sql.Date.valueOf(servicio.getFechaSalida()));
+            ps.setString(6, servicio.getDescripcion());
+            ps.setDouble(7, Double.parseDouble(servicio.getPrecio()) );
+            ps.setInt(8, Integer.parseInt(servicio.getEmpleado()));
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -174,14 +132,14 @@ public class ServicioDAO {
         }
     }
     
-    public Servicio buscarServicio(String id){
+    public Servicio buscarServicio(int id){
         PreparedStatement ps;
         ResultSet rs;
         Servicio servicio = null;
         
         try {
             ps = connection.prepareStatement("SELECT * FROM SERVICE WHERE id = ?");
-            ps.setString(1, id);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             
             while (rs.next()) {
@@ -204,11 +162,11 @@ public class ServicioDAO {
         }
     }
     
-    public boolean eliminarServicio(String id){
+    public boolean eliminarServicio(int id){
         PreparedStatement ps;
         try {
             ps = connection.prepareStatement("DELETE FROM SERVICE WHERE id = ?");
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -229,7 +187,7 @@ public class ServicioDAO {
             ps.setString(6, servicio.getDescripcion());
             ps.setDouble(7, Double.parseDouble(servicio.getPrecio()) );
             ps.setInt(8, Integer.parseInt(servicio.getEmpleado()));
-            ps.setString(9, servicio.getId());
+            ps.setInt(9, Integer.parseInt(servicio.getId()));
             ps.execute();
             return true;
         } catch (SQLException e) {

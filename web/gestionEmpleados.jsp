@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gestion empleados</title>
+        <title>Gesti&oacute;n Empleados</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -20,9 +20,6 @@
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
         <link rel="icon" href="./resources/Logo_1.ico" type="image/ico" />
-        <link rel="icon1" href="./resources/Logo.ico" type="image/ico" />
-        <link rel="iconElectro" href="./resources/Electro.jpg" type="image/jpg" />
-        <link rel="iconAdmin" href="./resources/administrador.png" type="image/png" />
     </head>
     <body>
         <div class="container-fluid">
@@ -44,16 +41,16 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <div id="menus">
-                                    <a href="servletEmpleado?accion" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
+                                    <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                         Gestión Empleados</a>
-                                    <a href="gestionServicios.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
+                                    <a href="servletServicio" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                         Gestión Servicios</a>
-                                    <a href="gestionVentas.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
+                                    <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
                                         Gestión Ventas</a>
-                                    <a href="gestionProductos.jsp" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
+                                    <a href="servletProducto" class="d-block text-light p-3 border-0"><i class="bi bi-box-seam lead mr-2"></i>
                                         Gestión Productos</a>
-                                    <a href="reporteProductos.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
-                                        Reporte</a>
+                                    <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
+                                        Reportes</a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a><!-- comment -->
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
@@ -116,8 +113,8 @@
                                                             <td><c:out value="${emp.fechaNacimiento}"/></td>
                                                             <td><c:out value="${emp.correo}"/></td>
                                                             <td><c:out value="${emp.celular}"/></td>
-                                                            <td><c:out value="${emp.salario}"/></td>
-                                                            <td><c:out value="${emp.tipoEmpleado}"/></td>
+                                                            <td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${emp.salario}" /></td>                                                           
+                                                            <td><c:out value="${ (emp.tipoEmpleado == '1') ? 'ADMINISTRADOR':'EMPLEADO' }"/></td>
                                                             <td>
                                                                 <a data-toggle="" href="servletEmpleado?accion=Editar&id=${emp.id}"<i class="bi bi-pencil-square"></i></a>
                                                                 <a href="#" data-href="servletEmpleado?accion=Eliminar&id=${emp.id}" class="bi bi-trash3-fill" data-toggle="modal" data-target="#eliminar"></a> 
@@ -130,6 +127,24 @@
                                         </div>
                                     </c:if>
 
+                                </div>
+                                <div class="container">
+                                    <c:if test="${action==1}">
+                                        <div class=" col-12 alert alert-success alert-dismissible fade show" role="alert">
+                                            Acci&oacute;n realizada con &eacute;xito.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${action==0}">
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                          Acci&oacute;n no realizada.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -147,31 +162,32 @@
                                         <form>
                                             <div class="card-body">
                                                 <div class="form-row">
-                                                    <div class="form-group col-sm-4">
+                                                <!--    <div class="form-group col-sm-4">
                                                         <label for="id">Id</label>
-                                                        <input type="text" id="id" name="id" class="form-control col" required>
+                                                        <input type="text" id="id" name="id" class="form-control col" readonly>
                                                     </div>
-                                                    <div class="form-group col-sm-4">
+                                                -->    
+                                                    <div class="form-group col-sm-5">
                                                         <label for="cedula">Cedula</label>
-                                                        <input id="cedula" type="number" pattern="[0-9]*" class="form-control text-center" name="cedula" required>
+                                                        <input id="cedula" type="number" pattern="[0-9]*" class="form-control text-center" name="cedula" placeholder="n° de cedula" required>
                                                     </div>
-                                                    <div class="form-group col-sm-4">
+                                                    <div class="form-group col-sm-7">
                                                         <label for="nombre">Nombre</label>
-                                                        <input id="nombre" type="text" class="form-control text-center" name="nombre" pattern="[a-zA-z]*" required>
+                                                        <input id="nombre" type="text" class="form-control text-center" name="nombre" pattern="[a-zA-Z\s]*" placeholder="Nombres completos"required>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-sm-4">
                                                         <label for="salario">Salario</label>
-                                                        <input id="salario" type="number" class="form-control text-center" name="salario" required>
+                                                        <input id="salario" type="number" class="form-control text-center" name="salario" placeholder="Salario" required>
                                                     </div>
                                                     <div class="form-group col-sm-4">
                                                         <label for="correo">E-mail</label>
-                                                        <input id="correo" type="email" class="form-control text-center" name="correo" placeholder="Correo electronico" required>
+                                                        <input id="correo" type="email" class="form-control text-center" name="correo" placeholder="Correo" required>
                                                     </div>
                                                     <div class="form-group col-sm-4">
                                                         <label for="celular">Telefono</label>
-                                                        <input id="celular" type="number" pattern="[0-9]*" class="form-control text-center" name="celular"  placeholder="Telefono de contacto" required>
+                                                        <input id="celular" type="number" pattern="[0-9]*" class="form-control text-center" name="celular"  placeholder="# de contacto" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">

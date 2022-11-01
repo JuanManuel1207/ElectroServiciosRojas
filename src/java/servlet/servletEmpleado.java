@@ -30,7 +30,7 @@ public class servletEmpleado extends HttpServlet {
                 List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
                 request.setAttribute("listaEmpleados", listaEmpleados);
             } else if("Agregar".equals(accion)){
-                String id= request.getParameter("id");
+               // String id= request.getParameter("id");
                 String cedula= request.getParameter("cedula");
                 String nombre= request.getParameter("nombre");
                 String fechaNacimiento= request.getParameter("fechaNacimiento");
@@ -38,19 +38,21 @@ public class servletEmpleado extends HttpServlet {
                 String celular= request.getParameter("celular");
                 String salario= request.getParameter("salario");
                 String tipoEmpleado= request.getParameter("tipoEmpleado");
-                if ("1".equals(tipoEmpleado)) {
-                    Empleado empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, "Administrador");
-                    empleadoDAO.insertar(empleado);
-                    System.out.println(empleado.getTipoEmpleado()+"*****");
-                }else if ("2".equals(tipoEmpleado)) {
-                    Empleado empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, "Empleado");
-                    empleadoDAO.insertar(empleado);
+                System.out.println(cedula+" "+nombre+" "+fechaNacimiento+" "+correo+" "+celular+" "+salario+" "+tipoEmpleado);
+                
+                Empleado empleado = new Empleado("",cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado);
+                
+                if(empleadoDAO.insertar(empleado)){
+                    dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
+                    List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
+                    request.setAttribute("listaEmpleados", listaEmpleados);
+                    request.setAttribute("action", "1");
+                }else{
+                    dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
+                    List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
+                    request.setAttribute("listaEmpleados", listaEmpleados);
+                    request.setAttribute("action", "0");
                 }
-                
-                dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
-                List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
-                request.setAttribute("listaEmpleados", listaEmpleados);
-                
             }else if("Eliminar".equals(accion)){
                 System.out.println("LLEGA");
                 String empleado = request.getParameter("id");
@@ -59,11 +61,12 @@ public class servletEmpleado extends HttpServlet {
                     dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
                     List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
                     request.setAttribute("listaEmpleados", listaEmpleados);
-                    
+                    request.setAttribute("action", "1");
                 }else{
                     dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
                     List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
                     request.setAttribute("listaEmpleados", listaEmpleados);
+                    request.setAttribute("action", "0");
                 }
             }else if("Editar".equals(accion)){
                 String id = request.getParameter("id");
@@ -82,18 +85,19 @@ public class servletEmpleado extends HttpServlet {
                 String celular= request.getParameter("celular");
                 String salario= request.getParameter("salario");
                 String tipoEmpleado= request.getParameter("tipoEmpleado");
-                if ("1".equals(tipoEmpleado)) {
-                    Empleado empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, "Administrador");
-                    empleadoDAO.actualizar(empleado);
-                }else if ("2".equals(tipoEmpleado)) {
-                    Empleado empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, "Empleado");
-                    empleadoDAO.actualizar(empleado);
-                }
+                Empleado empleado = new Empleado(id,cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado);
                 
-                dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
-                List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
-                request.setAttribute("listaEmpleados", listaEmpleados);
-                
+                if(empleadoDAO.actualizar(empleado)){
+                    dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
+                    List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
+                    request.setAttribute("listaEmpleados", listaEmpleados);
+                    request.setAttribute("action", "1");
+                }else{
+                    dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
+                    List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
+                    request.setAttribute("listaEmpleados", listaEmpleados);
+                    request.setAttribute("action", "0");
+                }        
             }
             dispatcher.forward(request, response);
     }

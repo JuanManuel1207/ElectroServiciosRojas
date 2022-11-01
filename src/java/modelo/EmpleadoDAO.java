@@ -44,7 +44,6 @@ public class EmpleadoDAO {
                 String celular= rs.getString("celular");
                 String salario= rs.getString("salario");
                 String tipoEmpleado= rs.getString("tipoEmpleado");
-                
                 Empleado empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado);
                 
                 lista.add(empleado);
@@ -91,15 +90,15 @@ public class EmpleadoDAO {
        PreparedStatement ps;
        
         try {
-            ps=conexion.prepareStatement("INSERT INTO empleado (id, cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
-            ps.setString(1, empleado.getId());
-            ps.setString(2, empleado.getCedula());
-            ps.setString(3, empleado.getNombre());
-            ps.setDate(4, java.sql.Date.valueOf(empleado.getFechaNacimiento()));
-            ps.setString(5, empleado.getCorreo());
-            ps.setString(6, empleado.getCelular());
-            ps.setString(7, empleado.getSalario());
-            ps.setString(8, empleado.getTipoEmpleado());
+            ps=conexion.prepareStatement("INSERT INTO empleado (cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado) VALUES (?,?,?,?,?,?,?)");
+        //    ps.setString(1, empleado.getId());
+            ps.setString(1, empleado.getCedula());
+            ps.setString(2, empleado.getNombre());
+            ps.setDate(3, java.sql.Date.valueOf(empleado.getFechaNacimiento()));
+            ps.setString(4, empleado.getCorreo());
+            ps.setString(5, empleado.getCelular());
+            ps.setString(6, empleado.getSalario());
+            ps.setString(7, empleado.getTipoEmpleado());
             ps.execute();
             
             return true;

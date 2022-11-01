@@ -4,7 +4,6 @@
  */
 package pdf;
 
-import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
@@ -13,30 +12,26 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
-import modelo.EmpleadoDAO;
-import modelo.Servicio;
+import modelo.Ventas;
 
 /**
  *
  * @author juanm
  */
-public class ServiciosPDF {
-    private List<Servicio> servicios;
-    private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+public class VentasPDF {
+    private List<Ventas> ventas;
 
-    public ServiciosPDF() {
-    
+    public VentasPDF() {
     }
 
-    public ServiciosPDF(List<Servicio> servicios) {
-        this.servicios = servicios;
+    public VentasPDF(List<Ventas> ventas) {
+        this.ventas = ventas;
     }
     
     public void writeHeader(PdfPTable pdfTable){
@@ -44,48 +39,27 @@ public class ServiciosPDF {
         cell.setBackgroundColor(new Color(191, 70, 17));
        
         
-        cell.setPhrase(new Phrase("ID"));
-        pdfTable.addCell(cell);
-        
-        cell.setPhrase(new Phrase("Tipo Servicio"));
+        cell.setPhrase(new Phrase("Id Venta"));
         pdfTable.addCell(cell);
         
         cell.setPhrase(new Phrase("Cliente"));
         pdfTable.addCell(cell);
         
-        cell.setPhrase(new Phrase("Estado"));
+        cell.setPhrase(new Phrase("Fecha Venta"));
         pdfTable.addCell(cell);
         
-        cell.setPhrase(new Phrase("Ingreso"));
+        cell.setPhrase(new Phrase("Valor Total"));
         pdfTable.addCell(cell);
         
-        cell.setPhrase(new Phrase("Salida"));
-        pdfTable.addCell(cell);
-        
-        cell.setPhrase(new Phrase("Descripción"));
-        pdfTable.addCell(cell);
-        
-        cell.setPhrase(new Phrase("Precio"));
-        pdfTable.addCell(cell);
-        
-        cell.setPhrase(new Phrase("Empleado"));
-        pdfTable.addCell(cell);
     }
     
     
     public void writeTableData(PdfPTable pTable){
-        for (Servicio servicio : servicios) {
-            pTable.addCell(servicio.getId());
-            String tipoServ = ( servicio.getTipoServicio().equals("1") ? "REPARACIÓN":"REVISIÓN");
-            pTable.addCell(tipoServ);
-            pTable.addCell(servicio.getCliente());
-            String estado = (servicio.getEstado().equals("1") ? "EN PROCESO" : "TERMINADO");
-            pTable.addCell(estado);
-            pTable.addCell(servicio.getFechaIngreso());
-            pTable.addCell(servicio.getFechaSalida());
-            pTable.addCell(servicio.getDescripcion());
-            pTable.addCell(servicio.getPrecio());
-            pTable.addCell(empleadoDAO.buscarEmpleados(servicio.getEmpleado()).getNombre());
+        for (Ventas venta : ventas) {
+            pTable.addCell(venta.getIdVenta());
+            pTable.addCell(venta.getCliente());
+            pTable.addCell(venta.getFecha());
+            pTable.addCell(venta.getPriceProduct()+"");
         }
     }
     
@@ -105,13 +79,13 @@ public class ServiciosPDF {
             header.setAlignment(header.ALIGN_CENTER);
             document.add(header);
         */    
-            Paragraph paragraph = new Paragraph("Reporte Servicios");
+            Paragraph paragraph = new Paragraph("Reporte Ventas");
             paragraph.setAlignment(paragraph.ALIGN_CENTER);
             document.add(paragraph);
             
-            PdfPTable table = new PdfPTable(9);
+            PdfPTable table = new PdfPTable(4);
             table.setWidthPercentage(100);
-            table.setWidths(new float[]{1.50f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.5f, 3.0f, 3.0f});
+            table.setWidths(new float[]{3.5f, 3.5f, 3.5f, 3.5f});
             table.setSpacingAfter(10);
             
             writeHeader(table);
@@ -122,6 +96,4 @@ public class ServiciosPDF {
             
             document.close();
         }
-
 }
-

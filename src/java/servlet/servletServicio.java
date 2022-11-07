@@ -25,6 +25,7 @@ import modelo.Empleado;
 import modelo.EmpleadoDAO;
 import modelo.Servicio;
 import modelo.ServicioDAO;
+import pdf.FacturaServicios;
 import pdf.ServiciosPDF;
 
 /**
@@ -72,6 +73,7 @@ public class servletServicio extends HttpServlet {
                 List<Empleado> listaEmple = empleadoDAO.listaEmpleados();
                 request.setAttribute("empleados", listaEmple);
                 request.setAttribute("action", "1");
+         
             }else{
                 dispatcher = request.getRequestDispatcher("gestionServicios.jsp");
                 List<Servicio> listaServicio = servicioDAO.listarServicio();
@@ -170,10 +172,26 @@ public class servletServicio extends HttpServlet {
                 Logger.getLogger(servletServicio.class.getName()).log(Level.SEVERE, null, ex);
             }
             request.getRequestDispatcher("servletServicio?action=ReporteServicios").forward(request, response);
+        }else if("Imprimir".equals(action)){
+                int id = Integer.parseInt(request.getParameter("servicio"));
+                Servicio servicio = servicioDAO.buscarServicio(id);
+                String variable1 = "Content-Disposition";
+                String variable2 = "attachment; filename=FacturaServicio_"+servicio.getCliente()+"_"+servicio.getFechaIngreso()+".pdf";
+                response.setHeader(variable1, variable2);
+                FacturaServicios facturaServicios = new FacturaServicios(servicio);
+                try {
+                    facturaServicios.export(response);
+
+                } catch (DocumentException ex) {
+                    Logger.getLogger(servletServicio.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                request.getRequestDispatcher("servletServicio").forward(request, response);
         }
         dispatcher.forward(request, response);
     }
 
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *

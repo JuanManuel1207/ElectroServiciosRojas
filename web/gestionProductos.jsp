@@ -6,7 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+    if(session.getAttribute("infoEmpleado") != null){
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,8 +45,10 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <div id="menus">
-                                    <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
+                                    <c:if test="${infoEmpleado.getTipoEmpleado()==1}">
+                                        <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                         Gestión Empleados</a>
+                                    </c:if>
                                     <a href="servletServicio" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                         Gestión Servicios</a>
                                     <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
@@ -72,12 +76,8 @@
                             <h1>
 
                             </h1>
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirProducto">Nuevo producto</button>
-                            <!-- comment<h6 class="form-inline position-relative d-inline-block my-2" style="color: #263580">ElectroServicios Rojas @ ElectroServicios Rojas @ ElectroServicios Rojas @ ElectroServicios</h6> -->
-                            <a href="index.html" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i></a>
-                            <h1>
-
-                            </h1>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#añadirProducto"><i class="bi bi-box-seam lead mr-2"></i>Nuevo producto</button>
+                            <a href="servletEmpleado?accion=cerrarSesion" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i>Cerrar Sesi&oacute;n</a>
                         </div>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
@@ -253,3 +253,8 @@
 
 </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("index.jsp");
+    }
+%>

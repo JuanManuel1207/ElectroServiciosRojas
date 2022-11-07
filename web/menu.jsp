@@ -5,10 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    if(session.getAttribute("infoEmpleado") != null){
+%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Menu</title>
+        <title>Men&uacute; | WebESR</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -41,8 +45,10 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <div id="menus">
-                                    <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
+                                    <c:if test="${infoEmpleado.getTipoEmpleado()==1}">
+                                        <a href="servletEmpleado" class="d-block text-light p-3 border-0"><i class="bi bi-person-lines-fill lead mr-2"></i>
                                         Gestión Empleados</a>
+                                    </c:if>                                    
                                     <a href="servletServicio" class="d-block text-light p-3 border-0"><i class="bi bi-hdd-rack lead mr-2"></i>
                                         Gestión Servicios</a>
                                     <a href="servletVentas" class="d-block text-light p-3 border-0"><i class="bi bi-cart4 lead mr-2"></i>
@@ -59,7 +65,20 @@
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <div id="contenido">
+                        <div class="container">
+                            <div>
+                                <h1>
 
+                                </h1>
+                                <a href="servletEmpleado?accion=cerrarSesion" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i>Cerrar Sesi&oacute;n</a>
+                                <h1>
+
+                                </h1>
+                            </div>
+                            <div class="alert alert-success" role="alert">
+                                <h4 class="text-center">Bienvenido <c:out value="${infoEmpleado.getNombre()}"/> al Sistema WebESR.</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,3 +91,8 @@
 
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("index.jsp");
+    }
+%>

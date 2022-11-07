@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
 
@@ -54,9 +55,7 @@ public class servletEmpleado extends HttpServlet {
                     request.setAttribute("action", "0");
                 }
             }else if("Eliminar".equals(accion)){
-                System.out.println("LLEGA");
                 String empleado = request.getParameter("id");
-                System.out.println("jdsajs: "+empleado);
                 if(empleadoDAO.eliminar(empleado)){
                     dispatcher = request.getRequestDispatcher("gestionEmpleados.jsp");
                     List<Empleado> listaEmpleados = empleadoDAO.listaEmpleados();
@@ -70,10 +69,8 @@ public class servletEmpleado extends HttpServlet {
                 }
             }else if("Editar".equals(accion)){
                 String id = request.getParameter("id");
-                System.out.println(id);
                 dispatcher = request.getRequestDispatcher("editarEmpleado.jsp");
                 Empleado empleado = empleadoDAO.buscarEmpleados(id);
-                System.out.println(empleado);
                 request.setAttribute("empleado", empleado);
                 
             }else if("Guardar".equals(accion)){
@@ -98,6 +95,24 @@ public class servletEmpleado extends HttpServlet {
                     request.setAttribute("listaEmpleados", listaEmpleados);
                     request.setAttribute("action", "0");
                 }        
+            }else if("ValidarCredenciales".equals(accion)){
+                String user = request.getParameter("user");
+                String pass = request.getParameter("password");
+                HttpSession session;
+                if(empleadoDAO.validarCredenciales(user, pass)){
+                    session = request.getSession();
+                    session.setAttribute("infoEmpleado", empleadoDAO.buscarUser(user));
+                    dispatcher = request.getRequestDispatcher("menu.jsp");
+                    //request.setAttribute("infoEmpleado", empleadoDAO.buscarUser(user));
+                }else{
+                    dispatcher = request.getRequestDispatcher("index.jsp");
+                    request.setAttribute("estado", 0);
+                }
+            }else if("cerrarSesion".equals(accion)){
+                HttpSession session = request.getSession();
+                session.setAttribute("infoEmpleado", null);
+                session.invalidate();
+                dispatcher = request.getRequestDispatcher("index.jsp");
             }
             dispatcher.forward(request, response);
     }

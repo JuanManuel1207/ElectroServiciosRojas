@@ -40,13 +40,13 @@
                             <h1>
 
                             </h1>
-                            <a href="index.html" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i></a>
+                            <a href="index.jsp" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i></a>
                             <h1>
 
                             </h1>
                         </div>
                         <div class="col-sm-12">
-                       <div class="card">
+                            <div class="card col-xs-12">
                             <div class="card-header">
                                 <h5>M&oacute;dulo de consulta de Servicios</h5>
                             </div>

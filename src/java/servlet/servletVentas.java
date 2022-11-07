@@ -28,6 +28,7 @@ import modelo.ProductoDAO;
 import modelo.ProductosEnum;
 import modelo.Ventas;
 import modelo.VentasDAO;
+import pdf.FacturaVentas;
 import pdf.VentasPDF;
 
 /**
@@ -148,9 +149,7 @@ public class servletVentas extends HttpServlet {
             req.setAttribute("totalVentas", totalVentas);
 
         }else if("generarReporte".equals(accion)){
-            System.out.println("GENERAR REPORTE");
             String date = req.getParameter("date");
-            System.out.println("Generar reporte "+date);
             DateFormat dateFormat = new SimpleDateFormat("hh:mm aaa");
             String nameFile = dateFormat.format(new java.util.Date());
             String variable1 = "Content-Disposition";
@@ -164,7 +163,20 @@ public class servletVentas extends HttpServlet {
             }
             
             req.getRequestDispatcher("servletVentas?accion=ReporteVentas").forward(req, resp);
-        }  
+        }else if("Imprimir".equals(accion)){
+                int id = Integer.parseInt(req.getParameter("venta"));
+                String variable1 = "Content-Disposition";
+                String variable2 = "attachment; filename=FacturaVenta_"+id+".pdf";
+                resp.setHeader(variable1, variable2);
+                FacturaVentas facturaVentas = new FacturaVentas(ventasDAO.obtenerVenta(id));
+                try {
+                    facturaVentas.export(resp);
+
+                } catch (DocumentException ex) {
+                    Logger.getLogger(servletServicio.class.getName()).log(Level.SEVERE, null, ex);
+                }   
+                req.getRequestDispatcher("servletVentas?accion=ReporteVentas").forward(req, resp);
+            }  
 //        dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         
         dispatcher.forward(req,resp);    

@@ -5,6 +5,8 @@
 package modelo;
 
 import config.ConexionBD;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,6 +57,37 @@ public class EmpleadoDAO {
         }
     }
    
+    public Empleado buscarUser(String user){
+       PreparedStatement ps;
+       ResultSet rs;
+       
+       Empleado empleado = null;
+        try {
+            ps=conexion.prepareStatement("SELECT * FROM empleado WHERE usuario=?");
+            ps.setString(1, user);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                
+                String id= rs.getString("id");
+                String cedula= rs.getString("cedula");
+                String nombre= rs.getString("nombre");
+                String fechaNacimiento= ""+rs.getDate("fechaNacimiento");
+                String correo= rs.getString("correo");
+                String celular= rs.getString("celular");
+                String salario= rs.getString("salario");
+                String tipoEmpleado= rs.getString("tipoEmpleado");
+                
+                empleado = new Empleado(id, cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado);
+                
+            }
+            return empleado;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
+    
     public Empleado buscarEmpleados(String _id){
        PreparedStatement ps;
        ResultSet rs;
@@ -90,7 +123,7 @@ public class EmpleadoDAO {
        PreparedStatement ps;
        
         try {
-            ps=conexion.prepareStatement("INSERT INTO empleado (cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado) VALUES (?,?,?,?,?,?,?)");
+            ps=conexion.prepareStatement("INSERT INTO empleado (cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado, usuario, contraseña) VALUES (?,?,?,?,?,?,?,?,?)");
         //    ps.setString(1, empleado.getId());
             ps.setString(1, empleado.getCedula());
             ps.setString(2, empleado.getNombre());
@@ -99,6 +132,8 @@ public class EmpleadoDAO {
             ps.setString(5, empleado.getCelular());
             ps.setString(6, empleado.getSalario());
             ps.setString(7, empleado.getTipoEmpleado());
+            ps.setString(8, empleado.getCedula());
+            ps.setString(9, hashPassword(empleado.getCedula()));
             ps.execute();
             
             return true;
@@ -106,6 +141,50 @@ public class EmpleadoDAO {
             System.out.println(e.toString());
             return false;
         }
+    }
+    
+    public boolean validarCredenciales(String user, String pass){
+       String aux = hashPassword(pass);
+       PreparedStatement ps;
+       ResultSet rs;
+       try{       
+           ps = conexion.prepareStatement("select usuario,contraseña from empleado where usuario=?");
+           ps.setString(1, user);
+           rs = ps.executeQuery();
+           
+           while(rs.next()){
+               if( rs.getString("contraseña").equals(aux) && rs.getString("usuario").equals(user)){
+                   return true;
+               }
+               return false;
+           }
+           return false;
+       }catch(SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+    
+    public String hashPassword(String password){
+        
+        String generatedPassword = null;
+        try 
+        {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+
+            byte[] bytes = md.digest();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+      
     }
 
     public boolean actualizar(Empleado empleado){

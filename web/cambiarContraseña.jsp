@@ -97,7 +97,7 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-sm-8">
-                                                <button id="btn-buscar" type="submit" class="btn btn-warning btn-outline-dark btn-block">Buscar</button>
+                                                <button id="btn-buscar" type="submit" class="btn btn-warning btn-outline-dark btn-block">Cambiar</button>
                                             </div>
                                         </div>
                                     </div>

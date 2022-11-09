@@ -14,11 +14,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -176,6 +179,12 @@ public class EmpleadoDAO {
         }
     }
     
+    private String randomPass(){
+        Random rnd = new Random();
+        int pass = rnd.nextInt(9999999);
+        return String.format("%07d", pass);
+    }
+    
     public boolean existeMail(String mail){
        PreparedStatement ps;
        ResultSet rs;
@@ -186,13 +195,10 @@ public class EmpleadoDAO {
            
            while(rs.next()){
                if( rs.getString("correo").equals(mail)){
-                 //  int generatePass = (int)Math.random()*(6666-1000);
-                   //System.out.println("Generate pass: "+generatePass);
-                   if(cambiarContraseña("1000163339"/*generatePass*/, rs.getString("id"))){
-                        if(enviarMail(mail, "1000163339")==true){
-                            return true;
-                        }
-                        return false;
+                   String generatePass = randomPass();
+                   System.out.println("Generate pass: "+generatePass);
+                   if(cambiarContraseña(generatePass, rs.getString("id"))){
+                        return enviarMail(mail, generatePass);
                    }
                     return false;
                }
@@ -242,54 +248,42 @@ public class EmpleadoDAO {
     }
     
     public boolean enviarMail(String mail, String generatePass){
+        boolean status = false;
         String emailFrom = "electroserviciosrojas.soporte@gmail.com";
         String passFrom = "mnexgshlfrmsyoju";
         String titulo = "Solicitud Recuperación de Contraseña WebESR";
         String mensaje = "Su contraseña ha sido restablecida correctamente, la nueva contraseña es: "+generatePass;
         
-        Properties mProperties = new Properties();
-        Session mSession;
-        MimeMessage mCorreo;
-        
-        mProperties.put("mail.smtp.host", "smtp.gmail.com");
-        mProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        mProperties.setProperty("mail.smtp.starttls.enable", "true");
-        mProperties.setProperty("mail.smtp.port", "587");
-        mProperties.setProperty("mail.smtp.user",emailFrom);
-        mProperties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        mProperties.setProperty("mail.smtp.auth", "true");
-        
-        mSession = Session.getDefaultInstance(mProperties);
-
         try {
-                mCorreo = new MimeMessage(mSession);
-                mCorreo.setFrom(new InternetAddress(emailFrom));
-                mCorreo.setRecipient(Message.RecipientType.TO, new InternetAddress(mail));
-                mCorreo.setSubject(titulo);
-                mCorreo.setText(mensaje, "ISO-8859-1", "html");
-
-                try {
-                Transport mTransport = mSession.getTransport("smtp");
-                mTransport.connect(emailFrom, passFrom);
-                mTransport.sendMessage(mCorreo, mCorreo.getRecipients(Message.RecipientType.TO));
-                mTransport.close();
-                return true;
-            } catch (NoSuchProviderException ex) {
-                Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            } catch (MessagingException ex) {
-                Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+            Properties pr = new Properties();
+            pr.setProperty("mail.smtp.host", "smtp.gmail.com");
+            pr.setProperty("mail.smtp.port", "587");
+            pr.setProperty("mail.smtp.auth", "true");
+            pr.setProperty("mail.smtp.starttls.enable", "true");
+            pr.put("mail.smtp.socketFactory.port", "587");
+            pr.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             
-        } catch (AddressException ex) {
-            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } catch (MessagingException ex) {
-            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-
+            Session session = Session.getInstance(pr, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication(){
+                    return new PasswordAuthentication(emailFrom, passFrom);
+                }
+            });
+            
+            Message mess = new MimeMessage(session);
+            
+            mess.setFrom(new InternetAddress(emailFrom));            
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(mail));
+            mess.setSubject(titulo);
+            mess.setText(mensaje);
+            
+            Transport.send(mess);
+            status = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        
+        return status;
     }
     
     public String hashPassword(String password){

@@ -13,6 +13,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -162,6 +173,122 @@ public class EmpleadoDAO {
        }catch(SQLException e) {
             System.out.println(e.toString());
             return false;
+        }
+    }
+    
+    public boolean existeMail(String mail){
+       PreparedStatement ps;
+       ResultSet rs;
+       try{       
+           ps = conexion.prepareStatement("select * from empleado where correo=?");
+           ps.setString(1, mail);
+           rs = ps.executeQuery();
+           
+           while(rs.next()){
+               if( rs.getString("correo").equals(mail)){
+                 //  int generatePass = (int)Math.random()*(6666-1000);
+                   //System.out.println("Generate pass: "+generatePass);
+                   if(cambiarContraseña("1000163339"/*generatePass*/, rs.getString("id"))){
+                        if(enviarMail(mail, "1000163339")==true){
+                            return true;
+                        }
+                        return false;
+                   }
+                    return false;
+               }
+               return false;
+           }
+           return false;
+       }catch(SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+    
+    public boolean comparePassword(String currentpass, String id){
+       String aux = hashPassword(currentpass);
+       PreparedStatement ps;
+       ResultSet rs;
+       try{       
+           ps = conexion.prepareStatement("select contraseña from empleado where id=?");
+           ps.setString(1, id);
+           rs = ps.executeQuery();
+           
+           while(rs.next()){
+               if( rs.getString("contraseña").equals(aux)){
+                   return true;
+               }
+               return false;
+           }
+           return false;
+       }catch(SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+    public boolean cambiarContraseña(String newPass, String id){
+        String aux = hashPassword(newPass);
+        PreparedStatement ps;
+        try {
+            ps=conexion.prepareStatement("UPDATE empleado SET contraseña=? WHERE id=?");
+            ps.setString(1, aux);
+            ps.setString(2, id);
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+    
+    public boolean enviarMail(String mail, String generatePass){
+        String emailFrom = "electroserviciosrojas.soporte@gmail.com";
+        String passFrom = "mnexgshlfrmsyoju";
+        String titulo = "Solicitud Recuperación de Contraseña WebESR";
+        String mensaje = "Su contraseña ha sido restablecida correctamente, la nueva contraseña es: "+generatePass;
+        
+        Properties mProperties = new Properties();
+        Session mSession;
+        MimeMessage mCorreo;
+        
+        mProperties.put("mail.smtp.host", "smtp.gmail.com");
+        mProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        mProperties.setProperty("mail.smtp.starttls.enable", "true");
+        mProperties.setProperty("mail.smtp.port", "587");
+        mProperties.setProperty("mail.smtp.user",emailFrom);
+        mProperties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        mProperties.setProperty("mail.smtp.auth", "true");
+        
+        mSession = Session.getDefaultInstance(mProperties);
+
+        try {
+                mCorreo = new MimeMessage(mSession);
+                mCorreo.setFrom(new InternetAddress(emailFrom));
+                mCorreo.setRecipient(Message.RecipientType.TO, new InternetAddress(mail));
+                mCorreo.setSubject(titulo);
+                mCorreo.setText(mensaje, "ISO-8859-1", "html");
+
+                try {
+                Transport mTransport = mSession.getTransport("smtp");
+                mTransport.connect(emailFrom, passFrom);
+                mTransport.sendMessage(mCorreo, mCorreo.getRecipients(Message.RecipientType.TO));
+                mTransport.close();
+                return true;
+            } catch (NoSuchProviderException ex) {
+                Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            } catch (MessagingException ex) {
+                Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            
+        } catch (AddressException ex) {
+            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (MessagingException ex) {
+            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+
         }
     }
     

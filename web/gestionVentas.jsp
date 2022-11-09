@@ -58,6 +58,8 @@
                                         Gestión Productos</a>
                                     <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                         Reportes</a>
+                                    <a href="cambiarContraseña.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-key lead mr-2"></i>
+                                        Cambiar Contraseña</a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a><!-- comment -->
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
@@ -143,7 +145,6 @@
                             <div class="table-responsive" id="tablaProd">
                                 <table class="table table-striped">
                                         <thead>
-                                            <th>Nro</th>
                                             <th>ID Producto</th>
                                             <th>Nombre Producto</th>
                                             <th>TipoProducto</th>
@@ -157,7 +158,6 @@
                                         <tbody>
                                             <c:forEach var="list" items="${listVentas}">
                                               <tr>
-                                                <td><c:out value="${list.idVenta}"/></td>
                                                 <td><c:out value="${list.idProducto}"/></td>
                                                 <td><c:out value="${list.productName}"/></td>
                                                 <td><c:out value="${list.productType}"/></td>

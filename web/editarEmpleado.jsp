@@ -56,7 +56,8 @@
                                         Gestión Productos</a>
                                     <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                         Reportes</a>
-                                    
+                                    <a href="cambiarContraseña.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-key lead mr-2"></i>
+                                        Cambiar Contraseña</a>
                                 </div>
                             </div>
 

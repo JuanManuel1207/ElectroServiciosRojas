@@ -26,7 +26,6 @@ public class ConexionBD {
         try {
             Class.forName( DRIVER );
             conexion = DriverManager.getConnection(URL,USER,PASS);
-            System.out.println("conexion exitosa electServRojas");
             return conexion;
         } catch (SQLException ex) {
             System.out.println(ex.toString());

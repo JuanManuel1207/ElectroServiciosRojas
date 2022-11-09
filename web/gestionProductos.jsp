@@ -57,6 +57,8 @@
                                         Gestión Productos</a>
                                     <a href="reporteServicios.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-card-list lead mr-2"></i>
                                         Reportes</a>
+                                    <a href="cambiarContraseña.jsp" class="d-block text-light p-3 border-0"> <i class="bi bi-key lead mr-2"></i>
+                                        Cambiar Contraseña</a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
                                     <a href="#" class="d-block text-light p-3 border-0"></a><!-- comment -->
                                     <a href="#" class="d-block text-light p-3 border-0"></a>
@@ -151,14 +153,14 @@
                                 <div class="modal-body">
                                     <form action="servletProducto?accion=Insertar" method="POST" autocomplete="off">
                                     <div class="card-body">
-                                        <div style="margin-bottom: 10px" class="input-group">
-                                            <div class="input-group">
+                                    <!--     <div style="margin-bottom: 10px" class="input-group">
+                                           <div class="input-group">
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text" id="inputGroup-sizing-default">ID producto</span>
                                                 </div>
                                                 <input id="idProducto" type="number" min="0" class="form-control text-center" name="idProducto" value="<c:out value="${producto.id}"/>" required>                                                                                       
                                             </div>                                            
-                                        </div>
+                                        </div>-->
                                         <div style="margin-bottom: 10px" class="input-group">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">

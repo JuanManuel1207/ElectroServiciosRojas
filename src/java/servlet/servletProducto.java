@@ -40,7 +40,7 @@ public class servletProducto extends HttpServlet {
             req.setAttribute("listaProductos", listProducts);       
             
         }else if("Insertar".equals(accion)){
-            String productId = req.getParameter("idProducto");
+            //String productId = req.getParameter("idProducto");
             String productName = req.getParameter("name");
             String productType = req.getParameter("select");  
             ProductosEnum productEnum = (productType.equals("0"))? ProductosEnum.valueOf("ELECTRODOMESTICO") : ProductosEnum.valueOf("REPUESTO");
@@ -49,7 +49,7 @@ public class servletProducto extends HttpServlet {
             String brand = req.getParameter("marca");
             String modelo = req.getParameter("modelo");
             
-            Producto product = new Producto(productId, productName, productEnum, stock, price, brand, modelo);
+            Producto product = new Producto("", productName, productEnum, stock, price, brand, modelo);
             if(productoDAO.insertarDB(product)){
                 dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
                 List<Producto> listProducts = productoDAO.listarProductos();

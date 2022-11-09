@@ -50,7 +50,7 @@
                                     <input id="password" type="password" class="form-control text-center" name="password" placeholder="Contrase&ntilde;a" required>
                                 </div>
                                 <div style="font-size:85%" >
-                                    <a href=""><u>¿Olvid&oacute; su contrase&ntilde;a?</u></a>
+                                    <a href="recuperarContraseña.jsp"><u>¿Olvid&oacute; su contrase&ntilde;a?</u></a>
                                 </div>
                                 
                             </div>

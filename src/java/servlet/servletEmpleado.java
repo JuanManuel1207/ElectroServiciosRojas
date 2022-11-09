@@ -113,6 +113,26 @@ public class servletEmpleado extends HttpServlet {
                 session.setAttribute("infoEmpleado", null);
                 session.invalidate();
                 dispatcher = request.getRequestDispatcher("index.jsp");
+            }else if("Recuperar".equals(accion)){
+                String mail =request.getParameter("enviarMail");
+                dispatcher = request.getRequestDispatcher("recuperarContraseña.jsp");
+                if(empleadoDAO.existeMail(mail)){
+                    request.setAttribute("estado",1);    
+                }else{
+                    request.setAttribute("estado",0);
+                }
+                
+            }else if("CambiarContraseña".equals(accion)){
+                String idEmpleado = request.getParameter("idEmpleado");
+                String currentPass = request.getParameter("currentPassword");
+                String newPassword = request.getParameter("newPassword");
+                dispatcher = request.getRequestDispatcher("cambiarContraseña.jsp");
+                if(empleadoDAO.comparePassword(currentPass, idEmpleado)){
+                    empleadoDAO.cambiarContraseña(newPassword, idEmpleado);
+                    request.setAttribute("estado",1);    
+                }else{
+                    request.setAttribute("estado",0);
+                }
             }
             dispatcher.forward(request, response);
     }

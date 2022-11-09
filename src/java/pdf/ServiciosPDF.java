@@ -7,6 +7,8 @@ package pdf;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -90,7 +92,6 @@ public class ServiciosPDF {
     }
     
     public void export(HttpServletResponse response) throws DocumentException{
-        
         Document document = new Document(PageSize.LETTER.rotate());
         
         try {
@@ -99,15 +100,10 @@ public class ServiciosPDF {
             Logger.getLogger(ServiciosPDF.class.getName()).log(Level.SEVERE, null, ex);
         }
             document.open();
-            
-       /*     com.lowagie.text.Image header = com.lowagie.text.Image.getInstance("Electro.jpg");
-            header.scaleToFit(650, 1000);
-            header.setAlignment(header.ALIGN_CENTER);
-            document.add(header);
-        */    
-            Paragraph paragraph = new Paragraph("Reporte Servicios");
+            Paragraph paragraph = new Paragraph(new Phrase("Reporte Servicios"));
             paragraph.setAlignment(paragraph.ALIGN_CENTER);
             document.add(paragraph);
+            
             
             PdfPTable table = new PdfPTable(9);
             table.setWidthPercentage(100);

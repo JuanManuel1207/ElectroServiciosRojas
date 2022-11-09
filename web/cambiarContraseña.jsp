@@ -1,6 +1,6 @@
 <%-- 
-    Document   : menu
-    Created on : 31/05/2022, 07:54:53 PM
+    Document   : cambiarContraseña
+    Created on : 8/11/2022, 01:28:28 PM
     Author     : juanm
 --%>
 
@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Men&uacute; | WebESR</title>
+        <title>Cambio Contrase&ntilde;a | WebESR</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -67,18 +67,59 @@
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <div id="contenido">
-                        <div class="container">
-                            <div>
-                                <h1>
-
-                                </h1>
-                                <a href="servletEmpleado?accion=cerrarSesion" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i>Cerrar Sesi&oacute;n</a>
-                                <h1>
-
-                                </h1>
-                            </div>
-                            <div class="alert alert-success" role="alert">
-                                <h4 class="text-center">Bienvenido <c:out value="${infoEmpleado.getNombre()}"/> al Sistema WebESR.</h4>
+                        <div>
+                            <br>
+                            <a href="servletEmpleado?accion=cerrarSesion" type="button" class="btn btn-danger form-inline position-relative d-inline-block my-2" id="cerrar"><i class="bi bi-box-arrow-right lead mr-2"></i>Cerrar Sesi&oacute;n</a>
+                        </div>
+                        <div class="col mb-auto">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h5>Cambio de Contrase&ntilde;a</h5>
+                                </div>
+                                <form action="servletEmpleado?accion=CambiarContraseña" method="POST" autocomplete="off">
+                                    <div class="card-body">
+                                        <input type="hidden" id="idEmpleado" name="idEmpleado" value="${infoEmpleado.getId()}" />
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-4">
+                                                <label for="currentPassword">Contraseña Actual: </label>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <input type="password" id="currentPassword" name="currentPassword" class="form-control col" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-4">
+                                                <label for="newPassword">Contraseña Nueva: </label>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <input type="password" id="newPassword" name="newPassword" class="form-control col" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-8">
+                                                <button id="btn-buscar" type="submit" class="btn btn-warning btn-outline-dark btn-block">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="card-footer">
+                                    <c:if test="${estado==0}">
+                                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                            Acción no realizada.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>        
+                                    </c:if>
+                                    <c:if test="${estado==1}">
+                                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                                Acción realizada con éxito.
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
                     </div>

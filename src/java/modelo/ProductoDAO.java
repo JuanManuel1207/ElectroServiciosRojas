@@ -56,14 +56,14 @@ public class ProductoDAO {
     public boolean insertarDB(Producto product){
         PreparedStatement ps;
         try{
-            ps = conexionBD.prepareStatement("INSERT INTO productos(id, name, tipo, cantidad, precio, marca, modelo) values(?,?,?,?,?,?,?)");
-            ps.setInt(1, Integer.parseInt(product.getProductId()));
-            ps.setString(2, product.getProductName());
-            ps.setString(3, product.getProductType().toString());
-            ps.setInt(4, product.getStock());
-            ps.setDouble(5, product.getPrice());
-            ps.setString(6, product.getBrand());
-            ps.setString(7, product.getModel());
+            ps = conexionBD.prepareStatement("INSERT INTO productos(name, tipo, cantidad, precio, marca, modelo) values(?,?,?,?,?,?)");
+          //  ps.setInt(1, Integer.parseInt(product.getProductId()));
+            ps.setString(1, product.getProductName());
+            ps.setString(2, product.getProductType().toString());
+            ps.setInt(3, product.getStock());
+            ps.setDouble(4, product.getPrice());
+            ps.setString(5, product.getBrand());
+            ps.setString(6, product.getModel());
             ps.execute();
             return true;
         }catch(SQLException e){
@@ -89,8 +89,8 @@ public class ProductoDAO {
                     ProductosEnum productEnum = ProductosEnum.valueOf(rs.getString("tipo"));                    
                     int stock = rs.getInt("cantidad");
                     double price = rs.getDouble("precio");
-                    String brand = rs.getString("modelo");
-                    String model = rs.getString("marca");
+                    String brand = rs.getString("marca");
+                    String model = rs.getString("modelo");
                     product = new Producto(productId,productName,productEnum,stock,price,brand,model);                                        
                 }
                 return product;
@@ -131,15 +131,14 @@ public class ProductoDAO {
     public boolean actualiarProducto(Producto product){
         PreparedStatement ps;
         try{
-            ps= conexionBD.prepareStatement("UPDATE productos SET id=?, name=?, tipo=?, cantidad=?, precio=?, marca=?, modelo=? WHERE id=?");
-            ps.setInt(1, Integer.parseInt(product.getProductId()));
-            ps.setString(2, product.getProductName());
-            ps.setString(3, product.getProductType().toString());
-            ps.setString(4, String.valueOf(product.getStock()));
-            ps.setString(5, String.valueOf(product.getPrice()));
-            ps.setString(6, product.getBrand());
-            ps.setString(7, product.getModel());
-            ps.setString(8, product.getProductId());
+            ps= conexionBD.prepareStatement("UPDATE productos SET name=?, tipo=?, cantidad=?, precio=?, marca=?, modelo=? WHERE id=?");
+            ps.setString(1, product.getProductName());
+            ps.setString(2, product.getProductType().toString());
+            ps.setString(3, String.valueOf(product.getStock()));
+            ps.setString(4, String.valueOf(product.getPrice()));
+            ps.setString(5, product.getBrand());
+            ps.setString(6, product.getModel());
+            ps.setInt(7, Integer.parseInt(product.getProductId()));
             ps.execute();
             return true;         
         }catch(SQLException ex){

@@ -72,6 +72,8 @@ public class servletVentas extends HttpServlet {
             }else{
                 req.setAttribute("action", "2");
                 dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+                req.setAttribute("totalPagar", totalPagar);
+                req.setAttribute("listVentas", listVentas);
             }                        
             //dispatcher = req.getRequestDispatcher("gestionVentas.jsp");            
         }else if("Agregar".equals(accion)){    

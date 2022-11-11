@@ -108,7 +108,6 @@ public class servletVentas extends HttpServlet {
             if(!listVentas.isEmpty()){
                 venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
                 String idVenta = ventasDAO.buscarIdVenta();
-                System.out.println("--------: "+idVenta);
                 ventasDAO.insertarVenta(venta);                         
 
                 for(int i = 0; i < listVentas.size(); i++){                                    
@@ -141,7 +140,6 @@ public class servletVentas extends HttpServlet {
             req.setAttribute("totalPagar",totalPagar);
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         }else if("ReporteVentas".equals(accion)){
-            System.out.println("reporte ventas");
             String fechaVenta = req.getParameter("fechaVenta");
             dispatcher = req.getRequestDispatcher("reporteVentas.jsp");
             List<Ventas> listaVentas = ventasDAO.listarVentasFecha(fechaVenta);

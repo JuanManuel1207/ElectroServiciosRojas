@@ -39,7 +39,6 @@ public class servletEmpleado extends HttpServlet {
                 String celular= request.getParameter("celular");
                 String salario= request.getParameter("salario");
                 String tipoEmpleado= request.getParameter("tipoEmpleado");
-                System.out.println(cedula+" "+nombre+" "+fechaNacimiento+" "+correo+" "+celular+" "+salario+" "+tipoEmpleado);
                 
                 Empleado empleado = new Empleado("",cedula, nombre, fechaNacimiento, correo, celular, salario, tipoEmpleado);
                 

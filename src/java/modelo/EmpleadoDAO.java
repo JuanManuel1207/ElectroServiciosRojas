@@ -196,7 +196,6 @@ public class EmpleadoDAO {
            while(rs.next()){
                if( rs.getString("correo").equals(mail)){
                    String generatePass = randomPass();
-                   System.out.println("Generate pass: "+generatePass);
                    if(cambiarContraseña(generatePass, rs.getString("id"))){
                         return enviarMail(mail, generatePass);
                    }

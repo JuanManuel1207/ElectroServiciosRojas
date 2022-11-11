@@ -103,7 +103,6 @@ public class servletServicio extends HttpServlet {
             
             
         }else if ("Editar".equals(action)) {
-            System.out.println("editar");
             int id = Integer.parseInt(request.getParameter("servicio"));
             dispatcher = request.getRequestDispatcher("editarServicio.jsp");
             List<Servicio> listaServicio = new ArrayList<>();

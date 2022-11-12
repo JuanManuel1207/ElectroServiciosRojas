@@ -102,7 +102,7 @@ public class ProductoDAO {
     
     public boolean actualizarStock(int idProducto, int stock){
         PreparedStatement ps;
-        String sql = "UPDATE PRODUCTOS SET cantidad=? WHERE id=?";
+        String sql = "UPDATE productos SET cantidad=? WHERE id=?";
         try{
             ps = conexionBD.prepareStatement(sql);
             ps.setInt(1,stock);

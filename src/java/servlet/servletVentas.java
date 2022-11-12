@@ -105,16 +105,17 @@ public class servletVentas extends HttpServlet {
             }
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
         }else if("generarVenta".equals(accion)){
+            
             if(!listVentas.isEmpty()){
                 venta = new Ventas(cliente,fechaVenta,totalPagar);                                           
                 String idVenta = ventasDAO.buscarIdVenta();
-                ventasDAO.insertarVenta(venta);                         
-
+                ventasDAO.insertarVenta(venta); 
+                                        
                 for(int i = 0; i < listVentas.size(); i++){                                    
                     Producto producto = prodDAO.buscarProducto(listVentas.get(i).getIdProducto());                
                     int stockActualizado = producto.getStock() - listVentas.get(i).getCantidad();
                     prodDAO.actualizarStock(Integer.parseInt(listVentas.get(i).getIdProducto()), stockActualizado);
-                    venta = new Ventas(idVenta, listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
+                    venta = new Ventas(idVenta,listVentas.get(i).getIdProducto(), listVentas.get(i).getCantidad(), listVentas.get(i).getPriceProduct());                                
                     ventasDAO.guardarDetalleVenta(venta);                                                                
                 }
                 req.setAttribute("listVentas", listVentas);
@@ -124,6 +125,7 @@ public class servletVentas extends HttpServlet {
                 req.setAttribute("action", "0");
             }
             dispatcher = req.getRequestDispatcher("gestionVentas.jsp");
+            
         }else if("Cancelar".equals(accion)){
             listVentas.removeAll(listVentas);
             totalPagar = 0;

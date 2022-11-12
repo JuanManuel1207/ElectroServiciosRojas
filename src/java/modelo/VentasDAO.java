@@ -32,7 +32,7 @@ public class VentasDAO {
         List<Ventas> lista = new ArrayList<>();
         
         try {
-            ps = conexionBD.prepareStatement("SELECT * FROM VENTAS WHERE fechaVenta = ?");
+            ps = conexionBD.prepareStatement("SELECT * FROM ventas WHERE fechaVenta = ?");
             ps.setDate(1, java.sql.Date.valueOf(fecha));
             rs = ps.executeQuery();
             
@@ -60,7 +60,7 @@ public class VentasDAO {
         ResultSet rs;
         Double total = 0.0;
         try {
-            ps = conexionBD.prepareStatement("SELECT SUM(monto) AS total FROM VENTAS WHERE fechaVenta = ?");
+            ps = conexionBD.prepareStatement("SELECT SUM(monto) AS total FROM ventas WHERE fechaVenta = ?");
             ps.setDate(1, java.sql.Date.valueOf(fecha));
             rs = ps.executeQuery();
             while(rs.next()){
@@ -80,7 +80,7 @@ public class VentasDAO {
             
             List<Ventas> ventasList = new ArrayList<>();
             try{
-                ps = conexionBD.prepareStatement("SELECT ventas.idVenta,cliente,fechaVenta,detalleVenta.cantidad,precioVenta,productos.name FROM VENTAS NATURAL JOIN DETALLEVENTA, PRODUCTOS WHERE ventas.idVenta = detalleVenta.idVenta AND detalleVenta.idProducto = productos.id");
+                ps = conexionBD.prepareStatement("SELECT ventas.idVenta,cliente,fechaVenta,detalleVenta.cantidad,precioVenta,productos.name FROM ventas NATURAL JOIN detalleVenta, productos WHERE ventas.idVenta = detalleVenta.idVenta AND detalleVenta.idProducto = productos.id");
                 rs = ps.executeQuery();
                 while(rs.next()){
                     String idVenta = rs.getInt("idVenta")+"";
@@ -107,7 +107,7 @@ public class VentasDAO {
             ResultSet rs;
             List<Ventas> ventasList = new ArrayList<>();
             try{
-                ps = conexionBD.prepareStatement("SELECT ventas.idVenta,cliente,fechaVenta,detalleVenta.cantidad,precioVenta,productos.name,ventas.monto FROM VENTAS NATURAL JOIN DETALLEVENTA, PRODUCTOS WHERE ? = detalleVenta.idVenta AND detalleVenta.idProducto = productos.id");
+                ps = conexionBD.prepareStatement("SELECT ventas.idVenta,cliente,fechaVenta,detalleVenta.cantidad,precioVenta,productos.name,ventas.monto FROM ventas NATURAL JOIN detalleVenta, productos WHERE ? = detalleVenta.idVenta AND detalleVenta.idProducto = productos.id");
                 ps.setInt(1, id);
                 rs = ps.executeQuery();
                 while(rs.next()){
@@ -163,10 +163,10 @@ public class VentasDAO {
         return idVenta;
     }
     
-    public boolean guardarDetalleVenta(Ventas venta){
+   public boolean guardarDetalleVenta(Ventas venta){
         PreparedStatement ps;
         try{
-            ps = conexionBD.prepareStatement("INSERT INTO DETALLEVENTA(idVenta,idProducto,cantidad,precioVenta) VALUES(?,?,?,?)");
+            ps = conexionBD.prepareStatement("INSERT INTO detalleVenta(idVenta,idProducto,cantidad,precioVenta) VALUES(?,?,?,?)");
             ps.setInt(1, Integer.parseInt(venta.getIdVenta()));
             ps.setInt(2, Integer.parseInt(venta.getIdProducto()));
             ps.setInt(3,venta.getCantidad());

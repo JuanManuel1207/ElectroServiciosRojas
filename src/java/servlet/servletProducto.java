@@ -36,7 +36,6 @@ public class servletProducto extends HttpServlet {
         if(accion == null || accion.isEmpty()){
             dispatcher = req.getRequestDispatcher("gestionProductos.jsp");
             List<Producto> listProducts = productoDAO.listarProductos();
-            listProducts.toString();
             req.setAttribute("listaProductos", listProducts);       
             
         }else if("Insertar".equals(accion)){

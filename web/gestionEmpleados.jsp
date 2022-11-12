@@ -122,8 +122,9 @@
                                                             <td><c:out value="${ (emp.tipoEmpleado == '1') ? 'ADMINISTRADOR':'EMPLEADO' }"/></td>
                                                             <td>
                                                                 <a data-toggle="" href="servletEmpleado?accion=Editar&id=${emp.id}"<i class="bi bi-pencil-square"></i></a>
-                                                                <a href="#" data-href="servletEmpleado?accion=Eliminar&id=${emp.id}" class="bi bi-trash3-fill" data-toggle="modal" data-target="#eliminar"></a> 
-                                                                
+                                                                <c:if test="${emp.tipoEmpleado == '2'}">
+                                                                     | <a href="#" data-href="servletEmpleado?accion=Eliminar&id=${emp.id}" class="bi bi-trash3-fill" data-toggle="modal" data-target="#eliminar"></a>
+                                                                </c:if>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
